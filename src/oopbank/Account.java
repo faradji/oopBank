@@ -47,20 +47,16 @@ public abstract class Account
         return limit;
     }
 
-    public void setLimit(double limit)
-    {
-        this.limit = limit;
-    }
+    //Abstrakt metod som utförs med olika villkor beroende på konto-typ
+    public abstract void setLimit(double limit);
 
     public double getInterest()
     {
         return interest;
     }
-
-    public void setInterest(double interest)
-    {
-        this.interest = interest;
-    }
+    
+    //Abstrakt metod som utförs med olika villkor beroende på konto-typ
+    public abstract void setInterest(double interest);
 
     public int getAccountNo()
     {
