@@ -5,11 +5,18 @@
  */
 package oopbank;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author annafock
  */
 public class Customer
 {
+    private String firstName;
+    private String lastName;
+    private long pNr;
+    private ArrayList<Account> accountList;
+    
     
 }
