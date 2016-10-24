@@ -5,11 +5,19 @@
  */
 package oopbank;
 
+import java.util.Date;
+
 /**
  *
  * @author annafock
  */
 public class Transaction
 {
+    private Date date;
+    private boolean transactionType;
+    private double amount;
+    private double balance;
+    
+    
     
 }
