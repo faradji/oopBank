@@ -13,25 +13,43 @@ import java.util.ArrayList;
  */
 public abstract class Account
 {
-        protected double balance;
-        protected double limit;
-        protected double interest;
         protected int accountNo;
         protected String accountType;
+        protected double balance; //Ska beräknas som interest * interest/100
+        protected double limit; //Olika för olika kontotyper. 
+        protected double interest; //Olika för olika kontotyper   
         protected ArrayList<Transaction> transactionList;
 
-        
-    //Vilka fält ska vi     
-    public Account(double balance, double limit, double interest, int accountNo, String accountType, ArrayList<Transaction> transactionList)
+    public Account(int accountNo, String accountType, double balance, double limit, double interest, ArrayList<Transaction> transactionList)
     {
+        this.accountNo = accountNo;
+        this.accountType = accountType;
         this.balance = balance;
         this.limit = limit;
         this.interest = interest;
-        this.accountNo = accountNo;
-        this.accountType = accountType;
         this.transactionList = transactionList;
     }
+     
+    public int getAccountNo()
+    {
+        return accountNo;
+    }
 
+    public void setAccountNo(int accountNo)
+    {
+        this.accountNo = accountNo;
+    }
+
+    public String getAccountType()
+    {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType)
+    {
+        this.accountType = accountType;
+    }
+    
     public double getBalance()
     {
         return balance;
@@ -57,26 +75,6 @@ public abstract class Account
     
     //Abstrakt metod som utförs med olika villkor beroende på konto-typ
     public abstract void setInterest(double interest);
-
-    public int getAccountNo()
-    {
-        return accountNo;
-    }
-
-    public void setAccountNo(int accountNo)
-    {
-        this.accountNo = accountNo;
-    }
-
-    public String getAccountType()
-    {
-        return accountType;
-    }
-
-    public void setAccountType(String accountType)
-    {
-        this.accountType = accountType;
-    }
 
     public ArrayList<Transaction> getTransactionList()
     {
