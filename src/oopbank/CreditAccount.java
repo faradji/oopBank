@@ -22,10 +22,20 @@ public class CreditAccount extends Account
     }
 
     @Override
+    public void setLimit(double limit)
+    {}
+    
+    @Override
+    public void setInterest(double interest)
+    {}
+    
+    @Override
     public String toString()
     {
         return super.toString() + "CreditAccount{" + "debtInterest=" + debtInterest + '}';
     }
+    
+    
     
     
 }

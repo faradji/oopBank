@@ -20,6 +20,14 @@ public class SavingsAccount extends Account
     {
         super(balance, limit, interest, accountNo, accountType, transactionList);
     }
+    
+    @Override
+    public void setLimit(double limit)
+    {}
+    
+    @Override
+    public void setInterest(double interest)
+    {}
 
     //Osäker på om toString ska hämtas från super, ska testköra detta
     @Override
