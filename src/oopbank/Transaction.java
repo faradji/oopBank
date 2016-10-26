@@ -17,7 +17,5 @@ public class Transaction
     private boolean transactionType;
     private double amount;
     private double balance;
-    
-    
-    
+      
 }

@@ -13,21 +13,21 @@ import java.util.ArrayList;
  */
 public abstract class Account
 {
+        private static int accountCounter = 1001;//statisk variabel som ökar varje gång ett objekt av Account skapas (kolla i konstruktorn/LA
         protected int accountNo;
         protected String accountType;
         protected double balance; //Ska beräknas som interest * interest/100
-        protected double limit; //Olika för olika kontotyper. 
         protected double interest; //Olika för olika kontotyper   
         protected ArrayList<Transaction> transactionList;
 
-    public Account(int accountNo, String accountType, double balance, double limit, double interest, ArrayList<Transaction> transactionList)
+    public Account(String accountType, double balance, double interest)
     {
-        this.accountNo = accountNo;
+        this.accountNo = accountCounter;//LA: eftersom variablen accountCounter är statisk så ändras den för alla objekt när den ändras. Vi sparar alltså i en ickestatisk variabel för varje objekt.
         this.accountType = accountType;
-        this.balance = balance;
-        this.limit = limit;
+        this.balance = balance;//ska man göra setbalance här istället?
         this.interest = interest;
-        this.transactionList = transactionList;
+        accountCounter++;
+        
     }
      
     public int getAccountNo()
@@ -60,14 +60,6 @@ public abstract class Account
         this.balance = balance;
     }
 
-    public double getLimit()
-    {
-        return limit;
-    }
-
-    //Abstrakt metod som utförs med olika villkor beroende på konto-typ
-    public abstract void setLimit(double limit);
-
     public double getInterest()
     {
         return interest;
@@ -89,7 +81,7 @@ public abstract class Account
     @Override
     public String toString()
     {
-        return "Account{" + "balance=" + balance + ", limit=" + limit + ", interest=" + interest + ", accountNo=" + accountNo + ", accountType=" + accountType + ", transactionList=" + transactionList + '}';
+        return "Account{" + "balance=" + balance + ", interest=" + interest + ", accountNo=" + accountNo + ", accountType=" + accountType + ", transactionList=" + transactionList + '}';
     }
         
              

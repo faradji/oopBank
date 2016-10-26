@@ -14,14 +14,17 @@ import java.util.ArrayList;
 public class CreditAccount extends Account
 {
     //7% på eventuellt lånade pengar. När balance är negativt när kontot avslutas dras 7% skuldränta.
-    //Om balance är negativt får man 0,5% på sparade pengar.
+    //Om balance är positivt får man 0,5% på sparade pengar.
     //Ska regleras i BankLogik-metoden closeAccount?
-    private double debtInterest;  
+    private double debtInterest; 
+    private double limit;//LA: eftersom det är helt olika villkor för limit så lägger vi två olika variablar på creditaccount och savingaccount, en är ju en summa och en är 1 uttag
 
-    public CreditAccount(double debtInterest, int accountNo, String accountType, double balance, double limit, double interest, ArrayList<Transaction> transactionList)
+    public CreditAccount()//balance är alltid 0 när ett creditaccount öppnas
     {
-        super(accountNo, accountType, balance, limit, interest, transactionList);
-        this.debtInterest = debtInterest;
+        super("Credit Account", 0, 0.5);//LA: här initierar vi de variablarna som är "fasta" för creditaccount
+        
+        this.debtInterest = 7.0;//LA: initeras i konstruktorn eftrsom vi vet att räntan är 7%
+        this.limit = -5000.0;//LA: initieras i konstruktorn eftersom vi vet att limit är -5000
     }
 
     public double getDebtInterest()
@@ -31,26 +34,36 @@ public class CreditAccount extends Account
 
     public void setDebtInterest(double debtInterest)
     {
-        //7% på lånade pengar när kontot avslutas. 
+        //7% på lånade pengar när kontot avslutas. LA: Ifall man skulle behöva ändra räntan i framtiden så är det bra att det finns en setter
         this.debtInterest = debtInterest;
     }
     
-    
+    @Override//LA: overrides den som finns i account. I savings account kan den supermetoden användas.
     public void setBalance(double balance)
     {
-    //När kreditkontot skapas är interest 0 kr. Balance kan aldrig bli lägre än -5000 eftersom det är kreditgränsen. 
+        //När kreditkontot skapas är interest 0 kr. Balance kan aldrig bli lägre än -5000 eftersom det är kreditgränsen. 
+        if(balance < limit)
+        {
+            System.out.println("");//LA: här ska nånting hända i gränssnittet "uttaget är inte godkänt" tex
+        }
+            else   
+            {
+                this.balance = balance;
+            }
     }
 
-    @Override
+    
     public void setLimit(double limit)
     {
-    //När kreditkontot skapas är credit limit -5000 kr.
+        this.limit = limit;
+        //När kreditkontot skapas är credit limit -5000 kr.
     }
     
     @Override
     public void setInterest(double interest)
     {
-    //0,5% på insatta pengar när kontot avslutas. 
+        this.interest = interest;
+        //0,5% på insatta pengar när kontot avslutas. 
     }
     
     @Override
