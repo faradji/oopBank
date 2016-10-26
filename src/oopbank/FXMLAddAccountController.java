@@ -1,27 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package oopbank;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
-/**
- * FXML Controller class
- *
- * @author Andreas Vettefors (contact@vettefors.se)
- */
-public class FXMLAddAccountController implements Initializable {
-
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+public class FXMLAddAccountController{
+    
+    @FXML
+    Button backBtn;
+    
+    @FXML
+    public void clickedBack(){
+        Stage tempStage = (Stage)backBtn.getScene().getWindow();
+        tempStage.close();
+    }
+    
+    @FXML
+    public void initialize() {
+      
     }    
     
 }
