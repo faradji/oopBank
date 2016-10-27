@@ -47,13 +47,22 @@ public class BankLogic
     }
         
     
-    public ArrayList<Customer> getCustomer(long pNr)
+    public ArrayList<String> getCustomer(long pNr)
     {
+        ArrayList<String> customerInfo = new ArrayList();
+        //LA: jag kan inte avsluta den här metoden - hur gör man för att listan med konton ska läggas på nästa plats i Arraylistan?
+        for (int i = 0; i < customerList.size(); i++)
+            
+            if(customerList.get(i).getpNr() == pNr)
+            {
+                customerInfo.add(customerList.get(i).getFirstName() + customerList.get(i).getLastName() + customerList.get(i).getpNr());
+            }
+        
         //Returnerar en ArrayList som innehåller information om kunden inklusive dens konton
         //Första platsen i listan är förslagsvis reserverad för kundens namn och personnummer
         //Sedan följer information om kundens konton
         
-        return customerList;
+        return customerInfo;
     
     }
     
