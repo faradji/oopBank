@@ -18,12 +18,11 @@ public class Customer
     private long pNr;
     private ArrayList<Account> accountList;
 
-    public Customer(String firstName, String lastName, long pNr, ArrayList<Account> accountList)//LA: Ska arraylist verkligen skickas med när objektet skapas? Det finns ju inga accounts då.
+    public Customer(String firstName, String lastName, long pNr)
     {
         this.firstName = firstName;
         this.lastName = lastName;
         this.pNr = pNr;
-        this.accountList = accountList;//LA: ta bort den om vi ska ta bort att arraylist skickas in som parameter
     }
 
     public String getFirstName()

@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public abstract class Account
 {
-        private static int accountCounter = 1001;//statisk variabel som ökar varje gång ett objekt av Account skapas (kolla i konstruktorn/LA
+        private static int accountCounter = 1001;//LA: statisk variabel som ökar varje gång ett objekt av Account skapas (kolla i konstruktorn/LA
         protected int accountNo;
         protected String accountType;
         protected double balance; //Ska beräknas som interest * interest/100
@@ -24,7 +24,7 @@ public abstract class Account
     {
         this.accountNo = accountCounter;//LA: eftersom variablen accountCounter är statisk så ändras den för alla objekt när den ändras. Vi sparar alltså i en ickestatisk variabel för varje objekt.
         this.accountType = accountType;
-        this.balance = balance;//ska man göra setbalance här istället?
+        this.balance = balance;//LA: ska man göra setbalance här istället?
         this.interest = interest;
         accountCounter++;
         
