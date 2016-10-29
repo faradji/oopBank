@@ -127,12 +127,18 @@ public class BankLogic
         }
         //AF: Just nu returnerar den bara en lista på borttagna konton, inte info om ränta. 
         //Måste kolla metoden closeAccounts mer innan jag fixar här
-        return removedCustomers;     
-        
+        return removedCustomers;
+
         //Tar bort kund med personnummer pNr ur banken, alla kundens eventuella
         //konton tas också bort och resultatet returneras
         //Listan som returneras ska innehålla information om alla konton som togs bort
         //saldot som kunden får tillbaka samt vad räntan blev
     }
 
+    
+    public String closeAccount(long pNr, int accountNo)
+    {
+
+        return "closed";
+    }
 }
