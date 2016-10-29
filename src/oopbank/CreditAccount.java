@@ -38,7 +38,7 @@ public class CreditAccount extends Account
         this.debtInterest = debtInterest;
     }
     
-    @Override//LA: overrides den som finns i account. I savings account kan den supermetoden användas.
+    @Override//LA: overrides den som finns i account. I savings account kan  supermetoden användas.
     public void setBalance(double balance)
     {
         //När kreditkontot skapas är interest 0 kr. Balance kan aldrig bli lägre än -5000 eftersom det är kreditgränsen. 
