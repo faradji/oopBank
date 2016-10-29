@@ -54,6 +54,7 @@ public abstract class Account
     {
         return balance;
     }
+
 //AF: skapa inställningar för setBalance
     public void setBalance(double balance)
     {
