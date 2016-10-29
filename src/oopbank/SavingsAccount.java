@@ -22,12 +22,6 @@ public class SavingsAccount extends Account
         
     }
 
-    @Override
-    public void setInterest(double interest)
-    {
-        this.interest = interest;
-    }
-
     //Osäker på om toString ska hämtas från super, ska testköra detta
     @Override
     public String toString()

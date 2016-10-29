@@ -16,7 +16,7 @@ public class Customer
     private String firstName;
     private String lastName;
     private long pNr;
-    private ArrayList<Account> accountList;
+    private static ArrayList<Account> accountList;
 
     public Customer(String firstName, String lastName, long pNr)
     {
@@ -61,7 +61,7 @@ public class Customer
     }
    
     //Lägger till ett Account-objekt till accountList
-    public void setAccountList(Account a)
+    public static void setAccountList(Account a)
     {
     accountList.add(a);
     }
@@ -69,7 +69,7 @@ public class Customer
     @Override
     public String toString()
     {
-        return "Customer{" + "firstName=" + firstName + ", lastName=" + lastName + ", pNr=" + pNr + ", accountList=" + accountList + '}';
+        return "Customer " + firstName + " " + lastName + ", " + pNr + " \nAccounts:\n" + accountList;
     }
     
     

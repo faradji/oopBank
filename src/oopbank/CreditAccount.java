@@ -60,13 +60,6 @@ public class CreditAccount extends Account
     }
     
     @Override
-    public void setInterest(double interest)
-    {
-        this.interest = interest;
-        //0,5% på insatta pengar när kontot avslutas. 
-    }
-    
-    @Override
     public String toString()
     {
         return super.toString() + "CreditAccount{" + "debtInterest=" + debtInterest + '}';
