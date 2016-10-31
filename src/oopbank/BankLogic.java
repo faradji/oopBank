@@ -52,27 +52,19 @@ public class BankLogic
         for (int i = 0; i < customerList.size(); i++)
         {
             if (customerList.get(i).getpNr() == pNr)
-            //LA: jag kan inte avsluta den här metoden - hur gör man för att listan med konton ska läggas på nästa plats i Arraylistan? 
-            //AF: Alternativ 1. Jag prövade så här... och ett alternativ till nedan...     
+            //Lägger fört till namn och personnummer på första raden    
             {
                 customerInfo.add(customerList.get(i).getFirstName() + customerList.get(i).getLastName() + customerList.get(i).getpNr());
 
+                //Sedan loopar accounts på följande rader
                 for (int j = 0; j < customerList.get(i).getAccountList().size(); j++) //AF: För indexet i, hämta accountlistans längd
                 {
                     customerInfo.add(customerList.get(i).getAccountList().get(j).toString());
                 }
             }
 
-            //AF: Alternativ 2. Lite fuskigt alterantiv kanske??
-            {
-                customerInfo.add(customerList.get(i).toString());
-            }
         }
 
-        //LA: jag kan inte avsluta den här metoden - hur gör man för att listan med konton ska läggas på nästa plats i Arraylistan? 
-//            {
-//                customerInfo.add(customerList.get(i).getFirstName() + customerList.get(i).getLastName() + customerList.get(i).getpNr());
-//            }
         //Returnerar en ArrayList som innehåller information om kunden inklusive dens konton
         //Första platsen i listan är förslagsvis reserverad för kundens namn och personnummer
         //Sedan följer information om kundens konton
@@ -96,27 +88,28 @@ public class BankLogic
         //ändrades, annars false(om kunden inte fanns)
     }
 
-    public ArrayList<Customer> removeCustomer(long pNr)
+    public ArrayList<String> removeCustomer(long pNr)
     {
         long closePNr;
         int closeAccountNo;
 
-        ArrayList<Customer> removedCustomers = new ArrayList();
+        ArrayList<String> removedCustomerInfo = new ArrayList();
 
         //AF: Första loopen hämtar customerList och hanterar kundens uppgifter
         for (int i = 0; i < customerList.size(); i++)
         {
             if (customerList.get(i).getpNr() == pNr)
             {
-                //AF: 1. Lägger till kunden i den nya arrayListen
-                removedCustomers.add(customerList.get(i));
+                //AF: 1. Lägger till kundens personinfo i den nya arrayListen - ska den skriva toString???
+                removedCustomerInfo.add(customerList.get(i).toString());
 
                 //AF: Andra loopen hämtar kundens konton för att kunna stänga dem
                 for (int j = 0; j < customerList.get(i).getAccountList().size(); j++)
                 {
-                    //AF: 2. Hämtar in metoden closeAccount och lägger in kundens pNr och kontonummerna                   
+                    //AF: 2. Hämtar in metoden closeAccount och lägger kundens pNr och kontonummerna som inparameter                 
                     closeAccount(customerList.get(i).getpNr(), customerList.get(i).getAccountList().get(j).getAccountNo());
 
+                    //Vad returnerar closeAccount? Hämta in det här och lägg till removedCustomerInfo
                 }
 
                 //AF: 3. Tar bort kunden från customerList
@@ -126,7 +119,7 @@ public class BankLogic
         }
         //AF: Just nu returnerar den bara en lista på borttagna konton, inte info om ränta. 
         //Måste kolla metoden closeAccounts mer innan jag fixar här
-        return removedCustomers;
+        return removedCustomerInfo;
 
         //Tar bort kund med personnummer pNr ur banken, alla kundens eventuella
         //konton tas också bort och resultatet returneras
