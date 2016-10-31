@@ -26,7 +26,6 @@ public class BankLogic
     {   //LA: känns som att det finns ett snyggare sätt att göra detta på, men jag har gjort så här...
         //AF: Jag tror att det räcker att ta return true/false efter if-satserna, utan att skapa en boolean-variabel
         boolean customerCreated = true;
-        Customer c; //AF: vad gör den här variablen?
 
         for (int i = 0; i < customerList.size(); i++)
         {
@@ -60,7 +59,7 @@ public class BankLogic
 
                 for (int j = 0; j < customerList.get(i).getAccountList().size(); j++) //AF: För indexet i, hämta accountlistans längd
                 {
-                    customerInfo.add(customerList.get(i).getAccountList().toString());
+                    customerInfo.add(customerList.get(i).getAccountList().get(j).toString());
                 }
             }
 

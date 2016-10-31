@@ -51,7 +51,6 @@ public class CreditAccount extends Account
                 this.balance = balance;
             }
     }
-
     
     public void setLimit(double limit)
     {
