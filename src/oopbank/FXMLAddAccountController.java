@@ -7,11 +7,19 @@ import javafx.stage.Stage;
 public class FXMLAddAccountController{
     
     @FXML
-    Button backBtn;
+    Button btnAddAccount;
     
     @FXML
-    public void clickedBack(){
-        Stage tempStage = (Stage)backBtn.getScene().getWindow();
+    Button btnBackAddAccount;
+    
+    @FXML
+    public void clickedAddAccount(){
+        System.out.println("Added account");
+    }
+    
+    @FXML
+    public void clickedBackAddAccount(){
+        Stage tempStage = (Stage)btnBackAddAccount.getScene().getWindow();
         tempStage.close();
     }
     

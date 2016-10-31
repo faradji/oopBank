@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oopbank.FXMLCustomerInfoController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oopbank.FXMLCustomerInfoController">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
@@ -17,28 +17,29 @@
          <center>
             <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
                <children>
-                  <HBox alignment="CENTER">
+                  <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
                      <children>
-                        <VBox alignment="TOP_CENTER" spacing="10.0">
+                        <VBox alignment="TOP_CENTER" spacing="10.0" HBox.hgrow="ALWAYS">
                            <children>
-                              <Label alignment="TOP_LEFT" text="Accounts">
+                              <Label alignment="TOP_LEFT" text="Accounts" VBox.vgrow="ALWAYS">
                                  <font>
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Label>
-                              <ListView prefHeight="302.0" prefWidth="321.0" />
+                              <ListView fx:id="accountList" prefHeight="300.0" prefWidth="320.0" VBox.vgrow="ALWAYS" />
                            </children>
                            <HBox.margin>
                               <Insets top="20.0" />
                            </HBox.margin>
                         </VBox>
-                        <VBox alignment="TOP_CENTER" spacing="20.0">
+                        <VBox alignment="CENTER_LEFT" spacing="20.0">
                            <children>
-                              <Button mnemonicParsing="false" text="Accountinformation" />
+                              <Button fx:id="btnAccountInfo" mnemonicParsing="false" onAction="#clickedAccountInformation" prefWidth="162.0" text="Accountinfo" />
                               <Region VBox.vgrow="ALWAYS" />
-                              <ChoiceBox prefWidth="150.0" />
-                              <Button mnemonicParsing="false" prefWidth="152.0" text="Add account" />
-                              <Button mnemonicParsing="false" prefWidth="152.0" text="Delete account" />
+                              <RadioButton fx:id="savingsAccount" mnemonicParsing="false" text="Savingsaccount" />
+                              <RadioButton fx:id="creditAccount" mnemonicParsing="false" text="Creditaccount" />
+                              <Button fx:id="btnAddAccount" mnemonicParsing="false" onAction="#clickedAddAccount" prefWidth="162.0" text="Add account" />
+                              <Button fx:id="btnDeleteAccount" mnemonicParsing="false" onAction="#clickedDeleteAccount" prefWidth="162.0" text="Delete account" />
                            </children>
                            <HBox.margin>
                               <Insets left="40.0" top="50.0" />
@@ -50,26 +51,39 @@
             </VBox>
          </center>
          <top>
-            <HBox alignment="TOP_CENTER" spacing="20.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" text="Nisse Palm">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <Label prefHeight="35.0" text="10-10-10-1010">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Button mnemonicParsing="false" text="Change customerdetails" />
+                  <HBox prefWidth="320.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="lblFullName" alignment="CENTER" text="Kalle Anka">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="lblSSN" text="888888-8888">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <HBox>
+                     <children>
+                        <Button fx:id="btnChangeCustomerInfo" mnemonicParsing="false" onAction="#clickedChangeCustomerInformation" prefHeight="31.0" prefWidth="162.0" text="Change customerinfo" />
+                     </children>
+                  </HBox>
                </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
             </HBox>
          </top>
          <bottom>
             <HBox alignment="CENTER" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" text="Back" />
+                  <Button fx:id="btnBackCustomerInfo" mnemonicParsing="false" onAction="#clickedBackCustomerInformation" text="Back" />
                </children>
                <BorderPane.margin>
                   <Insets top="20.0" />
