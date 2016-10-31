@@ -16,12 +16,18 @@ public class BankLogic
 
     private ArrayList<Customer> customerList; //Ska detta vara en lista med String istället för Customer?
 
-    public ArrayList<Customer> getCustomerList()//LA: Denna kommer Ali att göra.. Det blev lite missförstånd.
+    //Konstruktor
+    public BankLogic()
+    {
+        this.customerList = new ArrayList();
+    }    
+    
+    public ArrayList<Customer> getCustomerList()
     {
         //Returnerar en ArrayList med string som innehåller en presentation av bankens alla kunder
         return customerList;
     }
-
+    
     public boolean addCustomer(String firstName, String lastName, long pNr)
     {   //LA: känns som att det finns ett snyggare sätt att göra detta på, men jag har gjort så här...
         //AF: Jag tror att det räcker att ta return true/false efter if-satserna, utan att skapa en boolean-variabel
@@ -88,12 +94,10 @@ public class BankLogic
         //ändrades, annars false(om kunden inte fanns)
     }
 
+    //Inte riktigt klar, behöver stämmas av med closeAccount
     public ArrayList<String> removeCustomer(long pNr)
     {
-        long closePNr;
-        int closeAccountNo;
-
-        ArrayList<String> removedCustomerInfo = new ArrayList();
+        ArrayList<String> removedCustomerInfo = new ArrayList(); //Borde den här deklareras som fält?
 
         //AF: Första loopen hämtar customerList och hanterar kundens uppgifter
         for (int i = 0; i < customerList.size(); i++)
