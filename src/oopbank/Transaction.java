@@ -23,7 +23,7 @@ public class Transaction
     //AF: Varje transaktion ska ange om det är en insättning eller uttag och vilket belopp det handlar om
     //AF: Datum sätts som tidpunkten när transaktionen görs
     //AF: Osäker på varför transaction har en balance? Hör inte balansen till kontot? 
-    public Transaction(boolean transactionType, double amount)
+    public Transaction(boolean transactionType, double amount, double balance)
     {
 
         this.date = new Date(); //AF: Om jag har förstått det rätt så är Date alltid datum och tid "nu", alltså när objeketet skapas
@@ -31,7 +31,7 @@ public class Transaction
         this.transactionType = transactionType; //toString skriver ut deposit om true
         this.amount = amount;
 
-        //this.balance = balance;????
+        this.balance = balance;
     }
 
     public Date getDate()
