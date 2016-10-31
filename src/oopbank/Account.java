@@ -17,16 +17,16 @@ public abstract class Account
     private static int accountCounter = 1001;//LA: statisk variabel som ökar varje gång ett objekt av Account skapas (kolla i konstruktorn/LA
     protected int accountNo;
     protected String accountType;
-    protected double balance; //Ska beräknas som balance * interest/100
+    protected double balance; 
     protected double interest; //Olika för olika kontotyper   
     protected ArrayList<Transaction> transactionList;
 
-    public Account(String accountType, double balance, double interest)
+    public Account(String accountType, double balance)
     {
         this.accountNo = accountCounter;//LA: eftersom variablen accountCounter är statisk så ändras den för alla objekt när den ändras. Vi sparar alltså i en ickestatisk variabel för varje objekt.
         this.accountType = accountType;
         setBalance(balance);//LA: ska man göra setbalance här istället? //AF Ja, det tror jag
-        this.interest = interest; //AF: ska vara setInterest istället?
+        this.interest = interest;
         accountCounter++; //AF: Sparar nytt värde i accountCounter varje gång ett nytt objekt av typen Account skapas
 
     }
