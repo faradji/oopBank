@@ -21,7 +21,7 @@ public abstract class Account
     protected double interest; //Olika för olika kontotyper   
     protected ArrayList<Transaction> transactionList;
 
-    public Account(String accountType, double balance)
+    public Account(String accountType, double balance, double interest)
     {
         this.accountNo = accountCounter;//LA: eftersom variablen accountCounter är statisk så ändras den för alla objekt när den ändras. Vi sparar alltså i en ickestatisk variabel för varje objekt.
         this.accountType = accountType;
@@ -73,8 +73,6 @@ public abstract class Account
         return interest;
     }
 
-    //AF: Ändrade från abstract metod till vanlig setter eftersom
-    //interest regleras i respektive kontos konstruktorer, men kontonas setters ser likadana ut
     public void setInterest(double interest)
     {
         this.interest = interest;
