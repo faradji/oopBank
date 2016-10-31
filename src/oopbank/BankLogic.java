@@ -15,7 +15,9 @@ public class BankLogic
 {
 
     private ArrayList<Customer> customerList; //Ska detta vara en lista med String istället för Customer?
-
+    private ArrayList<String> customerInfo;
+    private ArrayList<String> removedCustomerInfo;
+    
     //Konstruktor
     public BankLogic()
     {
@@ -70,7 +72,6 @@ public class BankLogic
             }
 
         }
-
         //Returnerar en ArrayList som innehåller information om kunden inklusive dens konton
         //Första platsen i listan är förslagsvis reserverad för kundens namn och personnummer
         //Sedan följer information om kundens konton
