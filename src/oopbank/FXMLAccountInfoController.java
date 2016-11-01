@@ -77,14 +77,10 @@ public class FXMLAccountInfoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO 
         String namn = "";//hämta för och efternamn
-        lblnamn.setText(namn);
-        //lblAccountType ska visa om det är credit eller savings
-        lblAccountType.setText(namn);
-        //lblBalance visar saldot
-        lblBalance.setText(namn);
-        //lblCredit visar krediten, om det är ett credit konto
-        lblCredit.setText(namn);
-        //lvTransactions visar en lista på transaktioner
+        lblnamn.setText(namn);//lblAccountType ska visa om det är credit eller savings
+        lblAccountType.setText(namn);//lblBalance visar saldot
+        lblBalance.setText(namn);//lblCredit visar krediten, om det är ett credit konto
+        lblCredit.setText(namn);//lvTransactions visar en lista på transaktioner
 
     }
 
