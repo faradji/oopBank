@@ -17,23 +17,29 @@ public class BankLogic
     private ArrayList<Customer> customerList; //Ska detta vara en lista med String istället för Customer?
     private ArrayList<String> customerInfo;
     private ArrayList<String> removedCustomerInfo;
-    
+
     //Konstruktor
     public BankLogic()
     {
         this.customerList = new ArrayList();
         
-     
-    }    
-    
+        customerList.add(new Customer("Louise", "Ahokas", 2410051701L));
+        customerList.add(new Customer("Alexander", "Aschas", 0505113345L));
+        customerList.add(new Customer("Ali", "Faradji", 7308266873L));
+        customerList.add(new Customer("Anna", "Fock", 6507129021L));
+        customerList.add(new Customer("Henrik", "Rosqvist", 5611045723L));
+        customerList.add(new Customer("Andreas", "Vetterfors", 9901018021L));
+
+    }
+
     public ArrayList<Customer> getCustomerList()
     {
         //Returnerar en ArrayList med string som innehåller en presentation av bankens alla kunder
         return customerList;
     }
-    
+
     public boolean addCustomer(String firstName, String lastName, long pNr)
-    {   
+    {
         boolean customerCreated = true;
 
         for (int i = 0; i < customerList.size(); i++)
@@ -80,7 +86,7 @@ public class BankLogic
     public boolean changeCustomerName(String firstName, String lastName, long pNr)
     {
         boolean changedName = false;
-        
+
         for (int i = 0; i < customerList.size(); i++)
         {
             if (customerList.get(i).getpNr() == pNr)
@@ -131,7 +137,6 @@ public class BankLogic
         //saldot som kunden får tillbaka samt vad räntan blev
     }
 
-    
     public String closeAccount(long pNr, int accountNo)
     {
 
