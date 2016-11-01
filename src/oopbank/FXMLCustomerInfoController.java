@@ -18,7 +18,7 @@ public class FXMLCustomerInfoController {
 
     //ListView
     @FXML
-    private ListView accountList;
+    private static ListView accountList;
 
     //Observablelist with accounts to populate listview
     ObservableList<Account> obsAccountList;
@@ -110,6 +110,10 @@ public class FXMLCustomerInfoController {
     private void clickedBackCustomerInformation() {
         Stage tempStage = (Stage) btnBackCustomerInfo.getScene().getWindow();
         tempStage.close();
+    }
+
+    public static ListView getAccountList() {
+        return accountList;
     }
 
     @FXML
