@@ -1,17 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="oopbank.FXMLStartController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oopbank.FXMLStartController">
    <children>
-      <ListView layoutX="14.0" layoutY="14.0" prefHeight="400.0" prefWidth="350.0" />
-      <Button layoutX="374.0" layoutY="14.0" mnemonicParsing="false" text="Button" />
-      <Button layoutX="374.0" layoutY="49.0" mnemonicParsing="false" text="Button" />
-      <Button layoutX="374.0" layoutY="85.0" mnemonicParsing="false" text="Button" />
+      <BorderPane prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <HBox alignment="CENTER">
+               <children>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label text="Bank of Newton" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font size="48.0" />
+                           </font>
+                        </Label>
+                        <Label text="Administrator tool">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </top>
+         <center>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="60.0" />
+               </BorderPane.margin>
+               <children>
+                  <VBox spacing="20.0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label text="Select customer">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <ListView fx:id="lvCustomer" prefHeight="301.0" prefWidth="271.0" />
+                        <HBox spacing="20.0">
+                           <children>
+                              <Button mnemonicParsing="false" text="Remove customer" />
+                              <Button mnemonicParsing="false" onAction="#btnGoToCustomer" text="Go to customer" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="463.0" prefWidth="343.0" spacing="20.0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label text="Add new customer">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font></Label>
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label text="First name" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label text="Last name" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label text="Personal number" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT">
+                           <children>
+                              <Button mnemonicParsing="false" text="Add" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </center>
+      </BorderPane>
    </children>
 </AnchorPane>

@@ -16,13 +16,15 @@ public class Customer
     private String firstName;
     private String lastName;
     private long pNr;
-    private static ArrayList<Account> accountList;
+    private ArrayList<Account> accountList;
 
     public Customer(String firstName, String lastName, long pNr)
     {
         this.firstName = firstName;
         this.lastName = lastName;
         this.pNr = pNr;
+        
+        this.accountList = new ArrayList();
     }
 
     public String getFirstName()
@@ -69,7 +71,7 @@ public class Customer
     @Override
     public String toString()
     {
-        return "Customer " + firstName + " " + lastName + ", " + pNr + " \nAccounts:\n" + accountList;
+        return firstName + " " + lastName + ", " + pNr;
     }
     
     
