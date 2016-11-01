@@ -5,8 +5,6 @@
  */
 package oopbank;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -14,17 +12,5 @@ import java.util.List;
  */
 public class BankLogic {
 
-    private List<Customer> customers;
-
-    BankLogic() {
-        customers = new ArrayList<Customer>();
-    }
-
-    public void addSavingsAccount(long prnNumber) {
-        for (int i = 0; i < customers.size(); i++) {
-            if (customers.get(i).getpNr() == prnNumber) {
-                customers.get(i).getAccountList().add(new SavingsAccount());
-            }
-        }
-    }
+   
 }
