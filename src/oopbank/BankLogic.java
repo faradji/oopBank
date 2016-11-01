@@ -22,6 +22,8 @@ public class BankLogic
     public BankLogic()
     {
         this.customerList = new ArrayList();
+        
+     
     }    
     
     public ArrayList<Customer> getCustomerList()
