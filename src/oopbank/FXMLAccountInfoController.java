@@ -8,6 +8,8 @@ package oopbank;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -35,7 +37,10 @@ public class FXMLAccountInfoController implements Initializable {
     private Button btnBack;
     @FXML
     private TextField amount;
-
+    
+    @FXML
+    private ObservableList<BankLogic> transaction;
+    
     @FXML
     public void btnBackClicked() throws IOException {
         Stage tempStage = (Stage) btnBack.getScene().getWindow();
@@ -51,6 +56,7 @@ public class FXMLAccountInfoController implements Initializable {
             int account = 0;
             am = Double.parseDouble(amount.getText());
             pnr=BankLogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getpNr();
+           
             boolean deposit = BankLogic.deposit(pnr, account, am);
         } catch (Exception e) {
             System.err.println(e);
@@ -58,6 +64,8 @@ public class FXMLAccountInfoController implements Initializable {
 
     }
 
+    
+    
     @FXML
     public void withdraw() {
         try {
@@ -77,11 +85,14 @@ public class FXMLAccountInfoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO 
-        String namn = "";//hämta för och efternamn
-        lblnamn.setText(namn);//lblAccountType ska visa om det är credit eller savings
-        lblAccountType.setText(namn);//lblBalance visar saldot
-        lblBalance.setText(namn);//lblCredit visar krediten, om det är ett credit konto
-        lblCredit.setText(namn);//lvTransactions visar en lista på transaktioner
+        transaction = FXCollections.observableArrayList(BankLogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.lvCustomerChoice).getTransaction);
+        String forNamn = BankLogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getFirstName();//hämta för och efternamn
+        String efterNamn = BankLogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getLastName();
+        lblnamn.setText(forNamn+" "+efterNamn);//lblAccountType ska visa om det är credit eller savings
+        lblAccountType.setText(forNamn);//lblBalance visar saldot
+        lblBalance.setText();//lblCredit visar krediten, om det är ett credit konto
+        
+        lblCredit.setText(forNamn);//lvTransactions visar en lista på transaktioner
 
     }
 

@@ -247,6 +247,7 @@ public static ArrayList<Customer> getCustomerList()
         if (customerCreated == true)
         {
             customerList.add(new Customer(firstName, lastName, pNr));
+            
         }
         return customerCreated;
     }
