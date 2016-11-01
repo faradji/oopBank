@@ -50,8 +50,7 @@ public class FXMLAccountInfoController implements Initializable {
             long pnr = 0;
             int account = 0;
             am = Double.parseDouble(amount.getText());
-
-           // BankLogic.deposit(pnr, account, am);
+            BankLogic.deposit(pnr, account, am);
         } catch (Exception e) {
             System.err.println(e);
         }
@@ -65,8 +64,7 @@ public class FXMLAccountInfoController implements Initializable {
             long pnr = 0;
             int account = 0;
             am = Double.parseDouble(amount.getText());
-
-           // BankLogic.withdraw(pnr, account, am);
+            BankLogic.withdraw(pnr, account, am);
         } catch (Exception e) {
             System.err.println(e);
         }

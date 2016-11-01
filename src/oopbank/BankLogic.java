@@ -130,7 +130,7 @@ public class BankLogic
         this.customerList = customerList;
     }
 
-    public  boolean deposit(long prnNumber, int accountNo, double amount)
+    public static boolean deposit(long prnNumber, int accountNo, double amount)
     {
         boolean temp = false;
 
@@ -160,7 +160,7 @@ public class BankLogic
         return temp;
     }
 
-    public  boolean withdraw(long pNr, int accountNo, double amount)
+    public static boolean withdraw(long pNr, int accountNo, double amount)
     {
         boolean temp = false;
         for (int i = 0; i < customerList.size(); i++)
