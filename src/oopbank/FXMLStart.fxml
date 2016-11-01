@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -8,9 +10,75 @@
 
 <AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oopbank.FXMLStartController">
    <children>
-      <ListView layoutX="14.0" layoutY="14.0" prefHeight="400.0" prefWidth="350.0" />
-      <Button layoutX="374.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnAddCustomer" text="Add customer" />
-      <Button layoutX="374.0" layoutY="49.0" mnemonicParsing="false" onAction="#btnEditCustomer" text="Edit customer" />
-      <Button layoutX="374.0" layoutY="85.0" mnemonicParsing="false" onAction="#btnRemoveCustomer" text="Remove customer" />
+      <BorderPane prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <HBox alignment="CENTER">
+               <children>
+                  <Label text="Bank of Newton" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="48.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </top>
+         <bottom>
+            <Label text="Administrator tool" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </bottom>
+         <center>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="80.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </BorderPane.margin>
+               <children>
+                  <VBox spacing="20.0">
+                     <children>
+                        <ListView prefHeight="200.0" prefWidth="200.0" />
+                        <HBox spacing="20.0">
+                           <children>
+                              <Button mnemonicParsing="false" text="Go to customer" />
+                              <Button mnemonicParsing="false" text="Remove customer" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="463.0" prefWidth="343.0" spacing="20.0">
+                     <children>
+                        <HBox alignment="CENTER">
+                           <children>
+                              <Label text="New customer" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label text="First name" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label text="Last name" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label text="Personal number" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </center>
+      </BorderPane>
    </children>
 </AnchorPane>
