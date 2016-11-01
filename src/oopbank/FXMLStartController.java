@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 public class FXMLStartController {
 
     @FXML
-    private static ListView lvCustomer;
+    private ListView lvCustomer;
     
     @FXML
     private TextField txfFirstName;
@@ -33,7 +33,8 @@ public class FXMLStartController {
 
     @FXML
     private ObservableList<Customer> obsCustomerList;
-            
+    
+    static int lvCustomerChoice = 0;
 
 
     @FXML
@@ -51,7 +52,7 @@ public class FXMLStartController {
 
     @FXML
     public void btnGoToCustomer() throws IOException {
-        //lvCustomerChoice = lvCustomer.getSelectionModel().getSelectedIndex();
+        lvCustomerChoice = lvCustomer.getSelectionModel().getSelectedIndex();
 
         Stage editCustomerStage = new Stage();
         Scene editCustomerScene
@@ -69,15 +70,11 @@ public class FXMLStartController {
         lvCustomer.getSelectionModel().getSelectedIndex();
         // Skicka in uppgifter till removecustomer()
     }
-
-    public static ListView getLvCustomer() {
-        return lvCustomer;
-    }
-
-        
+   
     @FXML
     public void initialize() {
         obsCustomerList = FXCollections.observableArrayList(OopBank.banklogic.getCustomerList());
+       
         lvCustomer.setItems(obsCustomerList);
         
     }
