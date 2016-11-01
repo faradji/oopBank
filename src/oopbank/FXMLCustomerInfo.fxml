@@ -34,10 +34,8 @@
                         </VBox>
                         <VBox alignment="CENTER_LEFT" spacing="20.0">
                            <children>
-                              <Button fx:id="btnAccountInfo" mnemonicParsing="false" onAction="#clickedAccountInformation" prefWidth="162.0" text="Accountinfo" />
+                              <Button fx:id="btnAccountInfo" mnemonicParsing="false" onAction="#clickedAccountInformation" prefWidth="162.0" text="Transactions" />
                               <Region VBox.vgrow="ALWAYS" />
-                              <RadioButton fx:id="savingsAccount" mnemonicParsing="false" text="Savingsaccount" />
-                              <RadioButton fx:id="creditAccount" mnemonicParsing="false" text="Creditaccount" />
                               <Button fx:id="btnAddAccount" mnemonicParsing="false" onAction="#clickedAddAccount" prefWidth="162.0" text="Add account" />
                               <Button fx:id="btnDeleteAccount" mnemonicParsing="false" onAction="#clickedDeleteAccount" prefWidth="162.0" text="Delete account" />
                            </children>
