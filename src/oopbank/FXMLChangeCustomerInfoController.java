@@ -18,7 +18,7 @@ public class FXMLChangeCustomerInfoController {
 
     private void clickedSaveChanges() {
 
-        if (txtFieldFirstName.getText().equals("") 
+        /*if (txtFieldFirstName.getText().equals("") 
                 || txtFieldLastName.getText().equals("")) {
             System.out.println("All fields needs to be filled");
         } else {
@@ -28,7 +28,7 @@ public class FXMLChangeCustomerInfoController {
             BankLogic.getCustomerList().get(FXMLStartController.choice)
                     .setLastName(txtFieldLastName.getText());
         }
-
+*/
     }
 
     @FXML

@@ -115,7 +115,7 @@ public class FXMLCustomerInfoController {
     @FXML
     public void initialize() {
         
-        // Customer name display
+       /* // Customer name display
         lblFullName.setText(getCustomerList()
                 .get(FXMLStartController.lvCustomerChoice)
                 .getFirstName() + " " + getCustomerList()
@@ -140,6 +140,9 @@ public class FXMLCustomerInfoController {
         savingsAccount.setUserData("sa");
         creditAccount.setToggleGroup(accountsToggleGroup);
         creditAccount.setUserData("ca");
+
+        */
     }
+
 
 }

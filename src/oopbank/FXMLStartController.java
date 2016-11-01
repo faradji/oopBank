@@ -69,7 +69,7 @@ public class FXMLStartController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         obsCustomerList = FXCollections.observableArrayList();
-        obsCustomerList.add(BankLogic.getCustomerList());
+        //obsCustomerList.add(BankLogic.getCustomerList());
         
         lvCustomer.getItems().add(obsCustomerList);
     }    
