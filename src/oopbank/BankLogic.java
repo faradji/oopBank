@@ -39,7 +39,7 @@ public class BankLogic
 
     }
 
-    public int addCreditAccount(long prnNumber)
+    public static int addCreditAccount(long prnNumber)
     {
         int tempaccountnumb = 0;
         for (int i = 0; i < customerList.size(); i++)
@@ -55,7 +55,7 @@ public class BankLogic
         return tempaccountnumb;
     }
 
-    public ArrayList getTransactions(long pnrNumber, int accountNo)
+    public static ArrayList getTransactions(long pnrNumber, int accountNo)
     {
         int arrayfirst = 0;
         int arraysecond = 0;
@@ -78,7 +78,7 @@ public class BankLogic
         return customerList.get(arrayfirst).getAccountList().get(arraysecond).getTransactionList();
     }
 
-    public int addSavingsAccount(long prnNumber, double balance)
+    public static int addSavingsAccount(long prnNumber, double balance)
     {
         int tempaccountnumb = 0;
         for (int i = 0; i < customerList.size(); i++)
@@ -94,7 +94,7 @@ public class BankLogic
         return tempaccountnumb;
     }
 
-    public String getAccount(long prnNumber, int accountNo)
+    public static String getAccount(long prnNumber, int accountNo)
     {
 
         int arrayfirst = 0;
@@ -120,17 +120,17 @@ public class BankLogic
         return customerList.get(arrayfirst).getAccountList().get(arraysecond).toString();
     }
 
-    public ArrayList<Customer> getCustomers()
+    public static ArrayList<Customer> getCustomers()
     {
         return customerList;
     }
 
-    public void setCustomers(ArrayList<Customer> customerList)
-    {
-        this.customerList = customerList;
-    }
+    //public static void setCustomers(ArrayList<Customer> customerList)
+    //{
+      //  this.customerList = customerList;
+    //}
 
-    public boolean deposit(long prnNumber, int accountNo, double amount)
+    public static boolean deposit(long prnNumber, int accountNo, double amount)
     {
         boolean temp = false;
 
@@ -160,7 +160,7 @@ public class BankLogic
         return temp;
     }
 
-    public boolean withdraw(long pNr, int accountNo, double amount)
+    public static boolean withdraw(long pNr, int accountNo, double amount)
     {
         boolean temp = false;
         for (int i = 0; i < customerList.size(); i++)
@@ -189,7 +189,7 @@ public class BankLogic
         return temp;
     }
 
-    public String closeAccount(long pNr, int accountNo)
+    public static String closeAccount(long pNr, int accountNo)
     {
         String temp = "Something went wrong.";
         
@@ -232,7 +232,7 @@ public static ArrayList<Customer> getCustomerList()
         return customerList;
     }
 
-    public boolean addCustomer(String firstName, String lastName, long pNr)
+    public static boolean addCustomer(String firstName, String lastName, long pNr)
     {
         boolean customerCreated = true;
 
@@ -251,7 +251,7 @@ public static ArrayList<Customer> getCustomerList()
         return customerCreated;
     }
 
-    public ArrayList<String> getCustomer(long pNr)
+    public static ArrayList<String> getCustomer(long pNr)
     {
         ArrayList<String> customerInfo = new ArrayList();
 
@@ -277,7 +277,7 @@ public static ArrayList<Customer> getCustomerList()
 
     }
 
-    public boolean changeCustomerName(String firstName, String lastName, long pNr)
+    public static boolean changeCustomerName(String firstName, String lastName, long pNr)
     {
         boolean changedName = false;
 
@@ -296,7 +296,7 @@ public static ArrayList<Customer> getCustomerList()
     }
 
     //Inte riktigt klar, behöver stämmas av med closeAccount
-    public ArrayList<String> removeCustomer(long pNr)
+    public static ArrayList<String> removeCustomer(long pNr)
     {
         ArrayList<String> removedCustomerInfo = new ArrayList(); //Borde den här deklareras som fält?
 

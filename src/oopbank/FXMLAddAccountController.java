@@ -25,7 +25,7 @@ public class FXMLAddAccountController{
     
     @FXML
     public void initialize() {
-      
+    
     }    
     
 }
