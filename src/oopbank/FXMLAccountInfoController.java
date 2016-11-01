@@ -50,7 +50,8 @@ public class FXMLAccountInfoController implements Initializable {
             long pnr = 0;
             int account = 0;
             am = Double.parseDouble(amount.getText());
-            BankLogic.deposit(pnr, account, am);
+            pnr=BankLogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getpNr();
+            boolean deposit = BankLogic.deposit(pnr, account, am);
         } catch (Exception e) {
             System.err.println(e);
         }
