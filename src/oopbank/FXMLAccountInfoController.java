@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -25,37 +26,68 @@ import javafx.stage.Stage;
 public class FXMLAccountInfoController implements Initializable {
 
     @FXML
-    private Label lblAccountType, lblBalance, lblCredit;
-    
+    private Label lblAccountType, lblBalance, lblCredit, lblnamn;
+
     @FXML
     private ListView lvTransactions;
-    
+
     @FXML
     private Button btnBack;
-    
     @FXML
-    public void btnNewTransactionClicked()
-    {
-        //Ny transaktion, fönstret för detta är inte skapat än
-    }
-    
+    private TextField amount;
+
     @FXML
-    public void btnBackClicked() throws IOException
-    {
+    public void btnBackClicked() throws IOException {
         Stage tempStage = (Stage) btnBack.getScene().getWindow();
-        
+
         tempStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("FXMLCustomerInfo.fxml"))));
     }
+
+    @FXML
+    public void deposit() {
+        try {
+            double am;
+            long pnr = 0;
+            int account = 0;
+            am = Double.parseDouble(amount.getText());
+
+           // BankLogic.deposit(pnr, account, am);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+
+    }
+
+    @FXML
+    public void withdraw() {
+        try {
+            double am;
+            long pnr = 0;
+            int account = 0;
+            am = Double.parseDouble(amount.getText());
+
+           // BankLogic.withdraw(pnr, account, am);
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO 
+        String namn = "";//hämta för och efternamn
+        lblnamn.setText(namn);
         //lblAccountType ska visa om det är credit eller savings
+        lblAccountType.setText(namn);
         //lblBalance visar saldot
+        lblBalance.setText(namn);
         //lblCredit visar krediten, om det är ett credit konto
+        lblCredit.setText(namn);
         //lvTransactions visar en lista på transaktioner
-    }    
-    
+
+    }
+
 }
