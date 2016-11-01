@@ -22,8 +22,14 @@ public class BankLogic
     public BankLogic()
     {
         this.customerList = new ArrayList();
-        
-     
+       
+     customerList.add(new Customer("Louise", "Ahokas", 2410051701L));
+     customerList.add(new Customer("Alexander", "Aschas", 0505113345L));
+     customerList.add(new Customer("Ali", "Faradji", 7308266873L));
+     customerList.add(new Customer("Anna", "Fock", 6507129021L));
+     customerList.add(new Customer("Henrik", "Rosqvist", 5611045723L));
+     customerList.add(new Customer("Andreas", "Vetterfors", 9901018021L));
+                                
     }    
     
     public ArrayList<Customer> getCustomerList()
