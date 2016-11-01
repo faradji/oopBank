@@ -56,16 +56,9 @@ public abstract class Account
         return balance;
     }
 
-    //AF: Denna flyttas med till savingsAccount, men overrideas i CreditAccount med en annan setter
     public void setBalance(double balance)
     {
-        if (balance < 0)
-        {
-            System.out.println("");//LA: här ska nånting hända i gränssnittet "uttaget är inte godkänt" tex
-        } else
-        {
             this.balance = balance;
-        }
     }
 
     public double getInterest()

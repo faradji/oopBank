@@ -33,8 +33,7 @@ public class BankLogic
     }
     
     public boolean addCustomer(String firstName, String lastName, long pNr)
-    {   //LA: känns som att det finns ett snyggare sätt att göra detta på, men jag har gjort så här...
-        //AF: Jag tror att det räcker att ta return true/false efter if-satserna, utan att skapa en boolean-variabel
+    {   
         boolean customerCreated = true;
 
         for (int i = 0; i < customerList.size(); i++)
@@ -43,9 +42,6 @@ public class BankLogic
             {
                 customerCreated = false;
                 break;
-            } else
-            {
-                customerCreated = true;
             }
         }
         if (customerCreated == true)
@@ -83,16 +79,18 @@ public class BankLogic
 
     public boolean changeCustomerName(String firstName, String lastName, long pNr)
     {
+        boolean changedName = false;
+        
         for (int i = 0; i < customerList.size(); i++)
         {
             if (customerList.get(i).getpNr() == pNr)
             {
                 customerList.get(i).setFirstName(firstName);
                 customerList.get(i).setLastName(lastName);
-                return true;
+                changedName = true;
             }
         }
-        return false;
+        return changedName;
         //Byter namn på kund med personnummer pNr till name, returnerar true om namnet
         //ändrades, annars false(om kunden inte fanns)
     }
@@ -113,8 +111,9 @@ public class BankLogic
                 //AF: Andra loopen hämtar kundens konton för att kunna stänga dem
                 for (int j = 0; j < customerList.get(i).getAccountList().size(); j++)
                 {
+                    String closeAccountInfo = closeAccount(customerList.get(i).getpNr(), customerList.get(i).getAccountList().get(j).getAccountNo());
                     //AF: 2. Hämtar in metoden closeAccount och lägger kundens pNr och kontonummerna som inparameter                 
-                    closeAccount(customerList.get(i).getpNr(), customerList.get(i).getAccountList().get(j).getAccountNo());
+                    removedCustomerInfo.add(closeAccountInfo);
 
                     //Vad returnerar closeAccount? Hämta in det här och lägg till removedCustomerInfo
                 }
@@ -124,8 +123,6 @@ public class BankLogic
 
             }
         }
-        //AF: Just nu returnerar den bara en lista på borttagna konton, inte info om ränta. 
-        //Måste kolla metoden closeAccounts mer innan jag fixar här
         return removedCustomerInfo;
 
         //Tar bort kund med personnummer pNr ur banken, alla kundens eventuella
