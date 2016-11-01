@@ -10,7 +10,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oopbank.FXMLCustomerInfoController">
    <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+      <Insets bottom="13.0" left="13.0" right="13.0" top="13.0" />
    </padding>
    <children>
       <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -26,7 +26,7 @@
                                     <Font name="System Bold" size="15.0" />
                                  </font>
                               </Label>
-                              <ListView fx:id="accountList" prefHeight="300.0" prefWidth="320.0" VBox.vgrow="ALWAYS" />
+                              <ListView fx:id="accountList" VBox.vgrow="ALWAYS" />
                            </children>
                            <HBox.margin>
                               <Insets top="20.0" />
@@ -81,9 +81,11 @@
             </HBox>
          </top>
          <bottom>
-            <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" maxWidth="372.0" prefWidth="372.0">
                <children>
-                  <Button fx:id="btnBackCustomerInfo" mnemonicParsing="false" onAction="#clickedBackCustomerInformation" text="Back" />
+                  <Button mnemonicParsing="false" text="Print customerdetails" />
+                  <Region maxWidth="372.0" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="btnBackCustomerInfo" mnemonicParsing="false" onAction="#clickedBackCustomerInformation" text="Close" />
                </children>
                <BorderPane.margin>
                   <Insets top="20.0" />

@@ -1,6 +1,8 @@
 package oopbank;
 
 import java.io.IOException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,17 +20,20 @@ public class FXMLCustomerInfoController {
     @FXML
     private ListView accountList;
 
+    //Observablelist with accounts to populate listview
+    ObservableList<Account> obsAccountList;
+
     // Radiobutton
     @FXML
     private RadioButton savingsAccount;
- 
+
     @FXML
     private RadioButton creditAccount;
-    
+
     // Radiobuttongroup
     @FXML
     private ToggleGroup accountsToggleGroup;
-    
+
     // Value of the radiobutton checked
     private String rbtnChecked = "";
 
@@ -47,29 +52,28 @@ public class FXMLCustomerInfoController {
 
     @FXML
     private Button btnBackCustomerInfo;
-    
+
     //Labels
     @FXML
     private Label lblFullName;
-    
+
     @FXML
     private Label lblSSN;
-    
-    
+
     // Creates new stage
     @FXML
     private void clickedChangeCustomerInformation() throws IOException {
         Stage changeCustomerInformationStage = new Stage();
         Scene changeCustomerInformationScene
                 = new Scene(FXMLLoader.load(getClass()
-                        .getResource("FXMLAddAccount.fxml")));
+                        .getResource("FXMLChangeCustomerInfo.fxml")));
 
         changeCustomerInformationStage.setScene(changeCustomerInformationScene);
         changeCustomerInformationStage.initModality(Modality.APPLICATION_MODAL);
         changeCustomerInformationStage.setTitle("Change customerinformation");
         changeCustomerInformationStage.show();
     }
-    
+
     // Load new scene into existing stage
     @FXML
     private void clickedAccountInformation() throws IOException {
@@ -81,12 +85,11 @@ public class FXMLCustomerInfoController {
         accountInformationStage.setTitle("Accountinformation");
         accountInformationStage.setScene(accountInformationScene);
     }
-    
+
     // Creates new stage
     @FXML
     private void clickedAddAccount() throws IOException {
-        
-        
+
         Stage addAccountStage = new Stage();
         Scene addAccountScene = new Scene(FXMLLoader.load(getClass()
                 .getResource("FXMLAddAccount.fxml")));
@@ -101,7 +104,7 @@ public class FXMLCustomerInfoController {
     private void clickedDeleteAccount() {
         System.out.println("Account deleted");
     }
-    
+
     // Closes stage
     @FXML
     private void clickedBackCustomerInformation() {
@@ -112,9 +115,27 @@ public class FXMLCustomerInfoController {
     @FXML
     public void initialize() {
         
-        //Group radiobuttons. Only one button can be checked.
-        accountsToggleGroup =  new ToggleGroup();
+        // Customer name display
+        lblFullName.setText(getCustomerList()
+                .get(FXMLStartController.lvCustomerChoice)
+                .getFirstName() + " " + getCustomerList()
+                .get(FXMLStartController.lvCustomerChoice)
+                .getLastName());
         
+        // Customer SSN display
+        lblSSN.setText(getCustomerList()
+                .get(FXMLStartController.lvCustomerChoice)
+                .getPnr());
+        
+        //Fill listView with accountList
+        obsAccountList = FXCollections.
+                observableArrayList(BankLogic.getCustomerList()
+                        .getIndex(FXMLStartController.lvCustomerChoice).getAccountList());
+        accountList.setItems(obsAccountList);
+
+        //Group radiobuttons. Only one button can be checked.
+        accountsToggleGroup = new ToggleGroup();
+
         savingsAccount.setToggleGroup(accountsToggleGroup);
         savingsAccount.setUserData("sa");
         creditAccount.setToggleGroup(accountsToggleGroup);
