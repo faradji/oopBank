@@ -12,28 +12,32 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+public class FXMLStartController {
 
-public class FXMLStartController{
+    @FXML
+    private static ListView lvCustomer;
     
     @FXML
-    private ListView lvCustomer;
+    private TextField txfFirstName;
     
     @FXML
-    //private ObservableList<Customer> obsCustomerList = 
-      
-             
-       //FXCollections.observableArrayList(BankLogic.getCustomerList());
-    
-    
-    
-    public static int lvCustomerChoice = 0;
+    private TextField txtLastName;
     
     @FXML
-    public void btnAddCustomer() throws IOException
-    {
+    private TextField txtSSN;
+    
+
+    @FXML
+    private ObservableList<Customer> obsCustomerList;
+            
+
+
+    @FXML
+    public void btnAddCustomer() throws IOException {
         Stage addCustomerStage = new Stage();
         Scene addCustomerScene
                 = new Scene(FXMLLoader.load(getClass()
@@ -44,12 +48,11 @@ public class FXMLStartController{
         addCustomerStage.setTitle("Add customer");
         addCustomerStage.show();
     }
-    
+
     @FXML
-    public void btnGoToCustomer() throws IOException
-    {
+    public void btnGoToCustomer() throws IOException {
         //lvCustomerChoice = lvCustomer.getSelectionModel().getSelectedIndex();
-        
+
         Stage editCustomerStage = new Stage();
         Scene editCustomerScene
                 = new Scene(FXMLLoader.load(getClass()
@@ -60,19 +63,23 @@ public class FXMLStartController{
         editCustomerStage.setTitle("Customerinformation");
         editCustomerStage.show();
     }
-    
-    @FXML 
-    public void btnRemoveCustomer()
-    {
-          lvCustomer.getSelectionModel().getSelectedIndex();
-          // Skicka in uppgifter till removecustomer()
+
+    @FXML
+    public void btnRemoveCustomer() {
+        lvCustomer.getSelectionModel().getSelectedIndex();
+        // Skicka in uppgifter till removecustomer()
     }
-    
+
+    public static ListView getLvCustomer() {
+        return lvCustomer;
+    }
+
+        
     @FXML
     public void initialize() {
+        obsCustomerList = FXCollections.observableArrayList(OopBank.banklogic.getCustomerList());
+        lvCustomer.setItems(obsCustomerList);
         
-      
-        //lvCustomer.getItems().add(obsCustomerList);
-    }    
-    
+    }
+
 }

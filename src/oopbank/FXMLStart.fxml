@@ -14,43 +14,60 @@
          <top>
             <HBox alignment="CENTER">
                <children>
-                  <Label text="Bank of Newton" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font size="48.0" />
-                     </font>
-                  </Label>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <Label text="Bank of Newton" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font size="48.0" />
+                           </font>
+                        </Label>
+                        <Label text="Administrator tool">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
             </HBox>
          </top>
-         <bottom>
-            <Label text="Administrator tool" BorderPane.alignment="CENTER">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-         </bottom>
          <center>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="80.0" BorderPane.alignment="CENTER">
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0" BorderPane.alignment="CENTER">
                <BorderPane.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="60.0" />
                </BorderPane.margin>
                <children>
                   <VBox spacing="20.0">
                      <children>
-                        <ListView prefHeight="200.0" prefWidth="200.0" />
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <Label text="Select customer">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <ListView fx:id="lvCustomer" prefHeight="301.0" prefWidth="271.0" />
                         <HBox spacing="20.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#btnGoToCustomer" text="Go to customer" />
                               <Button mnemonicParsing="false" text="Remove customer" />
+                              <Button mnemonicParsing="false" onAction="#btnGoToCustomer" text="Go to customer" />
                            </children>
                         </HBox>
                      </children>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
                   </VBox>
                   <VBox prefHeight="463.0" prefWidth="343.0" spacing="20.0">
                      <children>
-                        <HBox alignment="CENTER">
+                        <HBox alignment="CENTER_LEFT">
                            <children>
-                              <Label text="New customer" />
+                              <Label text="Add new customer">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font></Label>
                            </children>
                         </HBox>
                         <HBox>
@@ -72,6 +89,11 @@
                               <Label text="Personal number" />
                               <Region HBox.hgrow="ALWAYS" />
                               <TextField />
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER_RIGHT">
+                           <children>
+                              <Button mnemonicParsing="false" text="Add" />
                            </children>
                         </HBox>
                      </children>
