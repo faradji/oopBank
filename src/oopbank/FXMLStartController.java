@@ -6,26 +6,28 @@
 package oopbank;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
-public class FXMLStartController implements Initializable {
+public class FXMLStartController{
     
     @FXML
-    ListView lvCustomer;
+    private ListView lvCustomer;
     
     @FXML
-    ObservableList<Customer> obsCustomerList;
+    //private ObservableList<Customer> obsCustomerList = 
+      
+             
+       //FXCollections.observableArrayList(BankLogic.getCustomerList());
+    
+    
     
     public static int lvCustomerChoice = 0;
     
@@ -44,9 +46,9 @@ public class FXMLStartController implements Initializable {
     }
     
     @FXML
-    public void btnEditCustomer() throws IOException
+    public void btnGoToCustomer() throws IOException
     {
-        lvCustomerChoice = lvCustomer.getSelectionModel().getSelectedIndex();
+        //lvCustomerChoice = lvCustomer.getSelectionModel().getSelectedIndex();
         
         Stage editCustomerStage = new Stage();
         Scene editCustomerScene
@@ -66,12 +68,11 @@ public class FXMLStartController implements Initializable {
           // Skicka in uppgifter till removecustomer()
     }
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        obsCustomerList = FXCollections.observableArrayList();
-        //obsCustomerList.add(BankLogic.getCustomerList());
+    @FXML
+    public void initialize() {
         
-        lvCustomer.getItems().add(obsCustomerList);
+      
+        //lvCustomer.getItems().add(obsCustomerList);
     }    
     
 }

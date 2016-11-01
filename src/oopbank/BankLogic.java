@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class BankLogic
 {
 
-    private ArrayList<Customer> customerList; //Ska detta vara en lista med String istället för Customer?
+    private static ArrayList<Customer> customerList; //Ska detta vara en lista med String istället för Customer?
     private ArrayList<String> customerInfo;
     private ArrayList<String> removedCustomerInfo;
 
@@ -226,7 +226,7 @@ public class BankLogic
 //        return (d);
 //    }
 
-public ArrayList<Customer> getCustomerList()
+public static ArrayList<Customer> getCustomerList()
     {
         //Returnerar en ArrayList med string som innehåller en presentation av bankens alla kunder
         return customerList;
