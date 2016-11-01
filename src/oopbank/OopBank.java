@@ -21,6 +21,8 @@ public class OopBank extends Application
     @Override
     public void start(Stage stage) throws Exception
     {
+        
+        BankLogic banklogic = new BankLogic();
         Parent root = FXMLLoader.load(getClass().getResource("FXMLStart.fxml"));
         
         Scene scene = new Scene(root);

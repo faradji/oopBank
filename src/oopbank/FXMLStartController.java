@@ -46,7 +46,7 @@ public class FXMLStartController{
     }
     
     @FXML
-    public void btnEditCustomer() throws IOException
+    public void btnGoToCustomer() throws IOException
     {
         //lvCustomerChoice = lvCustomer.getSelectionModel().getSelectedIndex();
         
