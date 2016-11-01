@@ -64,7 +64,7 @@ public class Customer
 //    public static void setAccountList(Account a)
 //    {
 //    accountList.add(a);
-//    }Tas bort
+//    }Tas bort 
 
     @Override
     public String toString()
