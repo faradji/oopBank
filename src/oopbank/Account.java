@@ -13,53 +13,22 @@ import java.util.ArrayList;
  */
 public abstract class Account
 {
-        protected double balance;
-        protected double limit;
-        protected double interest;
-        protected int accountNo;
-        protected String accountType;
-        protected ArrayList<Transaction> transactionList;
 
-        
-    //Vilka fält ska vi     
-    public Account(double balance, double limit, double interest, int accountNo, String accountType, ArrayList<Transaction> transactionList)
+    private static int accountCounter = 1001;//LA: statisk variabel som ökar varje gång ett objekt av Account skapas (kolla i konstruktorn/LA
+    protected int accountNo;
+    protected String accountType;
+    protected double balance; 
+    protected double interest; //Olika för olika kontotyper   
+    protected ArrayList<Transaction> transactionList;
+
+    public Account(String accountType, double balance, double interest)
     {
-        this.balance = balance;
-        this.limit = limit;
-        this.interest = interest;
-        this.accountNo = accountNo;
+        this.accountNo = accountCounter;//LA: eftersom variablen accountCounter är statisk så ändras den för alla objekt när den ändras. Vi sparar alltså i en ickestatisk variabel för varje objekt.
         this.accountType = accountType;
-        this.transactionList = transactionList;
-    }
-
-    public double getBalance()
-    {
-        return balance;
-    }
-
-    public void setBalance(double balance)
-    {
-        this.balance = balance;
-    }
-
-    public double getLimit()
-    {
-        return limit;
-    }
-
-    public void setLimit(double limit)
-    {
-        this.limit = limit;
-    }
-
-    public double getInterest()
-    {
-        return interest;
-    }
-
-    public void setInterest(double interest)
-    {
+        setBalance(balance);//LA: ska man göra setbalance här istället? //AF Ja, det tror jag
         this.interest = interest;
+        accountCounter++; //AF: Sparar nytt värde i accountCounter varje gång ett nytt objekt av typen Account skapas
+
     }
 
     public int getAccountNo()
@@ -82,6 +51,26 @@ public abstract class Account
         this.accountType = accountType;
     }
 
+    public double getBalance()
+    {
+        return balance;
+    }
+
+    public void setBalance(double balance)
+    {
+            this.balance = balance;
+    }
+
+    public double getInterest()
+    {
+        return interest;
+    }
+
+    public void setInterest(double interest)
+    {
+        this.interest = interest;
+    }
+
     public ArrayList<Transaction> getTransactionList()
     {
         return transactionList;
@@ -95,9 +84,7 @@ public abstract class Account
     @Override
     public String toString()
     {
-        return "Account{" + "balance=" + balance + ", limit=" + limit + ", interest=" + interest + ", accountNo=" + accountNo + ", accountType=" + accountType + ", transactionList=" + transactionList + '}';
+        return "Account{" + "balance=" + balance + ", interest=" + interest + ", accountNo=" + accountNo + ", accountType=" + accountType + ", transactionList=" + transactionList + '}';
     }
-        
-             
-    
+
 }

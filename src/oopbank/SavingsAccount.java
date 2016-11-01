@@ -16,9 +16,10 @@ public class SavingsAccount extends Account
 {
 //Saving account har inga egna variabler, ärver allt från account
 
-    public SavingsAccount(double balance, double limit, double interest, int accountNo, String accountType, ArrayList<Transaction> transactionList)
+    public SavingsAccount(double balance)
     {
-        super(balance, limit, interest, accountNo, accountType, transactionList);
+        super("Savings Account", balance, 10.0);//vi kan välja en annan ränta om vi vill, det är bara ett förslag för att vi ska kunna se lätt att det blir rätt i uträkningar
+        
     }
 
     //Osäker på om toString ska hämtas från super, ska testköra detta
