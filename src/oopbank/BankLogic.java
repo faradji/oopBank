@@ -317,8 +317,6 @@ public static ArrayList<Customer> getCustomerList()
                     String closeAccountInfo = closeAccount(pNr, customerList.get(i).getAccountList().get(j).getAccountNo());
                     //AF: 2. Hämtar in metoden closeAccount och lägger kundens pNr och kontonummerna som inparameter                 
                     removedCustomerInfo.add(closeAccountInfo);
-
-                    //Vad returnerar closeAccount? Hämta in det här och lägg till removedCustomerInfo
                 }
             }
             //AF: 3. Tar bort kunden från customerList
