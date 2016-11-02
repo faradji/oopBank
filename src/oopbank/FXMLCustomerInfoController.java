@@ -15,27 +15,15 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class FXMLCustomerInfoController {
-
+    
+    public static int accountChoice = 0;
+    
     //ListView
     @FXML
-    private static ListView accountList;
+    private ListView accountList;
 
     //Observablelist with accounts to populate listview
     ObservableList<Account> obsAccountList;
-
-    // Radiobutton
-    @FXML
-    private RadioButton savingsAccount;
-
-    @FXML
-    private RadioButton creditAccount;
-
-    // Radiobuttongroup
-    @FXML
-    private ToggleGroup accountsToggleGroup;
-
-    // Value of the radiobutton checked
-    private String rbtnChecked = "";
 
     // Buttons
     @FXML
@@ -77,6 +65,9 @@ public class FXMLCustomerInfoController {
     // Load new scene into existing stage
     @FXML
     private void clickedAccountInformation() throws IOException {
+        accountChoice = accountList.getSelectionModel().getSelectedIndex();
+        System.out.println("Konto index: " + accountChoice);
+        
         Stage accountInformationStage
                 = (Stage) btnAccountInfo.getScene().getWindow();
         Scene accountInformationScene = new Scene(FXMLLoader.load(getClass()
@@ -112,40 +103,32 @@ public class FXMLCustomerInfoController {
         tempStage.close();
     }
 
-    public static ListView getAccountList() {
+    public ListView getAccountList() {
         return accountList;
     }
 
     @FXML
     public void initialize() {
+    
+        System.out.println(FXMLStartController.lvCustomerChoice);
         
-       /* // Customer name display
-        lblFullName.setText(getCustomerList()
+        //Customer name display
+        lblFullName.setText(OopBank.banklogic.getCustomerList()
                 .get(FXMLStartController.lvCustomerChoice)
-                .getFirstName() + " " + getCustomerList()
+                .getFirstName() + " " + OopBank.banklogic.getCustomerList()
                 .get(FXMLStartController.lvCustomerChoice)
                 .getLastName());
         
         // Customer SSN display
-        lblSSN.setText(getCustomerList()
+        lblSSN.setText(String.valueOf(OopBank.banklogic.getCustomerList()
                 .get(FXMLStartController.lvCustomerChoice)
-                .getPnr());
+                .getpNr()));
         
         //Fill listView with accountList
         obsAccountList = FXCollections.
-                observableArrayList(BankLogic.getCustomerList()
-                        .getIndex(FXMLStartController.lvCustomerChoice).getAccountList());
+                observableArrayList(OopBank.banklogic.getCustomerList()
+                        .get(FXMLStartController.lvCustomerChoice).getAccountList());
         accountList.setItems(obsAccountList);
-
-        //Group radiobuttons. Only one button can be checked.
-        accountsToggleGroup = new ToggleGroup();
-
-        savingsAccount.setToggleGroup(accountsToggleGroup);
-        savingsAccount.setUserData("sa");
-        creditAccount.setToggleGroup(accountsToggleGroup);
-        creditAccount.setUserData("ca");
-
-        */
     }
 
 
