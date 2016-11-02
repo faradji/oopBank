@@ -9,8 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -24,20 +22,6 @@ public class FXMLCustomerInfoController {
 
     //Observablelist with accounts to populate listview
     ObservableList<Account> obsAccountList;
-
-    // Radiobutton
-    @FXML
-    private RadioButton savingsAccount;
-
-    @FXML
-    private RadioButton creditAccount;
-
-    // Radiobuttongroup
-    @FXML
-    private ToggleGroup accountsToggleGroup;
-
-    // Value of the radiobutton checked
-    private String rbtnChecked = "";
 
     // Buttons
     @FXML
@@ -80,7 +64,7 @@ public class FXMLCustomerInfoController {
     @FXML
     private void clickedAccountInformation() throws IOException {
         accountChoice = accountList.getSelectionModel().getSelectedIndex();
-        System.out.println(accountChoice);
+        System.out.println("Konto index: " + accountChoice);
         
         Stage accountInformationStage
                 = (Stage) btnAccountInfo.getScene().getWindow();

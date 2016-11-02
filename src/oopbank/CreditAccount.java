@@ -43,14 +43,10 @@ public class CreditAccount extends Account
         this.limit = limit;
         //När kreditkontot skapas är credit limit -5000 kr.
     }
-    
-    @Override
-    public String toString()
-    {
-        return super.toString() + "CreditAccount{" + "debtInterest=" + debtInterest + '}';
+
+
+    public double getLimit() {
+        return limit;
     }
-    
-    
-    
     
 }
