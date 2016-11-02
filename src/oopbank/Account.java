@@ -84,7 +84,7 @@ public abstract class Account
     @Override
     public String toString()
     {
-        return "Account{" + "balance=" + balance + ", interest=" + interest + ", accountNo=" + accountNo + ", accountType=" + accountType + ", transactionList=" + transactionList + '}';
+        return accountNo + " " + accountType + " " + balance;
     }
 
 }

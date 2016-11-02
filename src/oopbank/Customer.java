@@ -71,7 +71,7 @@ public class Customer
     @Override
     public String toString()
     {
-        return firstName + " " + lastName + ", " + pNr;
+        return firstName + " " + lastName + " " + pNr;
     }
     
     

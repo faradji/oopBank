@@ -298,31 +298,42 @@ public static ArrayList<Customer> getCustomerList()
     //Inte riktigt klar, behöver stämmas av med closeAccount
     public static ArrayList<String> removeCustomer(long pNr)
     {
-        ArrayList<String> removedCustomerInfo = new ArrayList(); //Borde den här deklareras som fält?
+        ArrayList<String> removedCustomerInfo = new ArrayList();
+        ArrayList<Account> tempAccounts = new ArrayList();
 
         //AF: Första loopen hämtar customerList och hanterar kundens uppgifter
         for (int i = 0; i < customerList.size(); i++)
         {
             if (customerList.get(i).getpNr() == pNr)
             {
-                //AF: 1. Lägger till kundens personinfo i den nya arrayListen - ska den skriva toString???
+                //AF: 1. Lägger till kundens personinfo i den nya arrayListen
                 removedCustomerInfo.add(customerList.get(i).toString());
 
-                //AF: Andra loopen hämtar kundens konton för att kunna stänga dem
+                //AF: 2. Andra loopen hämtar kundens konton och sparar dem i en ny arrayList                
                 for (int j = 0; j < customerList.get(i).getAccountList().size(); j++)
                 {
-                    String closeAccountInfo = closeAccount(customerList.get(i).getpNr(), customerList.get(i).getAccountList().get(j).getAccountNo());
+                    tempAccounts.add(customerList.get(i).getAccountList().get(j));
+
+                    String closeAccountInfo = closeAccount(pNr, customerList.get(i).getAccountList().get(j).getAccountNo());
                     //AF: 2. Hämtar in metoden closeAccount och lägger kundens pNr och kontonummerna som inparameter                 
                     removedCustomerInfo.add(closeAccountInfo);
 
                     //Vad returnerar closeAccount? Hämta in det här och lägg till removedCustomerInfo
                 }
-
-                //AF: 3. Tar bort kunden från customerList
-                customerList.remove(i);
-
             }
+            //AF: 3. Tar bort kunden från customerList
+                customerList.remove(i);
         }
+        
+        //AF: 4. Hämtar in metoden closeAccount för varje index i tempAccounts
+        //AF: 5. Lägger till varje konto som tas bort i arrayen removedCustomerInfo
+        for (int i = 0; i < tempAccounts.size(); i++)
+        {
+                
+            closeAccount(pNr, tempAccounts.get(i).getAccountNo());
+            removedCustomerInfo.add(tempAccounts.get(i).toString());
+        }           
+               
         return removedCustomerInfo;
 
         //Tar bort kund med personnummer pNr ur banken, alla kundens eventuella
