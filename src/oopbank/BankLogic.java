@@ -311,7 +311,7 @@ public static ArrayList<Customer> getCustomerList()
                 //AF: Andra loopen hämtar kundens konton för att kunna stänga dem
                 for (int j = 0; j < customerList.get(i).getAccountList().size(); j++)
                 {
-                    String closeAccountInfo = closeAccount(customerList.get(i).getpNr(), customerList.get(i).getAccountList().get(j).getAccountNo());
+                    String closeAccountInfo = closeAccount(pNr, customerList.get(i).getAccountList().get(j).getAccountNo());
                     //AF: 2. Hämtar in metoden closeAccount och lägger kundens pNr och kontonummerna som inparameter                 
                     removedCustomerInfo.add(closeAccountInfo);
 

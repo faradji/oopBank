@@ -48,10 +48,10 @@
                               </Label>
                            </children>
                         </HBox>
-                        <ListView fx:id="lvCustomer" prefHeight="301.0" prefWidth="271.0" />
-                        <HBox spacing="20.0">
+                        <ListView fx:id="lvCustomer" prefHeight="301.0" prefWidth="300.0" />
+                        <HBox spacing="30.0">
                            <children>
-                              <Button mnemonicParsing="false" text="Remove customer" />
+                              <Button mnemonicParsing="false" onAction="#btnRemoveCustomer" text="Remove customer" />
                               <Button mnemonicParsing="false" onAction="#btnGoToCustomer" text="Go to customer" />
                            </children>
                         </HBox>
@@ -60,7 +60,7 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox prefHeight="463.0" prefWidth="343.0" spacing="20.0">
+                  <VBox prefHeight="463.0" prefWidth="343.0">
                      <children>
                         <HBox alignment="CENTER_LEFT">
                            <children>
@@ -70,37 +70,65 @@
                                  </font></Label>
                            </children>
                         </HBox>
-                        <HBox>
+                        <Label text="First name">
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtFirstName">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </TextField>
+                        <Label text="Last name">
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtLastName" />
+                        <Label text="Social security number">
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtSSN" promptText="10 digits without dash" />
+                        <HBox alignment="CENTER_LEFT">
                            <children>
-                              <Label text="First name" />
+                              <Label fx:id="addCustomerAlert" />
                               <Region HBox.hgrow="ALWAYS" />
-                              <TextField />
-                           </children>
-                        </HBox>
-                        <HBox>
-                           <children>
-                              <Label text="Last name" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <TextField />
-                           </children>
-                        </HBox>
-                        <HBox>
-                           <children>
-                              <Label text="Personal number" />
-                              <Region HBox.hgrow="ALWAYS" />
-                              <TextField />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_RIGHT">
-                           <children>
-                              <Button mnemonicParsing="false" text="Add" />
+                              <Button mnemonicParsing="false" onAction="#btnAddCustomer" text="Add">
+                                 <HBox.margin>
+                                    <Insets top="20.0" />
+                                 </HBox.margin></Button>
                            </children>
                         </HBox>
                      </children>
+                     <padding>
+                        <Insets left="20.0" right="20.0" />
+                     </padding>
                   </VBox>
                </children>
             </HBox>
          </center>
+         <bottom>
+            <HBox>
+               <children>
+                  <Button mnemonicParsing="false" onAction="#btnSaveToFile" text="Save customers to file" BorderPane.alignment="CENTER" />
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="10.0" left="40.0" />
+               </BorderPane.margin>
+            </HBox>
+         </bottom>
       </BorderPane>
    </children>
 </AnchorPane>
