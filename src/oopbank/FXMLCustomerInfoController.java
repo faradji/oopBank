@@ -25,20 +25,6 @@ public class FXMLCustomerInfoController {
     //Observablelist with accounts to populate listview
     ObservableList<Account> obsAccountList;
 
-    // Radiobutton
-    @FXML
-    private RadioButton savingsAccount;
-
-    @FXML
-    private RadioButton creditAccount;
-
-    // Radiobuttongroup
-    @FXML
-    private ToggleGroup accountsToggleGroup;
-
-    // Value of the radiobutton checked
-    private String rbtnChecked = "";
-
     // Buttons
     @FXML
     private Button btnChangeCustomerInfo;
@@ -80,7 +66,7 @@ public class FXMLCustomerInfoController {
     @FXML
     private void clickedAccountInformation() throws IOException {
         accountChoice = accountList.getSelectionModel().getSelectedIndex();
-        System.out.println(accountChoice);
+        System.out.println("Konto index: " + accountChoice);
         
         Stage accountInformationStage
                 = (Stage) btnAccountInfo.getScene().getWindow();
