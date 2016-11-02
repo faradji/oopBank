@@ -192,6 +192,8 @@ public class BankLogic
     public static String closeAccount(long pNr, int accountNo)
     {
         String temp = "Something went wrong.";
+        double amount=0.0;
+        //
         
         for (int i = 0; i < customerList.size(); i++)
         {
@@ -205,6 +207,16 @@ public class BankLogic
                         customerList.get(i).getAccountList().remove(j);
 
                         temp = getAccount(pNr, accountNo);
+                        if (customerList.get(i).getAccountList().get(j).getAccountType().equalsIgnoreCase("Credit Account")) {
+                            amount = customerList.get(i).getAccountList().get(j).getBalance();
+                            if (amount<=0) {
+                            amount*=1.07;
+                            }else if(amount >=0){
+                            amount*=1.005;    
+                            }
+                        }else if (customerList.get(i).getAccountList().get(j).getAccountType().equalsIgnoreCase("Savings Account")){
+                            amount*=1.001;
+                    }
                         break;
                     }
 
