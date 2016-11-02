@@ -28,8 +28,8 @@ public class FXMLChangeCustomerInfoController {
     @FXML
     private void clickedSaveChanges() 
     {
-        OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).setFirstName(txtFieldFirstName.getText());
-        
+        //OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).setFirstName(txtFieldFirstName.getText());
+        //Alla metoder som anropas från banklogic verkar krascha programmet
         
         System.out.println("Test");
         
