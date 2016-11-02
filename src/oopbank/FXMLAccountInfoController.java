@@ -87,7 +87,7 @@ public class FXMLAccountInfoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO 
-        //transaction = FXCollections.observableArrayList(BankLogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.lvCustomerChoice).getTransaction);
+        transaction = FXCollections.observableArrayList(BankLogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.lvCustomerChoice).getTransaction);
         String forNamn = BankLogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getFirstName();//hämta för och efternamn
         String efterNamn = BankLogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getLastName();
         lblnamn.setText(forNamn+" "+efterNamn);//lblAccountType ska visa om det är credit eller savings
