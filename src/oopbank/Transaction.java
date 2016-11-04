@@ -15,7 +15,7 @@ import java.util.Date;
 public class Transaction
 {
 
-    private Date date; //AF: Behöver ingen setter eftersom den alltid skapas som "nu"
+    private String date; //AF: Behöver ingen setter eftersom den alltid skapas som "nu"
     private boolean transactionType;
     private double amount;
     private double balance;
@@ -23,19 +23,21 @@ public class Transaction
     //AF: Varje transaktion ska ange om det är en insättning eller uttag och vilket belopp det handlar om
     //AF: Datum sätts som tidpunkten när transaktionen görs
     //AF: Osäker på varför transaction har en balance? Hör inte balansen till kontot? 
-    public Transaction(boolean transactionType, double amount, double balance)
+    public Transaction(boolean transactionType, double amount)
     {
-
-        this.date = new Date(); //AF: Om jag har förstått det rätt så är Date alltid datum och tid "nu", alltså när objeketet skapas
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date date = new Date();
+        String sDate= sdf.format(date);
+        this.date = sDate; //AF: Om jag har förstått det rätt så är Date alltid datum och tid "nu", alltså när objeketet skapas
 
         this.transactionType = transactionType; //toString skriver ut deposit om true
         this.amount = amount;
 
-        this.balance = balance;
+        this.balance = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getBalance();
     }
 
-    public Date getDate()
-    {
+    public String getDate()
+    { 
         return date;
     }
 
@@ -77,10 +79,10 @@ public class Transaction
     {
         if (transactionType == true)
         {
-            return "Transaction{" + "date=" + date + ", transactionType=" + " deposit" + ", amount=" + amount + ", balance=" + balance + '}';
+            return date + " " +  "In: " + amount + " Balance: " + balance;
         } else
         {
-            return "Transaction{" + "date=" + date + ", transactionType=" + " withdrawal" + ", amount=" + amount + ", balance=" + balance + '}';
+            return date + " " +  "Out: " + amount + " Balance: " + balance;
         }
     }
 

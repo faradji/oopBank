@@ -37,6 +37,7 @@ public class OopBank extends Application {
      */
     public static void main(String[] args) {
         banklogic = new BankLogic();
+        
         launch(args);
     }
 

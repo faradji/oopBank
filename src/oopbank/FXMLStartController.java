@@ -129,13 +129,20 @@ public class FXMLStartController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == yes) {
-            ArrayList<String> tempCloseAccount = OopBank.banklogic.removeCustomer(OopBank.banklogic.getCustomerList()
+            ArrayList<String> tempInfoRemoveCustomer = OopBank.banklogic.removeCustomer(OopBank.banklogic.getCustomerList()
                     .get(lvCustomer.getSelectionModel().getSelectedIndex()).getpNr());
+            
+            System.out.println(tempInfoRemoveCustomer);
+        
+        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+        alert2.setTitle("Info");
+        alert2.setHeaderText(null);
+        alert2.setContentText(String.valueOf(tempInfoRemoveCustomer));
+        alert2.showAndWait();
+            
+       OopBank.banklogic.getRemovedCustomerInfo().clear();
 
-            obsCustomerList = FXCollections
-                    .observableArrayList(OopBank.banklogic.getCustomerList());
-
-            lvCustomer.setItems(obsCustomerList);
+            refresh();
         } else {
             // ... user chose CANCEL or closed the dialog
         }
@@ -170,15 +177,22 @@ public class FXMLStartController {
         alert.showAndWait();
 
     }
-
+    
     @FXML
-    public void initialize() {
+    public void refresh(){
+        lvCustomer.refresh();
+        
         obsCustomerList = FXCollections
                 .observableArrayList(OopBank.banklogic.getCustomerList());
 
         lvCustomer.setItems(obsCustomerList);
 
         lvCustomer.getSelectionModel().select(0);
+    }
+
+    @FXML
+    public void initialize() {
+        refresh();
     }
 
 }

@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oopbank.FXMLStartController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" stylesheets="@CSSOopBank.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oopbank.FXMLStartController">
    <children>
       <BorderPane prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -49,9 +49,10 @@
                            </children>
                         </HBox>
                         <ListView fx:id="lvCustomer" prefHeight="301.0" prefWidth="300.0" />
-                        <HBox spacing="30.0">
+                        <HBox>
                            <children>
                               <Button mnemonicParsing="false" onAction="#btnRemoveCustomer" text="Remove customer" />
+                              <Region HBox.hgrow="ALWAYS" />
                               <Button mnemonicParsing="false" onAction="#btnGoToCustomer" text="Go to customer" />
                            </children>
                         </HBox>
@@ -120,9 +121,11 @@
             </HBox>
          </center>
          <bottom>
-            <HBox>
+            <HBox maxWidth="299.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#btnSaveToFile" text="Save customers to file" BorderPane.alignment="CENTER" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#refresh" text="Refresh page" />
                </children>
                <BorderPane.margin>
                   <Insets bottom="10.0" left="40.0" />

@@ -28,6 +28,7 @@ public abstract class Account
         setBalance(balance);//LA: ska man göra setbalance här istället? //AF Ja, det tror jag
         this.interest = interest;
         accountCounter++; //AF: Sparar nytt värde i accountCounter varje gång ett nytt objekt av typen Account skapas
+        this.transactionList = new ArrayList();
 
     }
 

@@ -1,5 +1,6 @@
 package oopbank;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -11,7 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class FXMLAddAccountController {
-
+    
     @FXML
     Button btnAddAccount;
 
@@ -34,7 +35,7 @@ public class FXMLAddAccountController {
         Customer selectedcustomer = BankLogic.getCustomerList().get(FXMLStartController.lvCustomerChoice);
         if (btnRadioSavings.isSelected() == true) {
             double value = 0;
-
+  
             try {
                 value = Double.parseDouble(depositfield.getText());
                 if (value >= 0 && depositfield.getText() != null) {
@@ -80,6 +81,7 @@ public class FXMLAddAccountController {
     @FXML
     public void clickedCloseAddAccount() {
         Stage tempStage = (Stage) btnCloseAddAccount.getScene().getWindow();
+        
         tempStage.close();
     }
 

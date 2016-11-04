@@ -39,7 +39,7 @@ public class FXMLAccountInfoController implements Initializable {
     private TextField amount;
 
     @FXML
-    private ObservableList<BankLogic> transaction;
+    private ObservableList<Transaction> transaction;
 
     @FXML
     public void btnBackClicked() throws IOException {
@@ -97,8 +97,9 @@ public class FXMLAccountInfoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO 
-        //transaction = FXCollections.observableArrayList(OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getTransactionList()));
-
+        transaction = FXCollections.observableArrayList(OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getTransactionList());
+        lvTransactions.setItems(transaction);
+        
         String forNamn = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getFirstName();//hämta för och efternamn
         String efterNamn = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getLastName();
         lblnamn.setText(forNamn + " " + efterNamn);//lblAccountType ska visa om det är credit eller savings
