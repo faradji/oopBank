@@ -14,7 +14,7 @@
          <children>
             <HBox alignment="CENTER">
                <children>
-                  <Label text="Change customerinfo">
+                  <Label text="Change customer info">
                      <font>
                         <Font size="30.0" />
                      </font>

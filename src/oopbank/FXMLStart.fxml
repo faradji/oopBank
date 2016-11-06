@@ -51,6 +51,11 @@
                         <ListView fx:id="lvCustomer" prefHeight="301.0" prefWidth="300.0" />
                         <HBox>
                            <children>
+                              <Label fx:id="listViewAlert" textFill="RED" />
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
                               <Button mnemonicParsing="false" onAction="#btnRemoveCustomer" text="Remove customer" />
                               <Region HBox.hgrow="ALWAYS" />
                               <Button mnemonicParsing="false" onAction="#btnGoToCustomer" text="Go to customer" />

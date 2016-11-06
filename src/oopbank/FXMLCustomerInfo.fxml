@@ -27,6 +27,11 @@
                                  </font>
                               </Label>
                               <ListView fx:id="accountList" maxWidth="372.0" VBox.vgrow="ALWAYS" />
+                              <HBox>
+                                 <children>
+                                    <Label fx:id="listViewAlert" textFill="RED" />
+                                 </children>
+                              </HBox>
                            </children>
                            <HBox.margin>
                               <Insets top="20.0" />
@@ -34,10 +39,10 @@
                         </VBox>
                         <VBox alignment="CENTER_LEFT" spacing="20.0">
                            <children>
-                              <Button fx:id="btnAccountInfo" mnemonicParsing="false" onAction="#clickedAccountInformation" prefWidth="162.0" text="Transactions" />
+                              <Button fx:id="btnAccountInfo" mnemonicParsing="false" onAction="#clickedAccountInformation" prefWidth="167.0" text="Transactions" />
                               <Region VBox.vgrow="ALWAYS" />
-                              <Button fx:id="btnAddAccount" mnemonicParsing="false" onAction="#clickedAddAccount" prefWidth="162.0" text="Add account" />
-                              <Button fx:id="btnDeleteAccount" mnemonicParsing="false" onAction="#clickedDeleteAccount" prefWidth="162.0" text="Delete account" />
+                              <Button fx:id="btnAddAccount" mnemonicParsing="false" onAction="#clickedAddAccount" prefWidth="167.0" text="Add account" />
+                              <Button fx:id="btnDeleteAccount" mnemonicParsing="false" onAction="#clickedDeleteAccount" prefWidth="167.0" text="Delete account" />
                            </children>
                            <HBox.margin>
                               <Insets left="40.0" top="50.0" />
@@ -69,7 +74,7 @@
                   <Region HBox.hgrow="ALWAYS" />
                   <HBox>
                      <children>
-                        <Button fx:id="btnChangeCustomerInfo" mnemonicParsing="false" onAction="#clickedChangeCustomerInformation" prefHeight="31.0" prefWidth="162.0" text="Change customerinfo" />
+                        <Button fx:id="btnChangeCustomerInfo" mnemonicParsing="false" onAction="#clickedChangeCustomerInformation" prefHeight="31.0" prefWidth="167.0" text="Change customer info" />
                      </children>
                   </HBox>
                </children>
@@ -83,7 +88,7 @@
                <children>
                   <HBox alignment="CENTER" maxWidth="372.0" prefWidth="372.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#clickedPrintCustomerDetails" text="Print customerdetails" HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" onAction="#clickedPrintCustomerDetails" text="Print customer details" HBox.hgrow="ALWAYS" />
                         <Region maxWidth="372.0" HBox.hgrow="ALWAYS" />
                         <Button fx:id="btnBackCustomerInfo" mnemonicParsing="false" onAction="#clickedBackCustomerInformation" text="Close" HBox.hgrow="ALWAYS" />
                      </children>
@@ -96,14 +101,14 @@
                   </HBox>
                   <HBox HBox.hgrow="ALWAYS">
                      <children>
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#refresh" prefWidth="162.0" text="Refresh page" HBox.hgrow="ALWAYS">
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#refresh" prefWidth="167.0" text="Refresh page" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
                         </Button>
                      </children>
                      <HBox.margin>
-                        <Insets left="48.0" />
+                        <Insets left="43.0" />
                      </HBox.margin>
                   </HBox>
                </children>

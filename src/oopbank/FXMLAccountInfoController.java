@@ -7,6 +7,7 @@ package oopbank;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.InputMismatchException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,7 +29,7 @@ import javafx.stage.Stage;
 public class FXMLAccountInfoController implements Initializable {
 
     @FXML
-    private Label lblAccountType, lblBalance, lblCredit, lblnamn;
+    private Label lblAccountType, lblBalance, lblCredit, lblnamn, credit;
 
     @FXML
     private ListView lvTransactions;
@@ -53,12 +54,19 @@ public class FXMLAccountInfoController implements Initializable {
     public void deposit() {
         try {
             double am;
-            long pnr = 0;
-            int account = 0;
+            long pnr;
+            int account;
             am = Double.parseDouble(amount.getText());
-            pnr = BankLogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getpNr();
+            pnr = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getpNr();
+            account = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getAccountNo();
 
-            boolean deposit = BankLogic.deposit(pnr, account, am);
+            OopBank.banklogic.deposit(pnr, account, am);
+
+            //OopBank.transaction.setAmount(am);
+            //OopBank.transaction.setTransactionType(true);
+            //String temp=OopBank.transaction.toString();
+            //BankLogic.getTransactions(pnr,account).add(temp);
+            refresh();
         } catch (Exception e) {
             System.err.println(e);
         }
@@ -72,23 +80,94 @@ public class FXMLAccountInfoController implements Initializable {
             long pnr = 0;
             int account = 0;
             am = Double.parseDouble(amount.getText());
+
+            pnr = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getpNr();
+            account = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getAccountNo();
+
+            double tempBalance = OopBank.banklogic.getCustomerList()
+                    .get(FXMLStartController.lvCustomerChoice)
+                    .getAccountList()
+                    .get(FXMLCustomerInfoController.accountChoice).getBalance();
+
             if (lblAccountType.getText().equalsIgnoreCase("Credit Account")) {
-                if (!lblBalance.getText().equalsIgnoreCase("-5000")||((Double.parseDouble(lblBalance.getText()))-am)!=-5000) {
+                tempBalance = OopBank.banklogic.getCustomerList().
+                        get(FXMLStartController.lvCustomerChoice)
+                        .getAccountList()
+                        .get(FXMLCustomerInfoController.accountChoice)
+                        .getBalance() - am;
+                if (tempBalance >= -5000) {
+                    OopBank.banklogic.withdraw(pnr, account, am);
+                    refresh();
+                } else {
+                    //Skriv i label
+                    System.out.println("Not enough money");
+                }
+
+            } else if (lblAccountType.getText().equalsIgnoreCase("Savings Account")) {
+                if (OopBank.banklogic.getCustomerList()
+                        .get(FXMLStartController.lvCustomerChoice)
+                        .getAccountList()
+                        .get(FXMLCustomerInfoController.accountChoice)
+                        .getHasWithdrawn() == true) {
+
+                    if ((tempBalance - (am * 1.02)) > 0) {
+
+                        tempBalance -= (am * 0.02);
+                        OopBank.banklogic.getCustomerList()
+                                .get(FXMLStartController.lvCustomerChoice)
+                                .getAccountList()
+                                .get(FXMLCustomerInfoController.accountChoice)
+                                .setBalance(tempBalance);
+                        OopBank.banklogic.withdraw(pnr, account, am);
+                        refresh();
+                    } else {
+                        System.out.println("Not enough money");
+                    }
+                } else if ((tempBalance - am) > 0) {
+                    OopBank.banklogic.getCustomerList()
+                            .get(FXMLStartController.lvCustomerChoice)
+                            .getAccountList()
+                            .get(FXMLCustomerInfoController.accountChoice)
+                            .setHasWithdrawn(true);
 
                     OopBank.banklogic.withdraw(pnr, account, am);
-                    
-                } else if (SavingsAccount.getHasWithdrawn() == true) {
-                    am *= 0.02;
-                    OopBank.banklogic.withdraw(pnr, account, am);
+                    refresh();
                 } else {
-                    SavingsAccount.setHasWithdrawn(true);
-                    OopBank.banklogic.withdraw(pnr, account, am);
+                    System.out.println("Not enough money");
                 }
             }
-        } catch (Exception e) {
-            System.err.println(e);
+
+        } catch (InputMismatchException e) {
+            System.out.println("Måste vara en siffra");
+        } catch (Exception e1) {
+            System.err.println(e1);
         }
 
+    }
+
+    public void refresh() {
+        transaction = FXCollections.observableArrayList(OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice
+        ).getAccountList().get(FXMLCustomerInfoController.accountChoice).getTransactionList());
+        lvTransactions.setItems(transaction);
+
+        String forNamn = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getFirstName();
+        String efterNamn = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getLastName();
+        lblnamn.setText(forNamn + " " + efterNamn);//hämta för och efternamn
+
+        String accountType = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getAccountType();
+        lblAccountType.setText(accountType);//lblAccountType ska visa om det är credit eller savings
+
+        String balance = String.valueOf(OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice
+        ).getAccountList().get(FXMLCustomerInfoController.accountChoice).getBalance());
+        lblBalance.setText(balance);//lblBalance visar saldot
+
+        if (lblAccountType.getText().equalsIgnoreCase("Credit Account")) {
+
+            lblCredit.setText("-5000");//lblCredit visar krediten, om det är ett credit konto
+        } else {
+            lblCredit.setVisible(false);
+            credit.setVisible(false);
+        }
     }
 
     /**
@@ -97,17 +176,8 @@ public class FXMLAccountInfoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO 
-        transaction = FXCollections.observableArrayList(OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getTransactionList());
-        lvTransactions.setItems(transaction);
-        
-        String forNamn = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getFirstName();//hämta för och efternamn
-        String efterNamn = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getLastName();
-        lblnamn.setText(forNamn + " " + efterNamn);//lblAccountType ska visa om det är credit eller savings
-        lblAccountType.setText(forNamn);//lblBalance visar saldot
-        OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(0);
-        lblBalance.setText(forNamn);//lblCredit visar krediten, om det är ett credit konto
 
-        lblCredit.setText(forNamn);//lvTransactions visar en lista på transaktioner
+        refresh();
 
     }
 

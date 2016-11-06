@@ -29,8 +29,11 @@ public class FXMLChangeCustomerInfoController {
     @FXML
     private void clickedSaveChanges() {
 
-        OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).setFirstName(txtFieldFirstName.getText());
-        OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).setLastName(txtFieldLastName.getText());
+        OopBank.banklogic.changeCustomerName(txtFieldFirstName.getText(),
+                txtFieldLastName.getText(),
+                OopBank.banklogic.getCustomerList()
+                .get(FXMLStartController.lvCustomerChoice)
+                .getpNr());
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Info");

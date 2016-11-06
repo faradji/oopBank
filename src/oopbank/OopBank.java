@@ -28,7 +28,7 @@ public class OopBank extends Application {
 
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.setTitle("Bank of Newton Administratortool");
+        stage.setTitle("Bank of Newton Administrator tool");
         stage.show();
     }
 

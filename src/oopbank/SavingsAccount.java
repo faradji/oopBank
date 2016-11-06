@@ -5,7 +5,6 @@
  */
 package oopbank;
 
-import java.util.ArrayList;
 
 /**
  *
@@ -15,7 +14,7 @@ public class SavingsAccount extends Account
 
         
 {
-    private static boolean hasWithdrawn=false;
+   
 //Saving account har inga egna variabler, ärver allt från account
 
     public SavingsAccount(double balance)
@@ -23,14 +22,7 @@ public class SavingsAccount extends Account
         super("Savings Account", balance, 1.0);//vi kan välja en annan ränta om vi vill, det är bara ett förslag för att vi ska kunna se lätt att det blir rätt i uträkningar
         
     }
-    public static boolean getHasWithdrawn(){
-        
-        return hasWithdrawn;
-    }
-    public static void setHasWithdrawn(boolean hasWithdrawn){
-        
-        SavingsAccount.hasWithdrawn=hasWithdrawn;
-    }
+   
 
     
 

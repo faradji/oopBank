@@ -2,6 +2,7 @@ package oopbank;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Modality;
@@ -21,6 +24,9 @@ public class FXMLCustomerInfoController {
     //ListView
     @FXML
     private ListView accountList;
+    
+    @FXML
+    private Label listViewAlert;
 
     //Observablelist with accounts to populate listview
     ObservableList<Account> obsAccountList;
@@ -65,8 +71,8 @@ public class FXMLCustomerInfoController {
     // Load new scene into existing stage
     @FXML
     private void clickedAccountInformation() throws IOException {
+        try{
         accountChoice = accountList.getSelectionModel().getSelectedIndex();
-        System.out.println("Konto index: " + accountChoice);
 
         Stage accountInformationStage
                 = (Stage) btnAccountInfo.getScene().getWindow();
@@ -75,6 +81,10 @@ public class FXMLCustomerInfoController {
 
         accountInformationStage.setTitle("Accountinformation");
         accountInformationStage.setScene(accountInformationScene);
+        }
+        catch(Exception e){
+            listViewAlert.setText("Please, choose something in the list");
+        }
     }
 
     // Creates new stage
@@ -94,22 +104,54 @@ public class FXMLCustomerInfoController {
 
     @FXML
     private void clickedDeleteAccount() {
+        String removedAccount = "";
         
-        // Bara för test
-        // Samma fel som i removecustomer
-        OopBank.banklogic.getCustomerList().get(0).getAccountList().remove(0);
-        
-//        OopBank.banklogic.closeAccount(
-//                OopBank.banklogic.getCustomerList().
-//                get(FXMLStartController.lvCustomerChoice).getpNr(),
-//                OopBank.banklogic.getCustomerList().
-//                get(FXMLStartController.lvCustomerChoice)
-//                .getAccountList()
-//                .get(accountList.getSelectionModel().getSelectedIndex())
-//                .getAccountNo());
-        
+        try{
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText("Delete "
+                + OopBank.banklogic.getCustomerList().
+                get(FXMLStartController.lvCustomerChoice)
+                .getAccountList()
+                .get(accountList.getSelectionModel().getSelectedIndex())
+                .getAccountNo() + " "
+                + OopBank.banklogic.getCustomerList().
+                get(FXMLStartController.lvCustomerChoice)
+                .getAccountList()
+                .get(accountList.getSelectionModel().getSelectedIndex())
+                .getAccountType());
+        alert.setContentText("Are you sure?");
+        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        alert.getButtonTypes().setAll(yes, no);
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == yes) {
+            removedAccount = OopBank.banklogic.closeAccount(
+                    OopBank.banklogic.getCustomerList().
+                    get(FXMLStartController.lvCustomerChoice).getpNr(),
+                    OopBank.banklogic.getCustomerList().
+                    get(FXMLStartController.lvCustomerChoice)
+                    .getAccountList()
+                    .get(accountList.getSelectionModel().getSelectedIndex())
+                    .getAccountNo());
+
+            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+            alert2.setTitle("Info");
+            alert2.setHeaderText(null);
+            alert2.setContentText(removedAccount);
+            alert2.showAndWait();
+        } else {
+
+        }
+        removedAccount= "";
         refresh();
-        System.out.println("Account deleted");
+        }
+        catch(Exception e){
+            listViewAlert.setText("Please, choose something in the list");
+        }
     }
 
     // Closes stage
@@ -156,7 +198,8 @@ public class FXMLCustomerInfoController {
                 observableArrayList(OopBank.banklogic.getCustomerList()
                         .get(FXMLStartController.lvCustomerChoice).getAccountList());
         accountList.setItems(obsAccountList);
-        accountList.getSelectionModel().select(0);
+        
+        listViewAlert.setText("");
     }
 
     @FXML
