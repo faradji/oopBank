@@ -29,7 +29,7 @@ import javafx.stage.Stage;
 public class FXMLAccountInfoController implements Initializable {
 
     @FXML
-    private Label lblAccountType, lblBalance, lblCredit, lblnamn, credit;
+    private Label lblAccountType, lblBalance, lblCredit, lblnamn, credit,lblAlert;
 
     @FXML
     private ListView lvTransactions;
@@ -61,14 +61,12 @@ public class FXMLAccountInfoController implements Initializable {
             account = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getAccountNo();
 
             OopBank.banklogic.deposit(pnr, account, am);
-
-            //OopBank.transaction.setAmount(am);
-            //OopBank.transaction.setTransactionType(true);
-            //String temp=OopBank.transaction.toString();
-            //BankLogic.getTransactions(pnr,account).add(temp);
+            
             refresh();
-        } catch (Exception e) {
-            System.err.println(e);
+        }catch(NumberFormatException e)  {
+            lblAlert.setText("Integer, please!");
+        } catch (Exception e1) {
+            System.err.println(e1);
         }
 
     }
@@ -100,7 +98,7 @@ public class FXMLAccountInfoController implements Initializable {
                     refresh();
                 } else {
                     //Skriv i label
-                    System.out.println("Not enough money");
+                    lblAlert.setText("Not enough money!");
                 }
 
             } else if (lblAccountType.getText().equalsIgnoreCase("Savings Account")) {
@@ -121,7 +119,7 @@ public class FXMLAccountInfoController implements Initializable {
                         OopBank.banklogic.withdraw(pnr, account, am);
                         refresh();
                     } else {
-                        System.out.println("Not enough money");
+                        lblAlert.setText("Not enough money!");
                     }
                 } else if ((tempBalance - am) > 0) {
                     OopBank.banklogic.getCustomerList()
@@ -133,12 +131,12 @@ public class FXMLAccountInfoController implements Initializable {
                     OopBank.banklogic.withdraw(pnr, account, am);
                     refresh();
                 } else {
-                    System.out.println("Not enough money");
+                   lblAlert.setText("Not enough money!");
                 }
             }
-
-        } catch (InputMismatchException e) {
-            System.out.println("Måste vara en siffra");
+               lblAlert.setText("");
+        } catch (NumberFormatException e) {
+            lblAlert.setText("Integer, please!");
         } catch (Exception e1) {
             System.err.println(e1);
         }
@@ -168,6 +166,8 @@ public class FXMLAccountInfoController implements Initializable {
             lblCredit.setVisible(false);
             credit.setVisible(false);
         }
+        
+        lblAlert.setText("");
     }
 
     /**

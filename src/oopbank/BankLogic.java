@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class BankLogic {
 
-    private static ArrayList<Customer> customerList; //Ska detta vara en lista med String istället för Customer?
+    private static ArrayList<Customer> customerList;
     private static ArrayList<String> customerInfo;
     private static ArrayList<String> removedCustomerInfo;
 
@@ -24,29 +24,22 @@ public class BankLogic {
         removedCustomerInfo = new ArrayList();
 
         customerList.add(new Customer("Louise", "Ahokas", 2410051701L));
-        customerList.add(new Customer("Alexander", "Aschas", 0505113345L));
-        customerList.add(new Customer("Ali", "Faradji", 7308266873L));
-        customerList.add(new Customer("Anna", "Fock", 6507129021L));
-        customerList.add(new Customer("Henrik", "Rosqvist", 5611045723L));
-        customerList.add(new Customer("Andreas", "Vetterfors", 9901018021L));
+        addSavingsAccount(2410051701L, 2000);
 
+        customerList.add(new Customer("Alexander", "Aschan", 0505113345L));
         addSavingsAccount(0505113345L, 6000);
+
+        customerList.add(new Customer("Ali", "Faradji", 7308266873L));
         addSavingsAccount(7308266873L, 9000);
-        addSavingsAccount(9901018021L, 11000);
-        addSavingsAccount(2410051701L, 2000);
-        addSavingsAccount(2410051701L, 2000);
-        addSavingsAccount(2410051701L, 2000);
-        addSavingsAccount(2410051701L, 2000);
-        addSavingsAccount(2410051701L, 2000);
-        
-        addCreditAccount(2410051701L);
-        addCreditAccount(2410051701L);
-        addCreditAccount(2410051701L);
-        addCreditAccount(2410051701L);
-        addCreditAccount(2410051701L);
-        
+
+        customerList.add(new Customer("Anna", "Fock", 6507129021L));
         addSavingsAccount(6507129021L, 5000);
+
+        customerList.add(new Customer("Henrik", "Rosqvist", 5611045723L));
         addSavingsAccount(5611045723L, 1000);
+
+        customerList.add(new Customer("Andreas", "Vettefors", 9901018021L));
+        addSavingsAccount(9901018021L, 11000);
 
     }
 
@@ -123,24 +116,19 @@ public class BankLogic {
     //{
     //  this.customerList = customerList;
     //}
-      public  boolean deposit(long prnNumber, int accountNo, double amount)
-    {
+    public boolean deposit(long prnNumber, int accountNo, double amount) {
         boolean temp = true;
 
-        for (int i = 0; i < customerList.size(); i++)
-        {
-            if (customerList.get(i).getpNr() == prnNumber)
-            {
-                for (int j = 0; j < customerList.get(i).getAccountList().size(); j++)
-                {
-                    if (customerList.get(i).getAccountList().get(j).getAccountNo() == accountNo)
-                    {
-                        double tempBalance=customerList.get(i).getAccountList().get(j).getBalance();
-                        tempBalance+=amount;
+        for (int i = 0; i < customerList.size(); i++) {
+            if (customerList.get(i).getpNr() == prnNumber) {
+                for (int j = 0; j < customerList.get(i).getAccountList().size(); j++) {
+                    if (customerList.get(i).getAccountList().get(j).getAccountNo() == accountNo) {
+                        double tempBalance = customerList.get(i).getAccountList().get(j).getBalance();
+                        tempBalance += amount;
                         customerList.get(i).getAccountList().get(j).setBalance(tempBalance);
                         customerList.get(i).getAccountList().get(j).getTransactionList().add(new Transaction(temp, amount));
                         break;
-                    } 
+                    }
 
                 }
             }
@@ -149,24 +137,19 @@ public class BankLogic {
         return temp;
     }
 
-    public static boolean withdraw(long pNr, int accountNo, double amount)
-    {
+    public static boolean withdraw(long pNr, int accountNo, double amount) {
         boolean temp = false;
-        for (int i = 0; i < customerList.size(); i++)
-        {
-            if (customerList.get(i).getpNr() == pNr)
-            {
-                for (int j = 0; j < customerList.get(i).getAccountList().size(); j++)
-                {
-                    if (customerList.get(i).getAccountList().get(j).getAccountNo() == accountNo)
-                    {
-                      double tempBalance=customerList.get(i).getAccountList().get(j).getBalance();
-                        tempBalance-=amount;
+        for (int i = 0; i < customerList.size(); i++) {
+            if (customerList.get(i).getpNr() == pNr) {
+                for (int j = 0; j < customerList.get(i).getAccountList().size(); j++) {
+                    if (customerList.get(i).getAccountList().get(j).getAccountNo() == accountNo) {
+                        double tempBalance = customerList.get(i).getAccountList().get(j).getBalance();
+                        tempBalance -= amount;
                         customerList.get(i).getAccountList().get(j).setBalance(tempBalance);
                         customerList.get(i).getAccountList().get(j).getTransactionList().add(new Transaction(temp, amount));
-                        
+
                         break;
-                    } 
+                    }
 
                 }
 
@@ -287,7 +270,6 @@ public class BankLogic {
     //Inte riktigt klar, behöver stämmas av med closeAccount
     public static ArrayList<String> removeCustomer(long pNr) {
         int tempCustomerIndex = 0;
-        
 
         int[] tempAccountNoArray = new int[customerList.get(tempCustomerIndex)
                 .getAccountList().size()];
@@ -300,7 +282,7 @@ public class BankLogic {
         }
         int tempAccountListSize = customerList.get(tempCustomerIndex)
                 .getAccountList().size();
-        
+
         //Sparar info om kunden i arrayen
         removedCustomerInfo.add(customerList.get(tempCustomerIndex).toString());
 
@@ -310,16 +292,15 @@ public class BankLogic {
             tempAccountNoArray[j] = customerList.get(tempCustomerIndex)
                     .getAccountList().get(j).getAccountNo();
         }
-        
 
         // Stänger konton
-        for(int k = 0; k<tempAccountListSize; k++){
-          removedCustomerInfo.add(closeAccount(pNr, tempAccountNoArray[k]));      
+        for (int k = 0; k < tempAccountListSize; k++) {
+            removedCustomerInfo.add(closeAccount(pNr, tempAccountNoArray[k]));
         }
-        
+
         // Tar bort kunden
         customerList.remove(tempCustomerIndex);
-        
+
         // Returnerar en array med all information som behövs
         return removedCustomerInfo;
 

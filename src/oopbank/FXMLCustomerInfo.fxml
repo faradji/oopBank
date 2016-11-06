@@ -19,11 +19,11 @@
                <children>
                   <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
                      <children>
-                        <VBox alignment="TOP_CENTER" spacing="10.0" HBox.hgrow="ALWAYS">
+                        <VBox alignment="CENTER_LEFT" spacing="10.0" HBox.hgrow="ALWAYS">
                            <children>
                               <Label alignment="TOP_LEFT" text="Accounts" VBox.vgrow="ALWAYS">
                                  <font>
-                                    <Font name="System Bold" size="15.0" />
+                                    <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
                               <ListView fx:id="accountList" maxWidth="372.0" VBox.vgrow="ALWAYS" />
@@ -58,13 +58,13 @@
                <children>
                   <HBox prefWidth="320.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label fx:id="lblFullName" alignment="CENTER" text="Kalle Anka">
+                        <Label fx:id="lblFullName" alignment="CENTER">
                            <font>
                               <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
                         <Region HBox.hgrow="ALWAYS" />
-                        <Label fx:id="lblSSN" text="888888-8888">
+                        <Label fx:id="lblSSN">
                            <font>
                               <Font size="18.0" />
                            </font>

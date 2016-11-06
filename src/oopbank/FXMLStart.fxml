@@ -109,7 +109,7 @@
                         <TextField fx:id="txtSSN" promptText="10 digits without dash" />
                         <HBox alignment="CENTER_LEFT">
                            <children>
-                              <Label fx:id="addCustomerAlert" />
+                              <Label fx:id="addCustomerAlert" textFill="RED" />
                               <Region HBox.hgrow="ALWAYS" />
                               <Button mnemonicParsing="false" onAction="#btnAddCustomer" text="Add">
                                  <HBox.margin>

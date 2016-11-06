@@ -64,7 +64,7 @@ public class FXMLCustomerInfoController {
 
         changeCustomerInformationStage.setScene(changeCustomerInformationScene);
         changeCustomerInformationStage.initModality(Modality.APPLICATION_MODAL);
-        changeCustomerInformationStage.setTitle("Change customerinformation");
+        changeCustomerInformationStage.setTitle("Change customer information");
         changeCustomerInformationStage.show();
     }
 
@@ -79,7 +79,7 @@ public class FXMLCustomerInfoController {
         Scene accountInformationScene = new Scene(FXMLLoader.load(getClass()
                 .getResource("FXMLAccountInfo.fxml")));
 
-        accountInformationStage.setTitle("Accountinformation");
+        accountInformationStage.setTitle("Account information");
         accountInformationStage.setScene(accountInformationScene);
         }
         catch(Exception e){
