@@ -39,13 +39,13 @@
                         </VBox>
                         <VBox alignment="CENTER_LEFT" spacing="20.0">
                            <children>
-                              <Button fx:id="btnAccountInfo" mnemonicParsing="false" onAction="#clickedAccountInformation" prefWidth="167.0" text="Transactions" />
+                              <Button fx:id="btnAccountInfo" mnemonicParsing="false" onAction="#clickedAccountInformation" prefWidth="167.0" text="Deposit/Withdraw" />
                               <Region VBox.vgrow="ALWAYS" />
                               <Button fx:id="btnAddAccount" mnemonicParsing="false" onAction="#clickedAddAccount" prefWidth="167.0" text="Add account" />
                               <Button fx:id="btnDeleteAccount" mnemonicParsing="false" onAction="#clickedDeleteAccount" prefWidth="167.0" text="Delete account" />
                            </children>
                            <HBox.margin>
-                              <Insets left="40.0" top="50.0" />
+                              <Insets bottom="32.0" left="40.0" top="57.0" />
                            </HBox.margin>
                         </VBox>
                      </children>

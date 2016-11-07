@@ -40,17 +40,12 @@
                   <RadioButton fx:id="btnRadioSavings" mnemonicParsing="false" onAction="#handleRadioSavings" text="Savings Account" />
                   <RadioButton fx:id="btnRadioCredit" mnemonicParsing="false" onAction="#handleRadioCredit" text="Credit Account" GridPane.columnIndex="1" />
                   <TextField fx:id="depositfield" promptText="Enter a deposit... " GridPane.rowIndex="1" />
-                  <Label fx:id="errormessage" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets left="10.0" />
-                     </GridPane.margin>
-                  </Label>
                </children>
                <VBox.margin>
                   <Insets left="40.0" right="40.0" />
                </VBox.margin>
             </GridPane>
-            <Label text="Enter a deposit if you are creating a savings account.">
+            <Label fx:id="errormessage" text="Enter a deposit if you are creating a savings account.">
                <VBox.margin>
                   <Insets left="40.0" />
                </VBox.margin>

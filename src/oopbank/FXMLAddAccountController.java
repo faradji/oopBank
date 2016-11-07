@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class FXMLAddAccountController {
@@ -58,6 +59,7 @@ public class FXMLAddAccountController {
                     }
                 }
             } catch (Exception e) {
+                errormessage.setTextFill(Color.RED);
                 errormessage.setText("Not a valid sum, try again.");
             }
         }
@@ -94,6 +96,9 @@ public class FXMLAddAccountController {
     ) {
         if (btnRadioSavings.isSelected()) {
             btnRadioCredit.setSelected(false);
+             depositfield.setVisible(true);
+             errormessage.setTextFill(Color.BLACK);
+             errormessage.setText("Enter a deposit if you are creating a savings account.");
         }
         if (btnRadioSavings.isSelected() == false) {
             btnRadioSavings.setSelected(true);
@@ -106,7 +111,8 @@ public class FXMLAddAccountController {
     ) {
         if (btnRadioCredit.isSelected()) {
             btnRadioSavings.setSelected(false);
-
+            depositfield.setVisible(false);
+            errormessage.setText(" ");
         }
         if (btnRadioCredit.isSelected() == false) {
             btnRadioCredit.setSelected(true);
