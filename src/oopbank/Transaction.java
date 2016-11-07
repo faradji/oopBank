@@ -15,19 +15,17 @@ import java.util.Date;
 public class Transaction
 {
     private BankLogic banklogic = BankLogic.getInstance();
-    private String date; //AF: Behöver ingen setter eftersom den alltid skapas som "nu"
+    private String date; 
     private boolean transactionType;
     private double amount;
     private double balance;
-    //AF: Varje transaktion ska ange om det är en insättning eller uttag och vilket belopp det handlar om
-    //AF: Datum sätts som tidpunkten när transaktionen görs
-    //AF: Osäker på varför transaction har en balance? Hör inte balansen till kontot? 
+    
     public Transaction(boolean transactionType, double amount)
     {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         Date date = new Date();
         String sDate= sdf.format(date);
-        this.date = sDate; //AF: Om jag har förstått det rätt så är Date alltid datum och tid "nu", alltså när objeketet skapas
+        this.date = sDate; //När en transaction skapas så blir Date alltid datum och tid "nu".
 
         this.transactionType = transactionType; //toString skriver ut deposit om true
         this.amount = amount;
@@ -71,8 +69,7 @@ public class Transaction
         this.balance = balance;
     }
 
-    //AF: testar att göra olika toString beroende på vilken transaktionstyp som är vald
-    //AF: true = deposit
+    //true = deposit, false = withdrawal
     @Override
     public String toString()
     {

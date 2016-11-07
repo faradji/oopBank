@@ -31,25 +31,34 @@ public class FXMLChangeCustomerInfoController {
     @FXML
     private void clickedSaveChanges() {
 
-        banklogic.changeCustomerName(txtFieldFirstName.getText(),
-                txtFieldLastName.getText(),
-                banklogic.getCustomerList()
-                .get(FXMLStartController.lvCustomerChoice)
-                .getpNr());
+        try {
+            if(txtFieldFirstName.getText().matches("[0-9]")){
+                throw new Exception();
+            
+        }
+            banklogic.changeCustomerName(txtFieldFirstName.getText(),
+                    txtFieldLastName.getText(),
+                    banklogic.getCustomerList()
+                    .get(FXMLStartController.lvCustomerChoice)
+                    .getpNr());
 
-        FXMLStartController.obsCustomerList.clear();
-        FXMLStartController.obsCustomerList.addAll(banklogic.getCustomerList());
-        FXMLStartController.getNameChange().set(txtFieldFirstName.getText()
-                + " " + txtFieldLastName.getText());
+            FXMLStartController.obsCustomerList.clear();
+            FXMLStartController.obsCustomerList.addAll(banklogic.getCustomerList());
+            FXMLStartController.getNameChange().set(txtFieldFirstName.getText()
+                    + " " + txtFieldLastName.getText());
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Info");
-        alert.setHeaderText(null);
-        alert.setContentText("Changes saved");
-        alert.showAndWait();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Info");
+            alert.setHeaderText(null);
+            alert.setContentText("Changes saved");
+            alert.showAndWait();
 
-        Stage tempStage = (Stage) btnSaveChanges.getScene().getWindow();
-        tempStage.close();
+            Stage tempStage = (Stage) btnSaveChanges.getScene().getWindow();
+            tempStage.close();
+        } catch (Exception e) {
+            System.out.println("Fel");
+        }
+
     }
 
     @FXML
