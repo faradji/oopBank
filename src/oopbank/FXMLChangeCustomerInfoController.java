@@ -38,6 +38,7 @@ public class FXMLChangeCustomerInfoController {
         
         try {
             
+            // Felhantering
             if (txtFieldFirstName.getText().equals("")
                     || txtFieldLastName.getText().equals("")){
                     
@@ -54,13 +55,15 @@ public class FXMLChangeCustomerInfoController {
                 if(!Character.isLetter(tempChar))
                   throw new InputMismatchException();
               }
-                             
+            
+            // Skickar in värdena i fälten till changeCustomerName
             banklogic.changeCustomerName(txtFieldFirstName.getText(),
                     txtFieldLastName.getText(),
                     banklogic.getCustomerList()
                     .get(FXMLStartController.lvCustomerChoice)
                     .getpNr());
-
+            
+            // Uppdaterar Observablelisten och namnet på CustomerInfo-sidan
             FXMLStartController.obsCustomerList.clear();
             FXMLStartController.obsCustomerList.addAll(banklogic.getCustomerList());
             FXMLStartController.getNameChange().set(txtFieldFirstName.getText()

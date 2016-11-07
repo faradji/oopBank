@@ -58,7 +58,7 @@ public class FXMLCustomerInfoController {
     private Label lblSSN;
     
 
-    // Creates new stage
+    // Skapar nytt fönster
     @FXML
     private void clickedChangeCustomerInformation() throws IOException {
         Stage changeCustomerInformationStage = new Stage();
@@ -72,7 +72,7 @@ public class FXMLCustomerInfoController {
         changeCustomerInformationStage.show();
     }
 
-    // Load new scene into existing stage
+    // Skapar ny scen i nuvarande fönster
     @FXML
     private void clickedAccountInformation() throws IOException {
         try {
@@ -90,7 +90,7 @@ public class FXMLCustomerInfoController {
         }
     }
 
-    // Creates new stage
+    // Skapar nytt fönster
     @FXML
     private void clickedAddAccount() throws IOException {
 
@@ -156,7 +156,7 @@ public class FXMLCustomerInfoController {
         }
     }
 
-    // Closes stage
+    // Stänger fönstret
     @FXML
     private void clickedBackCustomerInformation() {
         Stage tempStage = (Stage) btnBackCustomerInfo.getScene().getWindow();
@@ -183,12 +183,6 @@ public class FXMLCustomerInfoController {
 
     @FXML
     public void refresh() {
-        //Customer name display
-//        lblFullName.setText(banklogic.getCustomerList()
-//                .get(FXMLStartController.lvCustomerChoice)
-//                .getFirstName() + " " + banklogic.getCustomerList()
-//                .get(FXMLStartController.lvCustomerChoice)
-//                .getLastName());
 
         // Customer SSN display
         lblSSN.setText(String.valueOf(banklogic.getCustomerList()
