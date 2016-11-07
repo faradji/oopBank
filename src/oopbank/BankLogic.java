@@ -187,7 +187,7 @@ public class BankLogic {
                         tempBalance = customerList.get(i).getAccountList().get(j).getBalance();
                         if (customerList.get(i).getAccountList().get(j).getAccountType().equalsIgnoreCase("Credit Account")) {
                             if (tempBalance < 0) {
-                                tempBalance -= (tempBalance * 0.07);
+                                tempBalance *= 1.07;
                                 customerList.get(i).getAccountList().get(j).setBalance(tempBalance);
                                 tempDebt =  (CreditAccount)customerList.get(tempCustomer).getAccountList().get(tempAccount);
 

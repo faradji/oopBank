@@ -62,7 +62,16 @@
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblAccountType" />
+                        <HBox>
+                           <children>
+                              <Label fx:id="lblAccountNo">
+                                 <HBox.margin>
+                                    <Insets right="2.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="lblAccountType" />
+                           </children>
+                        </HBox>
                         <Label text="Balance">
                            <font>
                               <Font name="System Bold" size="15.0" />

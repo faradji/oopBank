@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class Transaction
 {
-    private BankLogic banklogic;
+    private BankLogic banklogic = BankLogic.getInstance();
     private String date; //AF: Behöver ingen setter eftersom den alltid skapas som "nu"
     private boolean transactionType;
     private double amount;
@@ -24,7 +24,6 @@ public class Transaction
     //AF: Osäker på varför transaction har en balance? Hör inte balansen till kontot? 
     public Transaction(boolean transactionType, double amount)
     {
-        banklogic = BankLogic.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         Date date = new Date();
         String sDate= sdf.format(date);
