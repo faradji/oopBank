@@ -5,6 +5,7 @@
  */
 package oopbank;
 
+import java.util.InputMismatchException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -24,32 +25,67 @@ public class FXMLChangeCustomerInfoController {
 
     @FXML
     private Label lblSSN;
+    
+    @FXML
+    private Label lblAlert;
 
     @FXML
     private Button btnSaveChanges, btnClose;
 
     @FXML
     private void clickedSaveChanges() {
+        
+        
+        try {
+            
+            // Felhantering
+            if (txtFieldFirstName.getText().equals("")
+                    || txtFieldLastName.getText().equals("")){
+                    
+                throw new Exception();
+            }
+              for(int i = 0;i<txtFieldFirstName.getText().length();i++){
+              char tempChar = txtFieldFirstName.getText().charAt(i);
+                if(!Character.isLetter(tempChar))
+                  throw new InputMismatchException();
+              }
+              
+               for(int i = 0;i<txtFieldLastName.getText().length();i++){
+              char tempChar = txtFieldLastName.getText().charAt(i);
+                if(!Character.isLetter(tempChar))
+                  throw new InputMismatchException();
+              }
+            
+            // Skickar in värdena i fälten till changeCustomerName
+            banklogic.changeCustomerName(txtFieldFirstName.getText(),
+                    txtFieldLastName.getText(),
+                    banklogic.getCustomerList()
+                    .get(FXMLStartController.lvCustomerChoice)
+                    .getpNr());
+            
+            // Uppdaterar Observablelisten och namnet på CustomerInfo-sidan
+            FXMLStartController.obsCustomerList.clear();
+            FXMLStartController.obsCustomerList.addAll(banklogic.getCustomerList());
+            FXMLStartController.getNameChange().set(txtFieldFirstName.getText()
+                    + " " + txtFieldLastName.getText());
 
-        banklogic.changeCustomerName(txtFieldFirstName.getText(),
-                txtFieldLastName.getText(),
-                banklogic.getCustomerList()
-                .get(FXMLStartController.lvCustomerChoice)
-                .getpNr());
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Info");
+            alert.setHeaderText(null);
+            alert.setContentText("Changes saved");
+            alert.showAndWait();
 
-        FXMLStartController.obsCustomerList.clear();
-        FXMLStartController.obsCustomerList.addAll(banklogic.getCustomerList());
-        FXMLStartController.getNameChange().set(txtFieldFirstName.getText()
-                + " " + txtFieldLastName.getText());
+            Stage tempStage = (Stage) btnSaveChanges.getScene().getWindow();
+            tempStage.close();
+            } catch(InputMismatchException e){
+                lblAlert.setText("Can't be numbers!");
+            }        
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Info");
-        alert.setHeaderText(null);
-        alert.setContentText("Changes saved");
-        alert.showAndWait();
+        catch (Exception e2) {
+            lblAlert.setText("Every field needs a value!");
+        }
+     
 
-        Stage tempStage = (Stage) btnSaveChanges.getScene().getWindow();
-        tempStage.close();
     }
 
     @FXML

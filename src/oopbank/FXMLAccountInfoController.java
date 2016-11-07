@@ -55,18 +55,19 @@ public class FXMLAccountInfoController implements Initializable {
 
     }
 
-    @FXML
+    @FXML //deposit knappen
     public void deposit() {
         try {
             double am;
             long pnr;
             int account;
+            //hämta värdena och spara de
             am = Double.parseDouble(amount.getText());
             pnr = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getpNr();
             account = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getAccountNo();
-
+            // göra en deposit
             banklogic.deposit(pnr, account, am);
-
+//ladda om sidan
             refresh();
         } catch (NumberFormatException e) {
             lblAlert.setText("Numbers, please!");
@@ -82,22 +83,24 @@ public class FXMLAccountInfoController implements Initializable {
             double am;
             long pnr = 0;
             int account = 0;
+            //hämta värdena och spara de
             am = Double.parseDouble(amount.getText());
 
             pnr = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getpNr();
             account = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getAccountNo();
-
+//hämta balance
             double tempBalance = banklogic.getCustomerList()
                     .get(FXMLStartController.lvCustomerChoice)
                     .getAccountList()
                     .get(FXMLCustomerInfoController.accountChoice).getBalance();
-
+//kolla vilken typ av account det är
             if (lblAccountType.getText().equalsIgnoreCase("Credit Account")) {
                 tempBalance = banklogic.getCustomerList().
                         get(FXMLStartController.lvCustomerChoice)
                         .getAccountList()
                         .get(FXMLCustomerInfoController.accountChoice)
                         .getBalance() - am;
+                //om balance är mer eller lika mycket än -5000
                 if (tempBalance >= -5000) {
                     banklogic.withdraw(pnr, account, am);
                     refresh();
@@ -105,14 +108,15 @@ public class FXMLAccountInfoController implements Initializable {
                     //Skriv i label
                     lblAlert.setText("Not enough money!");
                 }
-
+//kolla vilken typ av account det är
             } else if (lblAccountType.getText().equalsIgnoreCase("Savings Account")) {
+                //kolla om uttag har gjorts förr
                 if (banklogic.getCustomerList()
                         .get(FXMLStartController.lvCustomerChoice)
                         .getAccountList()
                         .get(FXMLCustomerInfoController.accountChoice)
                         .getHasWithdrawn() == true) {
-
+// annars lägg på ränta
                     if ((tempBalance - (am * 1.02)) > 0) {
 
                         tempBalance -= (am * 0.02);
@@ -121,18 +125,21 @@ public class FXMLAccountInfoController implements Initializable {
                                 .getAccountList()
                                 .get(FXMLCustomerInfoController.accountChoice)
                                 .setBalance(tempBalance);
+//göra en withdraw
                         banklogic.withdraw(pnr, account, am);
                         refresh();
                     } else {
                         lblAlert.setText("Not enough money!");
                     }
+                    // om nya balance är mer än 0
                 } else if ((tempBalance - am) > 0) {
+                    //registrera första uttag
                     banklogic.getCustomerList()
                             .get(FXMLStartController.lvCustomerChoice)
                             .getAccountList()
                             .get(FXMLCustomerInfoController.accountChoice)
                             .setHasWithdrawn(true);
-
+//göra en withdraw
                     banklogic.withdraw(pnr, account, am);
                     refresh();
                 } else {

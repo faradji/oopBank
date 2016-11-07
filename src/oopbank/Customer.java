@@ -62,11 +62,6 @@ public class Customer
         return accountList;
     }
    
-//    //Lägger till ett Account-objekt till accountList
-//    public static void setAccountList(Account a)
-//    {
-//    accountList.add(a);
-//    }Tas bort 
 
     @Override
     public String toString()
