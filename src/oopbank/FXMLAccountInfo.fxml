@@ -12,9 +12,9 @@
    <children>
       <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
-            <VBox alignment="TOP_CENTER">
+            <VBox alignment="CENTER">
                <children>
-                  <HBox alignment="TOP_CENTER" spacing="20.0" BorderPane.alignment="CENTER">
+                  <HBox spacing="20.0" BorderPane.alignment="CENTER">
                      <children>
                         <VBox>
                            <children>
@@ -29,7 +29,7 @@
                         </VBox>
                         <Button mnemonicParsing="false" onAction="#deposit" text="Deposit">
                            <HBox.margin>
-                              <Insets top="21.0" />
+                              <Insets left="14.0" top="21.0" />
                            </HBox.margin>
                         </Button>
                         <Button mnemonicParsing="false" onAction="#withdraw" text="Withdraw">
@@ -69,12 +69,12 @@
                            </font>
                         </Label>
                         <Label fx:id="lblBalance" />
-                        <Label fx:id="lblCredit" text="Credit">
+                        <Label fx:id="credit" text="Credit">
                            <font>
                               <Font name="System Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label fx:id="credit" />
+                        <Label fx:id="lblCredit" />
                      </children>
                      <HBox.margin>
                         <Insets top="25.0" />

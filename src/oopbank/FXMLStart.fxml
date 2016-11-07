@@ -130,7 +130,6 @@
                <children>
                   <Button mnemonicParsing="false" onAction="#btnSaveToFile" text="Save customers to file" BorderPane.alignment="CENTER" />
                   <Region HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" onAction="#refresh" text="Refresh page" />
                </children>
                <BorderPane.margin>
                   <Insets bottom="10.0" left="40.0" />

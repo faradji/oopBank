@@ -3,6 +3,7 @@ package oopbank;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,18 +19,20 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class FXMLCustomerInfoController {
-private BankLogic banklogic= BankLogic.getInstance();
+
+    private BankLogic banklogic = BankLogic.getInstance();
+
     public static int accountChoice = 0;
 
     //ListView
     @FXML
     private ListView accountList;
-    
+
     @FXML
     private Label listViewAlert;
 
     //Observablelist with accounts to populate listview
-    ObservableList<Account> obsAccountList;
+    public static ObservableList<Account> obsAccountList;
 
     // Buttons
     @FXML
@@ -53,6 +56,7 @@ private BankLogic banklogic= BankLogic.getInstance();
 
     @FXML
     private Label lblSSN;
+    
 
     // Creates new stage
     @FXML
@@ -71,18 +75,17 @@ private BankLogic banklogic= BankLogic.getInstance();
     // Load new scene into existing stage
     @FXML
     private void clickedAccountInformation() throws IOException {
-        try{
-        accountChoice = accountList.getSelectionModel().getSelectedIndex();
+        try {
+            accountChoice = accountList.getSelectionModel().getSelectedIndex();
 
-        Stage accountInformationStage
-                = (Stage) btnAccountInfo.getScene().getWindow();
-        Scene accountInformationScene = new Scene(FXMLLoader.load(getClass()
-                .getResource("FXMLAccountInfo.fxml")));
+            Stage accountInformationStage
+                    = (Stage) btnAccountInfo.getScene().getWindow();
+            Scene accountInformationScene = new Scene(FXMLLoader.load(getClass()
+                    .getResource("FXMLAccountInfo.fxml")));
 
-        accountInformationStage.setTitle("Account information");
-        accountInformationStage.setScene(accountInformationScene);
-        }
-        catch(Exception e){
+            accountInformationStage.setTitle("Account information");
+            accountInformationStage.setScene(accountInformationScene);
+        } catch (Exception e) {
             listViewAlert.setText("Please, choose something in the list");
         }
     }
@@ -105,51 +108,50 @@ private BankLogic banklogic= BankLogic.getInstance();
     @FXML
     private void clickedDeleteAccount() {
         String removedAccount = "";
-        
-        try{
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Confirmation Dialog");
-        alert.setHeaderText("Delete "
-                + banklogic.getCustomerList().
-                get(FXMLStartController.lvCustomerChoice)
-                .getAccountList()
-                .get(accountList.getSelectionModel().getSelectedIndex())
-                .getAccountNo() + " "
-                + banklogic.getCustomerList().
-                get(FXMLStartController.lvCustomerChoice)
-                .getAccountList()
-                .get(accountList.getSelectionModel().getSelectedIndex())
-                .getAccountType());
-        alert.setContentText("Are you sure?");
-        ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
-        ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-        alert.getButtonTypes().setAll(yes, no);
-
-        Optional<ButtonType> result = alert.showAndWait();
-
-        if (result.get() == yes) {
-            removedAccount = banklogic.closeAccount(
-                    banklogic.getCustomerList().
-                    get(FXMLStartController.lvCustomerChoice).getpNr(),
-                    banklogic.getCustomerList().
+        try {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText("Delete "
+                    + banklogic.getCustomerList().
                     get(FXMLStartController.lvCustomerChoice)
                     .getAccountList()
                     .get(accountList.getSelectionModel().getSelectedIndex())
-                    .getAccountNo());
+                    .getAccountNo() + " "
+                    + banklogic.getCustomerList().
+                    get(FXMLStartController.lvCustomerChoice)
+                    .getAccountList()
+                    .get(accountList.getSelectionModel().getSelectedIndex())
+                    .getAccountType());
+            alert.setContentText("Are you sure?");
+            ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+            ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-            alert2.setTitle("Info");
-            alert2.setHeaderText(null);
-            alert2.setContentText(removedAccount);
-            alert2.showAndWait();
-        } else {
+            alert.getButtonTypes().setAll(yes, no);
 
-        }
-        removedAccount= "";
-        refresh();
-        }
-        catch(Exception e){
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.get() == yes) {
+                removedAccount = banklogic.closeAccount(
+                        banklogic.getCustomerList().
+                        get(FXMLStartController.lvCustomerChoice).getpNr(),
+                        banklogic.getCustomerList().
+                        get(FXMLStartController.lvCustomerChoice)
+                        .getAccountList()
+                        .get(accountList.getSelectionModel().getSelectedIndex())
+                        .getAccountNo());
+
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setTitle("Info");
+                alert2.setHeaderText(null);
+                alert2.setContentText(removedAccount);
+                alert2.showAndWait();
+            } else {
+
+            }
+            removedAccount = "";
+            refresh();
+        } catch (Exception e) {
             listViewAlert.setText("Please, choose something in the list");
         }
     }
@@ -182,11 +184,11 @@ private BankLogic banklogic= BankLogic.getInstance();
     @FXML
     public void refresh() {
         //Customer name display
-        lblFullName.setText(banklogic.getCustomerList()
-                .get(FXMLStartController.lvCustomerChoice)
-                .getFirstName() + " " + banklogic.getCustomerList()
-                .get(FXMLStartController.lvCustomerChoice)
-                .getLastName());
+//        lblFullName.setText(banklogic.getCustomerList()
+//                .get(FXMLStartController.lvCustomerChoice)
+//                .getFirstName() + " " + banklogic.getCustomerList()
+//                .get(FXMLStartController.lvCustomerChoice)
+//                .getLastName());
 
         // Customer SSN display
         lblSSN.setText(String.valueOf(banklogic.getCustomerList()
@@ -199,11 +201,20 @@ private BankLogic banklogic= BankLogic.getInstance();
                         .get(FXMLStartController.lvCustomerChoice).getAccountList());
         accountList.setItems(obsAccountList);
         
+        FXMLStartController.getNameChange().set(banklogic.getCustomerList()
+                .get(FXMLStartController.lvCustomerChoice)
+                .getFirstName() + " " + banklogic.getCustomerList()
+                .get(FXMLStartController.lvCustomerChoice)
+                .getLastName());
+        lblFullName.textProperty().bind(FXMLStartController.getNameChange());
+
         listViewAlert.setText("");
     }
 
+   
     @FXML
     public void initialize() {
+        
         refresh();
     }
 

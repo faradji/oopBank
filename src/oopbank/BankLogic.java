@@ -6,6 +6,7 @@
 package oopbank;
 
 import java.util.ArrayList;
+import javafx.beans.property.SimpleStringProperty;
 
 /**
  *
@@ -13,7 +14,6 @@ import java.util.ArrayList;
  */
 public class BankLogic {
 
-    
     private static BankLogic banklogic = null;
     private ArrayList<Customer> customerList;
     private ArrayList<String> customerInfo;
@@ -43,9 +43,9 @@ public class BankLogic {
         customerList.add(new Customer("Andreas", "Vettefors", 9901018021L));
         addSavingsAccount(9901018021L, 11000);
     }
-    
-    public static BankLogic getInstance(){
-        if(banklogic == null){
+
+    public static BankLogic getInstance() {
+        if (banklogic == null) {
             banklogic = new BankLogic();
         }
         return banklogic;
@@ -169,8 +169,9 @@ public class BankLogic {
     public String closeAccount(long pNr, int accountNo) {
         int tempCustomer = 0;
         int tempAccount = 0;
-        String removedAccount;
+        String removedAccount = "";
         double tempBalance;
+        CreditAccount tempDebt;  
 
         // Vilken kund
         for (int i = 0; i < customerList.size(); i++) {
@@ -185,23 +186,51 @@ public class BankLogic {
                         // Räknar ut slutgiltigt saldo beroende på vilket sorts konto det är
                         tempBalance = customerList.get(i).getAccountList().get(j).getBalance();
                         if (customerList.get(i).getAccountList().get(j).getAccountType().equalsIgnoreCase("Credit Account")) {
-                            if (tempBalance <= 0) {
-                                tempBalance *= 1.07;
+                            if (tempBalance < 0) {
+                                tempBalance -= (tempBalance * 0.07);
+                                customerList.get(i).getAccountList().get(j).setBalance(tempBalance);
+                                tempDebt =  (CreditAccount)customerList.get(tempCustomer).getAccountList().get(tempAccount);
+
+                                removedAccount = "\nAccount is closed" + "\n"
+                                        + customerList.get(tempCustomer).getAccountList()
+                                        .get(tempAccount).getAccountNo() + " " + customerList.get(tempCustomer).getAccountList()
+                                        .get(tempAccount).getAccountType()
+                                        + "\nDebtfee: " + tempDebt.getDebtInterest()
+                       
+                                        + "\nBalance: " + " " + customerList.get(tempCustomer).getAccountList()
+                                        .get(tempAccount).getBalance();
+
                             } else if (tempBalance >= 0) {
                                 tempBalance *= 1.005;
+                                customerList.get(i).getAccountList().get(j).setBalance(tempBalance);
+                                removedAccount = "\nAccount is closed" + "\n"
+                                        + customerList.get(tempCustomer).getAccountList()
+                                        .get(tempAccount).getAccountNo() + " " + customerList.get(tempCustomer).getAccountList()
+                                        .get(tempAccount).getAccountType()
+                                        + "\nInterest: " + customerList.get(tempCustomer).getAccountList()
+                                        .get(tempAccount).getInterest()
+                                        + "\nBalance: " + " " + customerList.get(tempCustomer).getAccountList()
+                                        .get(tempAccount).getBalance();
                             }
                         } else if (customerList.get(i).getAccountList().get(j).getAccountType().equalsIgnoreCase("Savings Account")) {
                             tempBalance *= 1.001;
+                            customerList.get(i).getAccountList().get(j).setBalance(tempBalance);
+                            removedAccount = "\nAccount is closed" + "\n"
+                                    + customerList.get(tempCustomer).getAccountList()
+                                    .get(tempAccount).getAccountNo() + " " + customerList.get(tempCustomer).getAccountList()
+                                    .get(tempAccount).getAccountType()
+                                    + "\nInterest: " + customerList.get(tempCustomer).getAccountList()
+                                    .get(tempAccount).getInterest()
+                                    + "\nBalance: " + " " + customerList.get(tempCustomer).getAccountList()
+                                    .get(tempAccount).getBalance();
                         }
 
-                        customerList.get(i).getAccountList().get(j).setBalance(tempBalance);
                     }
 
                 }
             }
         }
 
-        removedAccount = "Account is closed" + getAccount(pNr, customerList.get(tempCustomer).getAccountList().get(tempAccount).getAccountNo());
         customerList.get(tempCustomer).getAccountList().remove(tempAccount);
 
         return removedAccount;
@@ -291,7 +320,7 @@ public class BankLogic {
                 .getAccountList().size();
 
         //Sparar info om kunden i arrayen
-        removedCustomerInfo.add(customerList.get(tempCustomerIndex).toString());
+        removedCustomerInfo.add("Customer removed\n" + customerList.get(tempCustomerIndex).toString());
 
         // Sparar kontonummer i en tempArray
         for (int j = 0; j < customerList.get(tempCustomerIndex)

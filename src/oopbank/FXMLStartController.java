@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -53,9 +54,11 @@ public class FXMLStartController {
     private Label addCustomerAlert;
 
     @FXML
-    private ObservableList<Customer> obsCustomerList;
+    public static ObservableList<Customer> obsCustomerList;
 
     static int lvCustomerChoice = 0;
+    
+   private static SimpleStringProperty nameChange = new SimpleStringProperty();
 
     @FXML
     public void btnAddCustomer() throws IOException {
@@ -90,7 +93,7 @@ public class FXMLStartController {
             alert.showAndWait();
 
         } catch (NumberFormatException e) {
-            addCustomerAlert.setText("Needs to be integer");
+            addCustomerAlert.setText("Numbers, please!");
             txtSSN.requestFocus();
         } catch (Exception e2) {
             addCustomerAlert.setText("Every Field needs a value");
@@ -103,7 +106,7 @@ public class FXMLStartController {
 
         try {
             lvCustomerChoice = lvCustomer.getSelectionModel().getSelectedIndex();
-
+               
             Stage editCustomerStage = new Stage();
             Scene editCustomerScene
                     = new Scene(FXMLLoader.load(getClass()
@@ -158,7 +161,7 @@ public class FXMLStartController {
             alert2.setContentText(removedCustomer);
             alert2.showAndWait();
 
-            banklogic.getInstance().getRemovedCustomerInfo().clear();
+            banklogic.getRemovedCustomerInfo().clear();
 
             refresh();
         } else {
@@ -193,6 +196,10 @@ public class FXMLStartController {
         alert.setContentText("Customers saved to " + fileName);
         alert.showAndWait();
 
+    }
+    
+     public static SimpleStringProperty getNameChange(){
+        return nameChange;
     }
 
     @FXML

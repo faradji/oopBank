@@ -45,6 +45,7 @@ public class FXMLAddAccountController {
                     for (int i = 0; i < banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().size(); i++) {
                         if (banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(i).getAccountNo() == newaccountno) {
                             tempsavingsaccount = (SavingsAccount)banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(i);
+                            FXMLCustomerInfoController.obsAccountList.add(tempsavingsaccount);
                             Alert alert = new Alert(AlertType.INFORMATION);
                             alert.setTitle("Account created");
                             alert.setHeaderText("A savings account has been created");
@@ -62,10 +63,12 @@ public class FXMLAddAccountController {
         }
         if (btnRadioCredit.isSelected() == true) {
             int newaccountno = banklogic.addCreditAccount(selectedcustomer.getpNr());
+            
             CreditAccount tempcreditaccount;
                     for (int i = 0; i < banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().size(); i++) {
                         if (banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(i).getAccountNo() == newaccountno) {
                             tempcreditaccount = (CreditAccount)banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(i);
+                            FXMLCustomerInfoController.obsAccountList.add(tempcreditaccount);
                             Alert alert = new Alert(AlertType.INFORMATION);
                             alert.setTitle("Account created");
                             alert.setHeaderText("A credit account has been created");

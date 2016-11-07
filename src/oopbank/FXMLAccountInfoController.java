@@ -28,7 +28,7 @@ import javafx.stage.Stage;
  */
 public class FXMLAccountInfoController implements Initializable {
 
-    private BankLogic banklogic= BankLogic.getInstance();
+    private BankLogic banklogic = BankLogic.getInstance();
     @FXML
     private Label lblAccountType, lblBalance, lblCredit, lblnamn, credit, lblAlert;
 
@@ -81,7 +81,7 @@ public class FXMLAccountInfoController implements Initializable {
             int account = 0;
             am = Double.parseDouble(amount.getText());
 
-            pnr =banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getpNr();
+            pnr = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getpNr();
             account = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getAccountNo();
 
             double tempBalance = banklogic.getCustomerList()
@@ -138,7 +138,7 @@ public class FXMLAccountInfoController implements Initializable {
             }
 
         } catch (NumberFormatException e) {
-            lblAlert.setText("Integer, please!");
+            lblAlert.setText("Numbers, please!");
         } catch (Exception e1) {
             System.err.println(e1);
         }
@@ -154,8 +154,15 @@ public class FXMLAccountInfoController implements Initializable {
         String efterNamn = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getLastName();
         lblnamn.setText(forNamn + " " + efterNamn);//hämta för och efternamn
 
-        String accountType = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getAccountType();
-        lblAccountType.setText(accountType);//lblAccountType ska visa om det är credit eller savings
+        String account = banklogic.getCustomerList()
+                .get(FXMLStartController.lvCustomerChoice)
+                .getAccountList().get(FXMLCustomerInfoController.accountChoice)
+                .getAccountNo() + " " + banklogic.getCustomerList()
+                .get(FXMLStartController.lvCustomerChoice)
+                .getAccountList()
+                .get(FXMLCustomerInfoController.accountChoice)
+                .getAccountType();
+        lblAccountType.setText(account);//lblAccountType ska visa om det är credit eller savings
 
         String balance = String.valueOf(banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice
         ).getAccountList().get(FXMLCustomerInfoController.accountChoice).getBalance());
@@ -164,6 +171,7 @@ public class FXMLAccountInfoController implements Initializable {
         if (lblAccountType.getText().equalsIgnoreCase("Credit Account")) {
 
             lblCredit.setText("-5000");//lblCredit visar krediten, om det är ett credit konto
+
         } else {
             lblCredit.setVisible(false);
             credit.setVisible(false);

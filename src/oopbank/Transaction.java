@@ -79,10 +79,10 @@ public class Transaction
     {
         if (transactionType == true)
         {
-            return date + " " +  "In: " + amount + " Balance: " + balance;
+            return date + " " +  "In: +" + amount + " Balance: " + balance;
         } else
         {
-            return date + " " +  "Out: " + amount + " Balance: " + balance;
+            return date + " " +  "Out: -" + amount + " Balance: " + balance;
         }
     }
 
