@@ -118,7 +118,7 @@ public class FXMLAccountInfoController implements Initializable {
                                 .getAccountList()
                                 .get(FXMLCustomerInfoController.accountChoice)
                                 .setBalance(tempBalance);
-                        banklogic.getInstance().withdraw(pnr, account, am);
+                        banklogic.withdraw(pnr, account, am);
                         refresh();
                     } else {
                         lblAlert.setText("Not enough money!");
