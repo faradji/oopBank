@@ -18,7 +18,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class FXMLCustomerInfoController {
-
+private BankLogic banklogic= BankLogic.getInstance();
     public static int accountChoice = 0;
 
     //ListView
@@ -110,12 +110,12 @@ public class FXMLCustomerInfoController {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Confirmation Dialog");
         alert.setHeaderText("Delete "
-                + OopBank.banklogic.getCustomerList().
+                + banklogic.getCustomerList().
                 get(FXMLStartController.lvCustomerChoice)
                 .getAccountList()
                 .get(accountList.getSelectionModel().getSelectedIndex())
                 .getAccountNo() + " "
-                + OopBank.banklogic.getCustomerList().
+                + banklogic.getCustomerList().
                 get(FXMLStartController.lvCustomerChoice)
                 .getAccountList()
                 .get(accountList.getSelectionModel().getSelectedIndex())
@@ -129,10 +129,10 @@ public class FXMLCustomerInfoController {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == yes) {
-            removedAccount = OopBank.banklogic.closeAccount(
-                    OopBank.banklogic.getCustomerList().
+            removedAccount = banklogic.closeAccount(
+                    banklogic.getCustomerList().
                     get(FXMLStartController.lvCustomerChoice).getpNr(),
-                    OopBank.banklogic.getCustomerList().
+                    banklogic.getCustomerList().
                     get(FXMLStartController.lvCustomerChoice)
                     .getAccountList()
                     .get(accountList.getSelectionModel().getSelectedIndex())
@@ -166,7 +166,7 @@ public class FXMLCustomerInfoController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Info");
         alert.setHeaderText("Customer details");
-        ArrayList tempCustomer = OopBank.banklogic.getCustomer(OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getpNr());
+        ArrayList tempCustomer = banklogic.getCustomer(banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getpNr());
         String contentText = "";
 
         for (int i = 0; i < tempCustomer.size(); i++) {
@@ -182,20 +182,20 @@ public class FXMLCustomerInfoController {
     @FXML
     public void refresh() {
         //Customer name display
-        lblFullName.setText(OopBank.banklogic.getCustomerList()
+        lblFullName.setText(banklogic.getCustomerList()
                 .get(FXMLStartController.lvCustomerChoice)
-                .getFirstName() + " " + OopBank.banklogic.getCustomerList()
+                .getFirstName() + " " + banklogic.getCustomerList()
                 .get(FXMLStartController.lvCustomerChoice)
                 .getLastName());
 
         // Customer SSN display
-        lblSSN.setText(String.valueOf(OopBank.banklogic.getCustomerList()
+        lblSSN.setText(String.valueOf(banklogic.getCustomerList()
                 .get(FXMLStartController.lvCustomerChoice)
                 .getpNr()));
 
         //Fill listView with accountList
         obsAccountList = FXCollections.
-                observableArrayList(OopBank.banklogic.getCustomerList()
+                observableArrayList(banklogic.getCustomerList()
                         .get(FXMLStartController.lvCustomerChoice).getAccountList());
         accountList.setItems(obsAccountList);
         

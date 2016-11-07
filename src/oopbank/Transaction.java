@@ -14,17 +14,17 @@ import java.util.Date;
  */
 public class Transaction
 {
-
+    private BankLogic banklogic;
     private String date; //AF: Behöver ingen setter eftersom den alltid skapas som "nu"
     private boolean transactionType;
     private double amount;
     private double balance;
-
     //AF: Varje transaktion ska ange om det är en insättning eller uttag och vilket belopp det handlar om
     //AF: Datum sätts som tidpunkten när transaktionen görs
     //AF: Osäker på varför transaction har en balance? Hör inte balansen till kontot? 
     public Transaction(boolean transactionType, double amount)
     {
+        banklogic = BankLogic.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         Date date = new Date();
         String sDate= sdf.format(date);
@@ -33,7 +33,7 @@ public class Transaction
         this.transactionType = transactionType; //toString skriver ut deposit om true
         this.amount = amount;
 
-        this.balance = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getBalance();
+        this.balance = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getBalance();
     }
 
     public String getDate()

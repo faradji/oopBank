@@ -5,6 +5,8 @@
  */
 package oopbank;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 /**
@@ -60,7 +62,9 @@ public abstract class Account
 
     public void setBalance(double balance)
     {
-            this.balance = balance;
+            BigDecimal bd = new BigDecimal(balance)
+                    .setScale(2,RoundingMode.FLOOR);
+            this.balance = bd.doubleValue();
     }
 
     public double getInterest()

@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 public class FXMLAddAccountController {
     
+    private BankLogic banklogic= BankLogic.getInstance();
     @FXML
     Button btnAddAccount;
 
@@ -32,18 +33,18 @@ public class FXMLAddAccountController {
     public void clickedAddAccount() {
         //hämta plats i customer array som den valda kunden finns, sätt det lika med en lokal variabel
         //som vi sedan kan använda
-        Customer selectedcustomer = BankLogic.getCustomerList().get(FXMLStartController.lvCustomerChoice);
+        Customer selectedcustomer = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice);
         if (btnRadioSavings.isSelected() == true) {
             double value = 0;
   
             try {
                 value = Double.parseDouble(depositfield.getText());
                 if (value >= 0 && depositfield.getText() != null) {
-                    int newaccountno = OopBank.banklogic.addSavingsAccount(selectedcustomer.getpNr(), value);
+                    int newaccountno = banklogic.addSavingsAccount(selectedcustomer.getpNr(), value);
                     SavingsAccount tempsavingsaccount;
-                    for (int i = 0; i < BankLogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().size(); i++) {
-                        if (BankLogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(i).getAccountNo() == newaccountno) {
-                            tempsavingsaccount = (SavingsAccount)BankLogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(i);
+                    for (int i = 0; i < banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().size(); i++) {
+                        if (banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(i).getAccountNo() == newaccountno) {
+                            tempsavingsaccount = (SavingsAccount)banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(i);
                             Alert alert = new Alert(AlertType.INFORMATION);
                             alert.setTitle("Account created");
                             alert.setHeaderText("A savings account has been created");
@@ -60,11 +61,11 @@ public class FXMLAddAccountController {
             }
         }
         if (btnRadioCredit.isSelected() == true) {
-            int newaccountno = OopBank.banklogic.addCreditAccount(selectedcustomer.getpNr());
+            int newaccountno = banklogic.addCreditAccount(selectedcustomer.getpNr());
             CreditAccount tempcreditaccount;
-                    for (int i = 0; i < BankLogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().size(); i++) {
-                        if (BankLogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(i).getAccountNo() == newaccountno) {
-                            tempcreditaccount = (CreditAccount)BankLogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(i);
+                    for (int i = 0; i < banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().size(); i++) {
+                        if (banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(i).getAccountNo() == newaccountno) {
+                            tempcreditaccount = (CreditAccount)banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(i);
                             Alert alert = new Alert(AlertType.INFORMATION);
                             alert.setTitle("Account created");
                             alert.setHeaderText("A credit account has been created");

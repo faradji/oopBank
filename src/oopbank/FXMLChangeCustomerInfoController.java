@@ -13,7 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class FXMLChangeCustomerInfoController {
-
+    
+    private BankLogic banklogic = BankLogic.getInstance();;
     @FXML
     private TextField txtFieldFirstName;
 
@@ -29,9 +30,9 @@ public class FXMLChangeCustomerInfoController {
     @FXML
     private void clickedSaveChanges() {
 
-        OopBank.banklogic.changeCustomerName(txtFieldFirstName.getText(),
+        banklogic.getInstance().changeCustomerName(txtFieldFirstName.getText(),
                 txtFieldLastName.getText(),
-                OopBank.banklogic.getCustomerList()
+                banklogic.getCustomerList()
                 .get(FXMLStartController.lvCustomerChoice)
                 .getpNr());
 
@@ -53,15 +54,15 @@ public class FXMLChangeCustomerInfoController {
 
     @FXML
     public void initialize() {
-        txtFieldFirstName.setText(OopBank.banklogic.getCustomerList()
+        txtFieldFirstName.setText(banklogic.getCustomerList()
                 .get(FXMLStartController.lvCustomerChoice)
                 .getFirstName());
 
-        txtFieldLastName.setText(OopBank.banklogic.getCustomerList()
+        txtFieldLastName.setText(banklogic.getCustomerList()
                 .get(FXMLStartController.lvCustomerChoice)
                 .getLastName());
 
-        lblSSN.setText(String.valueOf(OopBank.banklogic.getCustomerList()
+        lblSSN.setText(String.valueOf(banklogic.getCustomerList()
                 .get(FXMLStartController.lvCustomerChoice)
                 .getpNr()));
 

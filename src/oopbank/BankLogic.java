@@ -13,12 +13,14 @@ import java.util.ArrayList;
  */
 public class BankLogic {
 
-    private static ArrayList<Customer> customerList;
-    private static ArrayList<String> customerInfo;
-    private static ArrayList<String> removedCustomerInfo;
+    
+    private static BankLogic banklogic = null;
+    private ArrayList<Customer> customerList;
+    private ArrayList<String> customerInfo;
+    private ArrayList<String> removedCustomerInfo;
 
     //Konstruktor
-    public BankLogic() {
+    private BankLogic() {
         customerList = new ArrayList();
         customerInfo = new ArrayList();
         removedCustomerInfo = new ArrayList();
@@ -26,8 +28,8 @@ public class BankLogic {
         customerList.add(new Customer("Louise", "Ahokas", 2410051701L));
         addSavingsAccount(2410051701L, 2000);
 
-        customerList.add(new Customer("Alexander", "Aschan", 0505113345L));
-        addSavingsAccount(0505113345L, 6000);
+        customerList.add(new Customer("Alexander", "Aschan", 4505113345L));
+        addSavingsAccount(4505113345L, 6000);
 
         customerList.add(new Customer("Ali", "Faradji", 7308266873L));
         addSavingsAccount(7308266873L, 9000);
@@ -40,10 +42,16 @@ public class BankLogic {
 
         customerList.add(new Customer("Andreas", "Vettefors", 9901018021L));
         addSavingsAccount(9901018021L, 11000);
-
+    }
+    
+    public static BankLogic getInstance(){
+        if(banklogic == null){
+            banklogic = new BankLogic();
+        }
+        return banklogic;
     }
 
-    public static int addCreditAccount(long prnNumber) {
+    public int addCreditAccount(long prnNumber) {
         int tempaccountnumb = 0;
         for (int i = 0; i < customerList.size(); i++) {
             if (customerList.get(i).getpNr() == prnNumber) {
@@ -56,7 +64,7 @@ public class BankLogic {
         return tempaccountnumb;
     }
 
-    public static ArrayList getTransactions(long pnrNumber, int accountNo) {
+    public ArrayList getTransactions(long pnrNumber, int accountNo) {
         int arrayfirst = 0;
         int arraysecond = 0;
         for (int i = 0; i < customerList.size(); i++) {
@@ -74,7 +82,7 @@ public class BankLogic {
         return customerList.get(arrayfirst).getAccountList().get(arraysecond).getTransactionList();
     }
 
-    public static int addSavingsAccount(long prnNumber, double balance) {
+    public int addSavingsAccount(long prnNumber, double balance) {
         int tempaccountnumb = 0;
         for (int i = 0; i < customerList.size(); i++) {
             if (customerList.get(i).getpNr() == prnNumber) {
@@ -87,7 +95,7 @@ public class BankLogic {
         return tempaccountnumb;
     }
 
-    public static String getAccount(long prnNumber, int accountNo) {
+    public String getAccount(long prnNumber, int accountNo) {
 
         int arrayfirst = 0;
         int arraysecond = 0;
@@ -108,7 +116,7 @@ public class BankLogic {
         return customerList.get(arrayfirst).getAccountList().get(arraysecond).toString();
     }
 
-    public static ArrayList<Customer> getCustomers() {
+    public ArrayList<Customer> getCustomers() {
         return customerList;
     }
 
@@ -137,7 +145,7 @@ public class BankLogic {
         return temp;
     }
 
-    public static boolean withdraw(long pNr, int accountNo, double amount) {
+    public boolean withdraw(long pNr, int accountNo, double amount) {
         boolean temp = false;
         for (int i = 0; i < customerList.size(); i++) {
             if (customerList.get(i).getpNr() == pNr) {
@@ -158,7 +166,7 @@ public class BankLogic {
         return temp;
     }
 
-    public static String closeAccount(long pNr, int accountNo) {
+    public String closeAccount(long pNr, int accountNo) {
         int tempCustomer = 0;
         int tempAccount = 0;
         String removedAccount;
@@ -193,7 +201,7 @@ public class BankLogic {
             }
         }
 
-        removedAccount = getAccount(pNr, customerList.get(tempCustomer).getAccountList().get(tempAccount).getAccountNo());
+        removedAccount = "Account is closed" + getAccount(pNr, customerList.get(tempCustomer).getAccountList().get(tempAccount).getAccountNo());
         customerList.get(tempCustomer).getAccountList().remove(tempAccount);
 
         return removedAccount;
@@ -208,12 +216,12 @@ public class BankLogic {
     //        return (d);
     //    }
 
-    public static ArrayList<Customer> getCustomerList() {
+    public ArrayList<Customer> getCustomerList() {
         //Returnerar en ArrayList med string som innehåller en presentation av bankens alla kunder
         return customerList;
     }
 
-    public static boolean addCustomer(String firstName, String lastName, long pNr) {
+    public boolean addCustomer(String firstName, String lastName, long pNr) {
         boolean customerCreated = true;
 
         for (int i = 0; i < customerList.size(); i++) {
@@ -229,7 +237,7 @@ public class BankLogic {
         return customerCreated;
     }
 
-    public static ArrayList<String> getCustomer(long pNr) {
+    public ArrayList<String> getCustomer(long pNr) {
         //ArrayList<String> customerInfo = new ArrayList();
 
         for (int i = 0; i < customerList.size(); i++) {
@@ -252,7 +260,7 @@ public class BankLogic {
 
     }
 
-    public static boolean changeCustomerName(String firstName, String lastName, long pNr) {
+    public boolean changeCustomerName(String firstName, String lastName, long pNr) {
         boolean changedName = false;
 
         for (int i = 0; i < customerList.size(); i++) {
@@ -267,8 +275,7 @@ public class BankLogic {
         //ändrades, annars false(om kunden inte fanns)
     }
 
-    //Inte riktigt klar, behöver stämmas av med closeAccount
-    public static ArrayList<String> removeCustomer(long pNr) {
+    public ArrayList<String> removeCustomer(long pNr) {
         int tempCustomerIndex = 0;
 
         int[] tempAccountNoArray = new int[customerList.get(tempCustomerIndex)
@@ -306,7 +313,7 @@ public class BankLogic {
 
     }
 
-    public static ArrayList<String> getRemovedCustomerInfo() {
+    public ArrayList<String> getRemovedCustomerInfo() {
         return removedCustomerInfo;
     }
 

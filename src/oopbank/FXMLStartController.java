@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -30,6 +31,9 @@ import javafx.stage.Stage;
 
 public class FXMLStartController {
 
+    
+    private BankLogic banklogic = BankLogic.getInstance();
+    
     @FXML
     private ListView lvCustomer;
 
@@ -64,11 +68,11 @@ public class FXMLStartController {
             }
 
             // Hämtar värden från textfälten och skickar till addCustomer
-            OopBank.banklogic.addCustomer(txtFirstName.getText(), txtLastName.getText(), Long.valueOf(txtSSN.getText()));
+            banklogic.addCustomer(txtFirstName.getText(), txtLastName.getText(), Long.valueOf(txtSSN.getText()));
 
             // Lägger in den nya i obsCustomerList
             obsCustomerList = FXCollections
-                    .observableArrayList(OopBank.banklogic.getCustomerList());
+                    .observableArrayList(banklogic.getCustomerList());
 
             lvCustomer.setItems(obsCustomerList);
 
@@ -124,10 +128,10 @@ public class FXMLStartController {
         // Varnar användaren för att en kund tas bort
         Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle("Confirmation Dialog");
-        alert.setHeaderText("Delete " + OopBank.banklogic.getCustomerList()
+        alert.setHeaderText("Delete " + banklogic.getCustomerList()
                 .get(lvCustomer.getSelectionModel()
                         .getSelectedIndex()).getFirstName()
-                + " " + OopBank.banklogic.getCustomerList()
+                + " " + banklogic.getCustomerList()
                 .get(lvCustomer.getSelectionModel()
                         .getSelectedIndex()).getLastName());
         alert.setContentText("Are you sure?");
@@ -139,7 +143,7 @@ public class FXMLStartController {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == yes) {
-            ArrayList<String> tempInfoRemoveCustomer = OopBank.banklogic.removeCustomer(OopBank.banklogic.getCustomerList()
+            ArrayList<String> tempInfoRemoveCustomer = banklogic.removeCustomer(banklogic.getCustomerList()
                     .get(lvCustomer.getSelectionModel().getSelectedIndex()).getpNr());
 
             for (int i = 0; i < tempInfoRemoveCustomer.size(); i++) {
@@ -154,7 +158,7 @@ public class FXMLStartController {
             alert2.setContentText(removedCustomer);
             alert2.showAndWait();
 
-            OopBank.banklogic.getRemovedCustomerInfo().clear();
+            banklogic.getInstance().getRemovedCustomerInfo().clear();
 
             refresh();
         } else {
@@ -173,7 +177,7 @@ public class FXMLStartController {
         String fileName = "customer.txt";
 
         try (PrintWriter pw = new PrintWriter(new FileOutputStream(fileName))) {
-            for (Customer temp : OopBank.banklogic.getCustomerList()) {
+            for (Customer temp : banklogic.getCustomerList()) {
                 pw.println(temp.getFirstName() + " " + temp.getLastName() + " "
                         + temp.getpNr());
             }
@@ -196,7 +200,7 @@ public class FXMLStartController {
         lvCustomer.refresh();
 
         obsCustomerList = FXCollections
-                .observableArrayList(OopBank.banklogic.getCustomerList());
+                .observableArrayList(banklogic.getCustomerList());
 
         lvCustomer.setItems(obsCustomerList);
         

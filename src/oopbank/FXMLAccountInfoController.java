@@ -28,8 +28,9 @@ import javafx.stage.Stage;
  */
 public class FXMLAccountInfoController implements Initializable {
 
+    private BankLogic banklogic= BankLogic.getInstance();
     @FXML
-    private Label lblAccountType, lblBalance, lblCredit, lblnamn, credit,lblAlert;
+    private Label lblAccountType, lblBalance, lblCredit, lblnamn, credit, lblAlert;
 
     @FXML
     private ListView lvTransactions;
@@ -44,7 +45,7 @@ public class FXMLAccountInfoController implements Initializable {
 
     @FXML
     public void btnBackClicked() throws IOException {
-       
+
         Stage tempStage = (Stage) btnBack.getScene().getWindow();
 
         tempStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("FXMLCustomerInfo.fxml"))));
@@ -58,13 +59,13 @@ public class FXMLAccountInfoController implements Initializable {
             long pnr;
             int account;
             am = Double.parseDouble(amount.getText());
-            pnr = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getpNr();
-            account = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getAccountNo();
+            pnr = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getpNr();
+            account = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getAccountNo();
 
-            OopBank.banklogic.deposit(pnr, account, am);
-            
+            banklogic.deposit(pnr, account, am);
+
             refresh();
-        }catch(NumberFormatException e)  {
+        } catch (NumberFormatException e) {
             lblAlert.setText("Integer, please!");
         } catch (Exception e1) {
             System.err.println(e1);
@@ -80,22 +81,22 @@ public class FXMLAccountInfoController implements Initializable {
             int account = 0;
             am = Double.parseDouble(amount.getText());
 
-            pnr = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getpNr();
-            account = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getAccountNo();
+            pnr =banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getpNr();
+            account = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getAccountNo();
 
-            double tempBalance = OopBank.banklogic.getCustomerList()
+            double tempBalance = banklogic.getCustomerList()
                     .get(FXMLStartController.lvCustomerChoice)
                     .getAccountList()
                     .get(FXMLCustomerInfoController.accountChoice).getBalance();
 
             if (lblAccountType.getText().equalsIgnoreCase("Credit Account")) {
-                tempBalance = OopBank.banklogic.getCustomerList().
+                tempBalance = banklogic.getCustomerList().
                         get(FXMLStartController.lvCustomerChoice)
                         .getAccountList()
                         .get(FXMLCustomerInfoController.accountChoice)
                         .getBalance() - am;
                 if (tempBalance >= -5000) {
-                    OopBank.banklogic.withdraw(pnr, account, am);
+                    banklogic.withdraw(pnr, account, am);
                     refresh();
                 } else {
                     //Skriv i label
@@ -103,7 +104,7 @@ public class FXMLAccountInfoController implements Initializable {
                 }
 
             } else if (lblAccountType.getText().equalsIgnoreCase("Savings Account")) {
-                if (OopBank.banklogic.getCustomerList()
+                if (banklogic.getCustomerList()
                         .get(FXMLStartController.lvCustomerChoice)
                         .getAccountList()
                         .get(FXMLCustomerInfoController.accountChoice)
@@ -112,30 +113,30 @@ public class FXMLAccountInfoController implements Initializable {
                     if ((tempBalance - (am * 1.02)) > 0) {
 
                         tempBalance -= (am * 0.02);
-                        OopBank.banklogic.getCustomerList()
+                        banklogic.getCustomerList()
                                 .get(FXMLStartController.lvCustomerChoice)
                                 .getAccountList()
                                 .get(FXMLCustomerInfoController.accountChoice)
                                 .setBalance(tempBalance);
-                        OopBank.banklogic.withdraw(pnr, account, am);
+                        banklogic.getInstance().withdraw(pnr, account, am);
                         refresh();
                     } else {
                         lblAlert.setText("Not enough money!");
                     }
                 } else if ((tempBalance - am) > 0) {
-                    OopBank.banklogic.getCustomerList()
+                    banklogic.getCustomerList()
                             .get(FXMLStartController.lvCustomerChoice)
                             .getAccountList()
                             .get(FXMLCustomerInfoController.accountChoice)
                             .setHasWithdrawn(true);
 
-                    OopBank.banklogic.withdraw(pnr, account, am);
+                    banklogic.withdraw(pnr, account, am);
                     refresh();
                 } else {
-                   lblAlert.setText("Not enough money!");
+                    lblAlert.setText("Not enough money!");
                 }
             }
-           
+
         } catch (NumberFormatException e) {
             lblAlert.setText("Integer, please!");
         } catch (Exception e1) {
@@ -145,18 +146,18 @@ public class FXMLAccountInfoController implements Initializable {
     }
 
     public void refresh() {
-        transaction = FXCollections.observableArrayList(OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice
+        transaction = FXCollections.observableArrayList(banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice
         ).getAccountList().get(FXMLCustomerInfoController.accountChoice).getTransactionList());
         lvTransactions.setItems(transaction);
 
-        String forNamn = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getFirstName();
-        String efterNamn = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getLastName();
+        String forNamn = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getFirstName();
+        String efterNamn = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getLastName();
         lblnamn.setText(forNamn + " " + efterNamn);//hämta för och efternamn
 
-        String accountType = OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getAccountType();
+        String accountType = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getAccountType();
         lblAccountType.setText(accountType);//lblAccountType ska visa om det är credit eller savings
 
-        String balance = String.valueOf(OopBank.banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice
+        String balance = String.valueOf(banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice
         ).getAccountList().get(FXMLCustomerInfoController.accountChoice).getBalance());
         lblBalance.setText(balance);//lblBalance visar saldot
 
@@ -167,7 +168,7 @@ public class FXMLAccountInfoController implements Initializable {
             lblCredit.setVisible(false);
             credit.setVisible(false);
         }
-        
+
         lblAlert.setText("");
     }
 
