@@ -1,27 +1,38 @@
 package oopbank;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Optional;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class FXMLCustomerInfoController {
-    
+
+    private BankLogic banklogic = BankLogic.getInstance();
+
     public static int accountChoice = 0;
-    
+
     //ListView
     @FXML
     private ListView accountList;
 
+    @FXML
+    private Label listViewAlert;
+
     //Observablelist with accounts to populate listview
-    ObservableList<Account> obsAccountList;
+    public static ObservableList<Account> obsAccountList;
 
     // Buttons
     @FXML
@@ -45,6 +56,7 @@ public class FXMLCustomerInfoController {
 
     @FXML
     private Label lblSSN;
+    
 
     // Creates new stage
     @FXML
@@ -56,23 +68,26 @@ public class FXMLCustomerInfoController {
 
         changeCustomerInformationStage.setScene(changeCustomerInformationScene);
         changeCustomerInformationStage.initModality(Modality.APPLICATION_MODAL);
-        changeCustomerInformationStage.setTitle("Change customerinformation");
+        changeCustomerInformationStage.setTitle("Change customer information");
         changeCustomerInformationStage.show();
     }
 
     // Load new scene into existing stage
     @FXML
     private void clickedAccountInformation() throws IOException {
-        accountChoice = accountList.getSelectionModel().getSelectedIndex();
-        System.out.println("Konto index: " + accountChoice);
-        
-        Stage accountInformationStage
-                = (Stage) btnAccountInfo.getScene().getWindow();
-        Scene accountInformationScene = new Scene(FXMLLoader.load(getClass()
-                .getResource("FXMLAccountInfo.fxml")));
+        try {
+            accountChoice = accountList.getSelectionModel().getSelectedIndex();
 
-        accountInformationStage.setTitle("Accountinformation");
-        accountInformationStage.setScene(accountInformationScene);
+            Stage accountInformationStage
+                    = (Stage) btnAccountInfo.getScene().getWindow();
+            Scene accountInformationScene = new Scene(FXMLLoader.load(getClass()
+                    .getResource("FXMLAccountInfo.fxml")));
+
+            accountInformationStage.setTitle("Account information");
+            accountInformationStage.setScene(accountInformationScene);
+        } catch (Exception e) {
+            listViewAlert.setText("Please, choose something in the list");
+        }
     }
 
     // Creates new stage
@@ -87,11 +102,58 @@ public class FXMLCustomerInfoController {
         addAccountStage.initModality(Modality.APPLICATION_MODAL);
         addAccountStage.setTitle("Add account");
         addAccountStage.show();
+
     }
 
     @FXML
     private void clickedDeleteAccount() {
-        System.out.println("Account deleted");
+        String removedAccount = "";
+
+        try {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText("Delete "
+                    + banklogic.getCustomerList().
+                    get(FXMLStartController.lvCustomerChoice)
+                    .getAccountList()
+                    .get(accountList.getSelectionModel().getSelectedIndex())
+                    .getAccountNo() + " "
+                    + banklogic.getCustomerList().
+                    get(FXMLStartController.lvCustomerChoice)
+                    .getAccountList()
+                    .get(accountList.getSelectionModel().getSelectedIndex())
+                    .getAccountType());
+            alert.setContentText("Are you sure?");
+            ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+            ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            alert.getButtonTypes().setAll(yes, no);
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.get() == yes) {
+                removedAccount = banklogic.closeAccount(
+                        banklogic.getCustomerList().
+                        get(FXMLStartController.lvCustomerChoice).getpNr(),
+                        banklogic.getCustomerList().
+                        get(FXMLStartController.lvCustomerChoice)
+                        .getAccountList()
+                        .get(accountList.getSelectionModel().getSelectedIndex())
+                        .getAccountNo());
+
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setTitle("Info");
+                alert2.setHeaderText(null);
+                alert2.setContentText(removedAccount);
+                alert2.showAndWait();
+            } else {
+
+            }
+            removedAccount = "";
+            refresh();
+        } catch (Exception e) {
+            listViewAlert.setText("Please, choose something in the list");
+        }
     }
 
     // Closes stage
@@ -101,33 +163,59 @@ public class FXMLCustomerInfoController {
         tempStage.close();
     }
 
-    public ListView getAccountList() {
-        return accountList;
+    @FXML
+    public void clickedPrintCustomerDetails() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Info");
+        alert.setHeaderText("Customer details");
+        ArrayList tempCustomer = banklogic.getCustomer(banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getpNr());
+        String contentText = "";
+
+        for (int i = 0; i < tempCustomer.size(); i++) {
+            contentText += tempCustomer.get(i);
+            contentText += "\n";
+
+        }
+
+        alert.setContentText(contentText);
+        alert.showAndWait();
     }
 
     @FXML
-    public void initialize() {
-    
-        System.out.println(FXMLStartController.lvCustomerChoice);
-        
+    public void refresh() {
         //Customer name display
-        lblFullName.setText(OopBank.banklogic.getCustomerList()
-                .get(FXMLStartController.lvCustomerChoice)
-                .getFirstName() + " " + OopBank.banklogic.getCustomerList()
-                .get(FXMLStartController.lvCustomerChoice)
-                .getLastName());
-        
+//        lblFullName.setText(banklogic.getCustomerList()
+//                .get(FXMLStartController.lvCustomerChoice)
+//                .getFirstName() + " " + banklogic.getCustomerList()
+//                .get(FXMLStartController.lvCustomerChoice)
+//                .getLastName());
+
         // Customer SSN display
-        lblSSN.setText(String.valueOf(OopBank.banklogic.getCustomerList()
+        lblSSN.setText(String.valueOf(banklogic.getCustomerList()
                 .get(FXMLStartController.lvCustomerChoice)
                 .getpNr()));
-        
+
         //Fill listView with accountList
         obsAccountList = FXCollections.
-                observableArrayList(OopBank.banklogic.getCustomerList()
+                observableArrayList(banklogic.getCustomerList()
                         .get(FXMLStartController.lvCustomerChoice).getAccountList());
         accountList.setItems(obsAccountList);
+        
+        FXMLStartController.getNameChange().set(banklogic.getCustomerList()
+                .get(FXMLStartController.lvCustomerChoice)
+                .getFirstName() + " " + banklogic.getCustomerList()
+                .get(FXMLStartController.lvCustomerChoice)
+                .getLastName());
+        lblFullName.textProperty().bind(FXMLStartController.getNameChange());
+
+        listViewAlert.setText("");
     }
 
+   
+    @FXML
+    public void initialize() {
+        
+        refresh();
+    }
 
 }

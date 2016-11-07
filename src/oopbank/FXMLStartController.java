@@ -9,10 +9,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -30,6 +32,9 @@ import javafx.stage.Stage;
 
 public class FXMLStartController {
 
+    
+    private BankLogic banklogic = BankLogic.getInstance();
+    
     @FXML
     private ListView lvCustomer;
 
@@ -49,35 +54,37 @@ public class FXMLStartController {
     private Label addCustomerAlert;
 
     @FXML
-    private ObservableList<Customer> obsCustomerList;
+    public static ObservableList<Customer> obsCustomerList;
 
     static int lvCustomerChoice = 0;
+    
+   private static SimpleStringProperty nameChange = new SimpleStringProperty();
 
     @FXML
     public void btnAddCustomer() throws IOException {
 
         try {
             if (txtFirstName.getText().equals("")
-                    || txtLastName.getText().equals("") 
+                    || txtLastName.getText().equals("")
                     || txtSSN.getText().equals("")) {
                 throw new Exception();
             }
 
             // Hämtar värden från textfälten och skickar till addCustomer
-            OopBank.banklogic.addCustomer(txtFirstName.getText(), txtLastName.getText(), Long.valueOf(txtSSN.getText()));
+            banklogic.addCustomer(txtFirstName.getText(), txtLastName.getText(), Long.valueOf(txtSSN.getText()));
 
             // Lägger in den nya i obsCustomerList
             obsCustomerList = FXCollections
-                    .observableArrayList(OopBank.banklogic.getCustomerList());
+                    .observableArrayList(banklogic.getCustomerList());
 
             lvCustomer.setItems(obsCustomerList);
-            
+
             // Rensar inputs
             addCustomerAlert.setText("");
             txtFirstName.setText("");
             txtLastName.setText("");
             txtSSN.setText("");
-            
+
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
 
             alert.setTitle("Info");
@@ -86,7 +93,7 @@ public class FXMLStartController {
             alert.showAndWait();
 
         } catch (NumberFormatException e) {
-            addCustomerAlert.setText("Needs to be integer");
+            addCustomerAlert.setText("Numbers, please!");
             txtSSN.requestFocus();
         } catch (Exception e2) {
             addCustomerAlert.setText("Every Field needs a value");
@@ -96,29 +103,38 @@ public class FXMLStartController {
 
     @FXML
     public void btnGoToCustomer() throws IOException {
-        lvCustomerChoice = lvCustomer.getSelectionModel().getSelectedIndex();
 
-        Stage editCustomerStage = new Stage();
-        Scene editCustomerScene
-                = new Scene(FXMLLoader.load(getClass()
-                        .getResource("FXMLCustomerInfo.fxml")));
+        try {
+            lvCustomerChoice = lvCustomer.getSelectionModel().getSelectedIndex();
+               
+            Stage editCustomerStage = new Stage();
+            Scene editCustomerScene
+                    = new Scene(FXMLLoader.load(getClass()
+                            .getResource("FXMLCustomerInfo.fxml")));
 
-        editCustomerStage.setScene(editCustomerScene);
-        editCustomerStage.setResizable(false);
-        editCustomerStage.initModality(Modality.APPLICATION_MODAL);
-        editCustomerStage.setTitle("Customerinformation");
-        editCustomerStage.show();
+            editCustomerStage.setScene(editCustomerScene);
+            editCustomerStage.setResizable(false);
+            editCustomerStage.initModality(Modality.APPLICATION_MODAL);
+            editCustomerStage.setTitle("Customer information");
+            editCustomerStage.show();
+        } catch (Exception e) {
+            listViewAlert.setText("Please, choose something in the list");
+        }
+
     }
 
     @FXML
     public void btnRemoveCustomer() {
-
+        String removedCustomer = "";
+        
+        try{
+        // Varnar användaren för att en kund tas bort
         Alert alert = new Alert(AlertType.WARNING);
         alert.setTitle("Confirmation Dialog");
-        alert.setHeaderText("Delete " + OopBank.banklogic.getCustomerList()
+        alert.setHeaderText("Delete " + banklogic.getCustomerList()
                 .get(lvCustomer.getSelectionModel()
                         .getSelectedIndex()).getFirstName()
-                + " " + OopBank.banklogic.getCustomerList()
+                + " " + banklogic.getCustomerList()
                 .get(lvCustomer.getSelectionModel()
                         .getSelectedIndex()).getLastName());
         alert.setContentText("Are you sure?");
@@ -128,23 +144,34 @@ public class FXMLStartController {
         alert.getButtonTypes().setAll(yes, no);
 
         Optional<ButtonType> result = alert.showAndWait();
+
         if (result.get() == yes) {
-            ArrayList<String> tempCloseAccount = OopBank.banklogic.removeCustomer(OopBank.banklogic.getCustomerList()
+            ArrayList<String> tempInfoRemoveCustomer = banklogic.removeCustomer(banklogic.getCustomerList()
                     .get(lvCustomer.getSelectionModel().getSelectedIndex()).getpNr());
 
-            obsCustomerList = FXCollections
-                    .observableArrayList(OopBank.banklogic.getCustomerList());
+            for (int i = 0; i < tempInfoRemoveCustomer.size(); i++) {
+                removedCustomer += tempInfoRemoveCustomer.get(i) + "\n";
+            }
 
-            lvCustomer.setItems(obsCustomerList);
+            System.out.println(removedCustomer);
+
+            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+            alert2.setTitle("Info");
+            alert2.setHeaderText(null);
+            alert2.setContentText(removedCustomer);
+            alert2.showAndWait();
+
+            banklogic.getRemovedCustomerInfo().clear();
+
+            refresh();
         } else {
-            // ... user chose CANCEL or closed the dialog
+
+        }
+        }
+        catch(Exception e){
+            listViewAlert.setText("Please, choose something in the list");
         }
 
-        //System.out.println(OopBank.banklogic.getCustomerList().get(lvCustomer.getSelectionModel().getSelectedIndex()).getAccountList());
-        //System.out.println(OopBank.banklogic.getCustomerList()
-        //.get(lvCustomer.getSelectionModel().getSelectedIndex()).getpNr());
-        // Funkar inte kolla imorgon
-        // Ta den returnerade arrayen och gör något
     }
 
     @FXML
@@ -153,7 +180,7 @@ public class FXMLStartController {
         String fileName = "customer.txt";
 
         try (PrintWriter pw = new PrintWriter(new FileOutputStream(fileName))) {
-            for (Customer temp : OopBank.banklogic.getCustomerList()) {
+            for (Customer temp : banklogic.getCustomerList()) {
                 pw.println(temp.getFirstName() + " " + temp.getLastName() + " "
                         + temp.getpNr());
             }
@@ -170,15 +197,26 @@ public class FXMLStartController {
         alert.showAndWait();
 
     }
+    
+     public static SimpleStringProperty getNameChange(){
+        return nameChange;
+    }
+
+    @FXML
+    public void refresh() {
+        lvCustomer.refresh();
+
+        obsCustomerList = FXCollections
+                .observableArrayList(banklogic.getCustomerList());
+
+        lvCustomer.setItems(obsCustomerList);
+        
+        listViewAlert.setText("");
+    }
 
     @FXML
     public void initialize() {
-        obsCustomerList = FXCollections
-                .observableArrayList(OopBank.banklogic.getCustomerList());
-
-        lvCustomer.setItems(obsCustomerList);
-
-        lvCustomer.getSelectionModel().select(0);
+        refresh();
     }
 
 }

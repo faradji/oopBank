@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -7,33 +8,103 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oopbank.FXMLAccountInfoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oopbank.FXMLAccountInfoController">
    <children>
-      <Label fx:id="lblnamn" layoutX="14.0" layoutY="14.0" text="Kundens namn">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <ListView fx:id="lvTransactions" layoutX="386.0" layoutY="39.0" prefHeight="200.0" prefWidth="200.0" />
-      <Label layoutX="14.0" layoutY="39.0" text="Account type:">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="14.0" layoutY="59.0" text="Balance:">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label layoutX="14.0" layoutY="79.0" text="Credit:" />
-      <Button fx:id="btnBack" layoutX="545.0" layoutY="361.0" mnemonicParsing="false" onAction="#btnBackClicked" text="Back" />
-      <Label fx:id="lblAccountType" layoutX="106.0" layoutY="41.0" text="Credit account" />
-      <Label fx:id="lblBalance" layoutX="67.0" layoutY="61.0" text="1000" />
-      <Label fx:id="lblCredit" layoutX="53.0" layoutY="79.0" text="5000" />
-      <Label layoutX="437.0" layoutY="18.0" text="List of transactions" />
-      <Button fx:id="Deposit" layoutX="517.0" layoutY="250.0" mnemonicParsing="false" onAction="#deposit" text="Deposit" />
-      <Button fx:id="Withdraw" layoutX="512.0" layoutY="292.0" mnemonicParsing="false" onAction="#withdraw" text="Withdraw" />
-      <TextField fx:id="amount" layoutX="338.0" layoutY="250.0" />
-      <Label layoutX="145.0" layoutY="254.0" text="Type Amount to deposit/withdraw" />
+      <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <bottom>
+            <VBox alignment="CENTER">
+               <children>
+                  <HBox spacing="20.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <VBox>
+                           <children>
+                              <Label text="Amount">
+                                 <font>
+                                    <Font name="System Bold" size="15.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="amount" />
+                              <Label fx:id="lblAlert" textFill="RED" />
+                           </children>
+                        </VBox>
+                        <Button mnemonicParsing="false" onAction="#deposit" text="Deposit">
+                           <HBox.margin>
+                              <Insets left="14.0" top="21.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#withdraw" text="Withdraw">
+                           <HBox.margin>
+                              <Insets top="21.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                  </HBox>
+                  <Button fx:id="btnBack" mnemonicParsing="false" onAction="#btnBackClicked" text="Back" />
+               </children>
+            </VBox>
+         </bottom>
+         <center>
+            <HBox spacing="20.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox prefWidth="200.0">
+                     <children>
+                        <Label text="Name">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblnamn" />
+                        <Label text="Account">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <HBox>
+                           <children>
+                              <Label fx:id="lblAccountNo">
+                                 <HBox.margin>
+                                    <Insets right="2.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <Label fx:id="lblAccountType" />
+                           </children>
+                        </HBox>
+                        <Label text="Balance">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblBalance" />
+                        <Label fx:id="credit" text="Credit">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblCredit" />
+                     </children>
+                     <HBox.margin>
+                        <Insets top="25.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox>
+                     <children>
+                        <Label text="Transaction history">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="lvTransactions" prefHeight="233.0" prefWidth="361.0" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </center>
+      </BorderPane>
    </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
 </AnchorPane>
