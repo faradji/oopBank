@@ -7,6 +7,8 @@ package oopbank;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -30,7 +32,7 @@ public class FXMLAccountInfoController implements Initializable {
 
     private BankLogic banklogic = BankLogic.getInstance();
     @FXML
-    private Label lblAccountType, lblBalance, lblCredit, lblnamn, 
+    private Label lblAccountType, lblBalance, lblCredit, lblnamn,
             credit, lblAlert, lblAccountNo;
 
     @FXML
@@ -67,7 +69,7 @@ public class FXMLAccountInfoController implements Initializable {
 
             refresh();
         } catch (NumberFormatException e) {
-            lblAlert.setText("Integer, please!");
+            lblAlert.setText("Numbers, please!");
         } catch (Exception e1) {
             System.err.println(e1);
         }
@@ -147,27 +149,30 @@ public class FXMLAccountInfoController implements Initializable {
     }
 
     public void refresh() {
+
         transaction = FXCollections.observableArrayList(banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice
         ).getAccountList().get(FXMLCustomerInfoController.accountChoice).getTransactionList());
+
+        Collections.reverse(transaction);
         lvTransactions.setItems(transaction);
 
         String forNamn = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getFirstName();
         String efterNamn = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getLastName();
         lblnamn.setText(forNamn + " " + efterNamn);//hämta för och efternamn
-        
+
         String accountNumber = String.valueOf(banklogic.getCustomerList()
                 .get(FXMLStartController.lvCustomerChoice)
                 .getAccountList().get(FXMLCustomerInfoController.accountChoice)
                 .getAccountNo());
-        
+
         lblAccountNo.setText(accountNumber);
-        
-        String accountType =  banklogic.getCustomerList()
+
+        String accountType = banklogic.getCustomerList()
                 .get(FXMLStartController.lvCustomerChoice)
                 .getAccountList()
                 .get(FXMLCustomerInfoController.accountChoice)
                 .getAccountType();
-        
+
         lblAccountType.setText(accountType);//lblAccountType ska visa om det är credit eller savings
 
         String balance = String.valueOf(banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice
