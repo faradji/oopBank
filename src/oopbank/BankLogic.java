@@ -39,7 +39,7 @@ public class BankLogic {
         customerList.add(new Customer("Henrik", "Rosqvist", 5611045723L));
         addSavingsAccount(5611045723L, 1000);
 
-        customerList.add(new Customer("Andreas", "Vettefors", 9901018021L));
+        customerList.add(new Customer("Andreas", "Vettefors", 9801018021L));
         addSavingsAccount(9901018021L, 11000);
     }
 

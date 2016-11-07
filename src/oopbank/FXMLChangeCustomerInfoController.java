@@ -5,6 +5,7 @@
  */
 package oopbank;
 
+import java.util.InputMismatchException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -24,18 +25,36 @@ public class FXMLChangeCustomerInfoController {
 
     @FXML
     private Label lblSSN;
+    
+    @FXML
+    private Label lblAlert;
 
     @FXML
     private Button btnSaveChanges, btnClose;
 
     @FXML
     private void clickedSaveChanges() {
-
+        
+        
         try {
-            if(txtFieldFirstName.getText().matches("[0-9]")){
-                throw new Exception();
             
-        }
+            if (txtFieldFirstName.getText().equals("")
+                    || txtFieldLastName.getText().equals("")){
+                    
+                throw new Exception();
+            }
+              for(int i = 0;i<txtFieldFirstName.getText().length();i++){
+              char tempChar = txtFieldFirstName.getText().charAt(i);
+                if(!Character.isLetter(tempChar))
+                  throw new InputMismatchException();
+              }
+              
+               for(int i = 0;i<txtFieldLastName.getText().length();i++){
+              char tempChar = txtFieldLastName.getText().charAt(i);
+                if(!Character.isLetter(tempChar))
+                  throw new InputMismatchException();
+              }
+                             
             banklogic.changeCustomerName(txtFieldFirstName.getText(),
                     txtFieldLastName.getText(),
                     banklogic.getCustomerList()
@@ -55,9 +74,14 @@ public class FXMLChangeCustomerInfoController {
 
             Stage tempStage = (Stage) btnSaveChanges.getScene().getWindow();
             tempStage.close();
-        } catch (Exception e) {
-            System.out.println("Fel");
+            } catch(InputMismatchException e){
+                lblAlert.setText("Can't be numbers!");
+            }        
+
+        catch (Exception e2) {
+            lblAlert.setText("Every field needs a value!");
         }
+     
 
     }
 

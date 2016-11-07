@@ -9,8 +9,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,15 +26,17 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class FXMLStartController {
 
-    
     private BankLogic banklogic = BankLogic.getInstance();
-    
+
     @FXML
     private ListView lvCustomer;
 
@@ -57,23 +59,71 @@ public class FXMLStartController {
     public static ObservableList<Customer> obsCustomerList;
 
     static int lvCustomerChoice = 0;
-    
-   private static SimpleStringProperty nameChange = new SimpleStringProperty();
+
+    // Finns för att kunna uppdatera namnet på CustomerInfo-sidan
+    private static SimpleStringProperty nameChange = new SimpleStringProperty();
 
     @FXML
     public void btnAddCustomer() throws IOException {
 
         try {
+            // Kollar om textfälten har något värde.
+            // Annars skrivs ett felmeddelande ut.
             if (txtFirstName.getText().equals("")
                     || txtLastName.getText().equals("")
                     || txtSSN.getText().equals("")) {
                 throw new Exception();
             }
 
+            // Kollar om förnamn och efternamn innehåller någon siffra. 
+            // Om så är fallet så skrivs ett felmeddelande ut.
+            char tempChar = 0;
+            for (int i = 0; i < txtFirstName.getText().length(); i++) {
+                tempChar = txtFirstName.getText().charAt(i);
+                if (!Character.isLetter(tempChar)) {
+                    throw new InputMismatchException();
+                }
+            }
+
+            for (int j = 0; j < txtLastName.getText().length(); j++) {
+                tempChar = txtLastName.getText().charAt(j);
+                if (!Character.isLetter(tempChar)) {
+                    throw new InputMismatchException();
+                }
+            }
+
+            // Kollar om personnumret är 10 siffror
+            // Annars skrivs ett felmeddelande ut.
+            if (txtSSN.getText().length() != 10) {
+                throw new NoSuchFieldException();
+            }
+
+            // Kollar om personen är kund i banken
+            // Då skrivs ett felmeddelande ut
+            for (int k = 0; k < banklogic.getCustomerList().size(); k++) {
+                if (Long.valueOf(txtSSN.getText()) == banklogic.getCustomerList().get(k).getpNr()) {
+                    throw new IllegalAccessException();
+                }
+            }
+
+            // Kollar om personen är över 18år
+            // Annars skrivs ett felmeddelande ut
+            String tempAgeCheck = String.valueOf(txtSSN.getText().charAt(0));
+            if (tempAgeCheck.equals("0")) {
+                throw new SecurityException();
+            }
+
+            tempAgeCheck += String.valueOf(txtSSN.getText().charAt(1));
+            if (tempAgeCheck.equals("99")) {
+                throw new SecurityException();
+            }
+
+            tempAgeCheck = "";
+            tempChar = 0;
             // Hämtar värden från textfälten och skickar till addCustomer
             banklogic.addCustomer(txtFirstName.getText(), txtLastName.getText(), Long.valueOf(txtSSN.getText()));
 
-            // Lägger in den nya i obsCustomerList
+            // Lägger in den nya kunden i obsCustomerList
             obsCustomerList = FXCollections
                     .observableArrayList(banklogic.getCustomerList());
 
@@ -94,9 +144,16 @@ public class FXMLStartController {
 
         } catch (NumberFormatException e) {
             addCustomerAlert.setText("Numbers, please!");
-            txtSSN.requestFocus();
-        } catch (Exception e2) {
-            addCustomerAlert.setText("Every Field needs a value");
+        } catch (InputMismatchException e2) {
+            addCustomerAlert.setText(" Name can't be a number!");
+        } catch (NoSuchFieldException e3) {
+            addCustomerAlert.setText("Must be ten digits!");
+        } catch (SecurityException e4) {
+            addCustomerAlert.setText("Customer must be over 18 years old!");
+        } catch (IllegalAccessException e5) {
+            addCustomerAlert.setText("This person is already a customer!");
+        } catch (Exception e6) {
+            addCustomerAlert.setText("Every Field needs a value!");
         }
 
     }
@@ -106,7 +163,7 @@ public class FXMLStartController {
 
         try {
             lvCustomerChoice = lvCustomer.getSelectionModel().getSelectedIndex();
-               
+
             Stage editCustomerStage = new Stage();
             Scene editCustomerScene
                     = new Scene(FXMLLoader.load(getClass()
@@ -126,49 +183,50 @@ public class FXMLStartController {
     @FXML
     public void btnRemoveCustomer() {
         String removedCustomer = "";
-        
-        try{
-        // Varnar användaren för att en kund tas bort
-        Alert alert = new Alert(AlertType.WARNING);
-        alert.setTitle("Confirmation Dialog");
-        alert.setHeaderText("Delete " + banklogic.getCustomerList()
-                .get(lvCustomer.getSelectionModel()
-                        .getSelectedIndex()).getFirstName()
-                + " " + banklogic.getCustomerList()
-                .get(lvCustomer.getSelectionModel()
-                        .getSelectedIndex()).getLastName());
-        alert.setContentText("Are you sure?");
-        ButtonType yes = new ButtonType("Yes", ButtonData.OK_DONE);
-        ButtonType no = new ButtonType("No", ButtonData.CANCEL_CLOSE);
 
-        alert.getButtonTypes().setAll(yes, no);
+        try {
+            // Varnar användaren för att en kund tas bort
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText("Delete " + banklogic.getCustomerList()
+                    .get(lvCustomer.getSelectionModel()
+                            .getSelectedIndex()).getFirstName()
+                    + " " + banklogic.getCustomerList()
+                    .get(lvCustomer.getSelectionModel()
+                            .getSelectedIndex()).getLastName());
+            alert.setContentText("Are you sure?");
+            ButtonType yes = new ButtonType("Yes", ButtonData.OK_DONE);
+            ButtonType no = new ButtonType("No", ButtonData.CANCEL_CLOSE);
 
-        Optional<ButtonType> result = alert.showAndWait();
+            alert.getButtonTypes().setAll(yes, no);
 
-        if (result.get() == yes) {
-            ArrayList<String> tempInfoRemoveCustomer = banklogic.removeCustomer(banklogic.getCustomerList()
-                    .get(lvCustomer.getSelectionModel().getSelectedIndex()).getpNr());
+            Optional<ButtonType> result = alert.showAndWait();
 
-            for (int i = 0; i < tempInfoRemoveCustomer.size(); i++) {
-                removedCustomer += tempInfoRemoveCustomer.get(i) + "\n";
+            // Kollar av vilket val användaren valde
+            if (result.get() == yes) {
+                ArrayList<String> tempInfoRemoveCustomer = banklogic.removeCustomer(banklogic.getCustomerList()
+                        .get(lvCustomer.getSelectionModel().getSelectedIndex()).getpNr());
+
+                for (int i = 0; i < tempInfoRemoveCustomer.size(); i++) {
+                    removedCustomer += tempInfoRemoveCustomer.get(i) + "\n";
+                }
+
+                System.out.println(removedCustomer);
+
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setTitle("Info");
+                alert2.setHeaderText(null);
+                alert2.setContentText(removedCustomer);
+
+                alert2.showAndWait();
+
+                banklogic.getRemovedCustomerInfo().clear();
+
+                refresh();
+            } else {
+
             }
-
-            System.out.println(removedCustomer);
-
-            Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-            alert2.setTitle("Info");
-            alert2.setHeaderText(null);
-            alert2.setContentText(removedCustomer);
-            alert2.showAndWait();
-
-            banklogic.getRemovedCustomerInfo().clear();
-
-            refresh();
-        } else {
-
-        }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             listViewAlert.setText("Please, choose something in the list");
         }
 
@@ -177,8 +235,10 @@ public class FXMLStartController {
     @FXML
     public void btnSaveToFile() {
 
+        // Initierar vad textfilen ska heta
         String fileName = "customer.txt";
 
+        // Sparar kunderna till en textfil
         try (PrintWriter pw = new PrintWriter(new FileOutputStream(fileName))) {
             for (Customer temp : banklogic.getCustomerList()) {
                 pw.println(temp.getFirstName() + " " + temp.getLastName() + " "
@@ -197,8 +257,9 @@ public class FXMLStartController {
         alert.showAndWait();
 
     }
-    
-     public static SimpleStringProperty getNameChange(){
+
+    // Finns för att kunna uppdatera namnet på CustomerInfo - sidan
+    public static SimpleStringProperty getNameChange() {
         return nameChange;
     }
 
@@ -210,7 +271,7 @@ public class FXMLStartController {
                 .observableArrayList(banklogic.getCustomerList());
 
         lvCustomer.setItems(obsCustomerList);
-        
+
         listViewAlert.setText("");
     }
 
