@@ -44,6 +44,7 @@ public class FXMLAccountInfoController implements Initializable {
 
     @FXML
     public void btnBackClicked() throws IOException {
+       
         Stage tempStage = (Stage) btnBack.getScene().getWindow();
 
         tempStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("FXMLCustomerInfo.fxml"))));
@@ -134,7 +135,7 @@ public class FXMLAccountInfoController implements Initializable {
                    lblAlert.setText("Not enough money!");
                 }
             }
-               lblAlert.setText("");
+           
         } catch (NumberFormatException e) {
             lblAlert.setText("Integer, please!");
         } catch (Exception e1) {

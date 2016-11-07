@@ -20,7 +20,7 @@ public abstract class Account
     protected double balance; 
     protected double interest; //Olika för olika kontotyper   
     protected ArrayList<Transaction> transactionList;
-     private static boolean hasWithdrawn=false;
+    private boolean hasWithdrawn=false;
 
     public Account(String accountType, double balance, double interest)
     {
@@ -83,11 +83,11 @@ public abstract class Account
         this.transactionList = transactionList;
     }
     
-     public static boolean getHasWithdrawn(){
+     public boolean getHasWithdrawn(){
         
         return hasWithdrawn;
     }
-    public static void setHasWithdrawn(boolean hasWithdrawnTemp){
+    public void setHasWithdrawn(boolean hasWithdrawnTemp){
         
         hasWithdrawn=hasWithdrawnTemp;
     }
