@@ -49,7 +49,7 @@ public class BankLogic {
         }
         return banklogic;
     }
-
+//Lägger till ett kreditkonto till det personnummer som angivits
     public int addCreditAccount(long prnNumber) {
         int tempaccountnumb = 0;
         for (int i = 0; i < customerList.size(); i++) {
@@ -62,7 +62,7 @@ public class BankLogic {
         }
         return tempaccountnumb;
     }
-
+//Returnerar en arraylista av transaktioner tillhörande ett specifikt konto
     public ArrayList getTransactions(long pnrNumber, int accountNo) {
         int arrayfirst = 0;
         int arraysecond = 0;
@@ -80,7 +80,7 @@ public class BankLogic {
         }
         return customerList.get(arrayfirst).getAccountList().get(arraysecond).getTransactionList();
     }
-
+//Lägger till ett sparkonto till angivet personnummer med en först insättning
     public int addSavingsAccount(long prnNumber, double balance) {
         int tempaccountnumb = 0;
         for (int i = 0; i < customerList.size(); i++) {
@@ -94,8 +94,8 @@ public class BankLogic {
         return tempaccountnumb;
     }
 
+//Returnerar en sträng med information angående ett specificerat konto
     public String getAccount(long prnNumber, int accountNo) {
-
         int arrayfirst = 0;
         int arraysecond = 0;
         for (int i = 0; i < customerList.size(); i++) {
