@@ -56,7 +56,7 @@
                         </HBox>
                         <HBox>
                            <children>
-                              <Button mnemonicParsing="false" onAction="#btnRemoveCustomer" text="Remove customer" />
+                              <Button mnemonicParsing="false" onAction="#btnRemoveCustomer" prefWidth="155.0" text="Remove customer" />
                               <Region HBox.hgrow="ALWAYS" />
                               <Button mnemonicParsing="false" onAction="#btnGoToCustomer" text="Go to customer" />
                            </children>

@@ -63,12 +63,16 @@ public class FXMLAccountInfoController implements Initializable {
             int account;
             //hämta värdena och spara de
             am = Double.parseDouble(amount.getText());
+            if(am<=0){
+           lblAlert.setText("Positive numbers, Please!");
+            }else{
             pnr = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getpNr();
             account = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getAccountNo();
             // göra en deposit
             banklogic.deposit(pnr, account, am);
 //ladda om sidan
             refresh();
+        }
         } catch (NumberFormatException e) {
             lblAlert.setText("Numbers, please!");
         } catch (Exception e1) {
@@ -85,7 +89,9 @@ public class FXMLAccountInfoController implements Initializable {
             int account = 0;
             //hämta värdena och spara de
             am = Double.parseDouble(amount.getText());
-
+            if(am<=0){
+           lblAlert.setText("Positive numbers, Please!");
+            }else{
             pnr = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getpNr();
             account = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getAccountNo();
 //hämta balance
@@ -147,6 +153,7 @@ public class FXMLAccountInfoController implements Initializable {
                 }
             }
 
+        }
         } catch (NumberFormatException e) {
             lblAlert.setText("Numbers, please!");
         } catch (Exception e1) {
