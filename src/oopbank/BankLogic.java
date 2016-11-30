@@ -6,6 +6,7 @@
 package oopbank;
 
 import java.util.ArrayList;
+import oopbank.repository.DBConnection;
 
 /**
  *
@@ -17,30 +18,13 @@ public class BankLogic {
     private ArrayList<Customer> customerList;
     private ArrayList<String> customerInfo;
     private ArrayList<String> removedCustomerInfo;
-
+    private final DBConnection db;
     //Konstruktor
     private BankLogic() {
-        customerList = new ArrayList();
+        db=new DBConnection();
+        customerList = db.getCustomerInfo();
         customerInfo = new ArrayList();
         removedCustomerInfo = new ArrayList();
-
-        customerList.add(new Customer("Louise", "Ahokas", 2410051701L));
-        addSavingsAccount(2410051701L, 2000);
-
-        customerList.add(new Customer("Alexander", "Aschan", 4505113345L));
-        addSavingsAccount(4505113345L, 6000);
-
-        customerList.add(new Customer("Ali", "Faradji", 7308266873L));
-        addSavingsAccount(7308266873L, 9000);
-
-        customerList.add(new Customer("Anna", "Fock", 6507129021L));
-        addSavingsAccount(6507129021L, 5000);
-
-        customerList.add(new Customer("Henrik", "Rosqvist", 5611045723L));
-        addSavingsAccount(5611045723L, 1000);
-
-        customerList.add(new Customer("Andreas", "Vettefors", 9801018021L));
-        addSavingsAccount(9901018021L, 11000);
     }
 
     public static BankLogic getInstance() {
