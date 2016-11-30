@@ -21,6 +21,11 @@ public class SavingsAccount extends Account
     {
         super("Savings Account", balance, 1.0);
     }
+    
+        public SavingsAccount(int accountNo, double balance)
+    {
+        super(accountNo, "Savings Account", balance, 1.0);
+    }
    
 
     

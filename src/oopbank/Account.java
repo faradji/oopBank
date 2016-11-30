@@ -15,20 +15,34 @@ import java.util.ArrayList;
  */
 public abstract class Account {
 
-    private static int accountCounter = 1001;//statisk variabel som ökar varje gång ett objekt av Account skapas (kolla i konstruktorn/LA
+    private static int accountCounter = 0;//statisk variabel som ökar varje gång ett objekt av Account skapas (kolla i konstruktorn/LA
+
+    public static void setAccountCounter(int accountCounter) {
+        Account.accountCounter = accountCounter;
+    }
     protected int accountNo;
     protected String accountType;
     protected double balance;
-    protected double interest;   
+    protected double interest;
     protected ArrayList<Transaction> transactionList;
     private boolean hasWithdrawn = false;
-
+    
+//konstruktor som används när nya konton skapas som saknar kontonummer
     public Account(String accountType, double balance, double interest) {
         this.accountNo = accountCounter;//eftersom variablen accountCounter är statisk så ändras den för alla objekt när den ändras. Vi sparar alltså i en ickestatisk variabel för varje objekt.
         this.accountType = accountType;
         setBalance(balance);
         this.interest = interest;
         accountCounter++; //Sparar nytt värde i accountCounter varje gång ett nytt objekt av typen Account skapas
+        this.transactionList = new ArrayList();
+
+    }
+    //konstruktor som används när konton skapas direkt från databasen
+    public Account(int accountNo, String accountType, double balance, double interest) {
+        this.accountNo = accountNo;//eftersom variablen accountCounter är statisk så ändras den för alla objekt när den ändras. Vi sparar alltså i en ickestatisk variabel för varje objekt.
+        this.accountType = accountType;
+        setBalance(balance);
+        this.interest = interest;
         this.transactionList = new ArrayList();
 
     }
@@ -52,7 +66,7 @@ public abstract class Account {
     public double getBalance() {
         return balance;
     }
-    
+
     //Metoden returnerar en double med två decimaler (avrundning)
     public void setBalance(double balance) {
         BigDecimal bd = new BigDecimal(balance)

@@ -10,11 +10,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import oopbank.Account;
 import oopbank.Customer;
+import oopbank.SavingsAccount;
 
 public class DBConnection {
 
-    static final String dbUrl = "jdbc:mysql://127.0.0.1/oopbank";
+    static final String dbUrl = "jdbc:mysql://127.0.0.1/OOP-bank";
     //  inloggningsuppgifter
     static final String userName = "root";
     static final String passWord = "root";
@@ -40,7 +42,7 @@ public class DBConnection {
         this.sql = sql;
     }
 
-    public ArrayList getCustomerInfo() {
+    public ArrayList getCustomerListInfo() {
         ArrayList tempCustomer = new ArrayList();
 
         try {
@@ -51,7 +53,7 @@ public class DBConnection {
             }
 
         } catch (SQLException ex) {
-           System.out.println("FEL");
+            System.out.println("FEL");
         } finally {
             try {
                 rs.close();
@@ -59,7 +61,47 @@ public class DBConnection {
                 System.out.println("OCKSÅ FEL");
             }
         }
-        
-            return tempCustomer;
-        }
+
+        return tempCustomer;
     }
+
+    public ArrayList getAccountListinfo(long pNr) {
+        ArrayList tempAccountList = new ArrayList();
+        
+        try {
+            //hämtar största kontonumret och sätter accountcounter till det
+            //plus ett
+            rs = stmt.executeQuery("Select MAX(accountNumber) from account");
+            Account.setAccountCounter(rs.getInt("accountNumber")+1);
+            
+            //hämtar all information från account table och lägger till konton
+            //i arraylist för varje specifik kund
+            sql = "Select * FROM account WHERE customer_PNR = ?";
+            String tempLong = String.valueOf(pNr);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, tempLong);
+            rs = pstmt.executeQuery();
+   
+            while (rs.next()) {
+                if(rs.getString("accountType").equals("Savings Account") ){
+                  tempAccountList.add(new SavingsAccount(rs.getInt("accountNumber"), rs.getDouble("balance")));  
+                }
+                else if(rs.getString("accountType").equals("Credit Account")){
+                    tempAccountList.add()
+                }
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("FEL");
+        } finally {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                System.out.println("OCKSÅ FEL");
+            }
+        }
+
+        return tempCustomer;
+    }
+
+}

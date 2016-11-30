@@ -21,8 +21,11 @@ public class BankLogic {
     private final DBConnection db;
     //Konstruktor
     private BankLogic() {
-        db=new DBConnection();
-        customerList = db.getCustomerInfo();
+        db = new DBConnection();
+        customerList = db.getCustomerListInfo();
+        for(int i = 0; i < customerList.size(); i++){
+            customerList.get(i).setAccountList(db.getAccountListinfo(customerList.get(i).getpNr()));
+        }
         customerInfo = new ArrayList();
         removedCustomerInfo = new ArrayList();
     }

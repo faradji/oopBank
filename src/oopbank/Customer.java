@@ -27,6 +27,10 @@ public class Customer
         this.accountList = new ArrayList();
     }
 
+    public void setAccountList(ArrayList<Account> accountList) {
+        this.accountList = accountList;
+    }
+
     public String getFirstName()
     {
         return firstName;
