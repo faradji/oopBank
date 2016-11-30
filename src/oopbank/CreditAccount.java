@@ -25,6 +25,14 @@ public class CreditAccount extends Account
         this.debtInterest = 7.0;//initeras i konstruktorn eftrsom vi vet att räntan är 7%
         this.limit = -5000.0;//initieras i konstruktorn eftersom vi vet att limit är -5000
     }
+    
+        public CreditAccount(int accountNo, double balance)//balance är alltid 0 när ett creditaccount öppnas
+    {
+        super(accountNo, "Credit Account", balance, 0.5);//här initierar vi de variablarna som är "fasta" för creditaccount
+        
+        this.debtInterest = 7.0;//initeras i konstruktorn eftrsom vi vet att räntan är 7%
+        this.limit = -5000.0;//initieras i konstruktorn eftersom vi vet att limit är -5000
+    }
 
     public double getDebtInterest()
     {
