@@ -105,5 +105,131 @@ public class DBConnection {
 
         return tempAccountList;
     }
+    
+    public void addCreditAccountDB(int accountNumber, String accountType, long pNr) throws SQLException
+    {
+        try
+        {
+            
+            pstmt = conn.prepareStatement("Insert into account (AccountNumber, Balance, "
+                    + "AccountType, Customer_PNR) Values (?,?,?,?);");
+            
+            pstmt.setInt(1, accountNumber);
+            pstmt.setDouble(2, 0);
+            pstmt.setString(3, accountType);
+            pstmt.setLong(4, pNr);
+            
+            pstmt.executeUpdate();
+            
+            
+        } catch (SQLException ex)
+        {
+            System.out.println(ex.getMessage());
+            System.out.println("Fel i metoden addCreditAccountDB");
+        }
+        
+        finally{
+            if(pstmt != null)
+            {
+                pstmt.close();
+            }
+            
+            if (conn != null)
+            conn.close();
+        }
+    
+    }
+    
+    public void addSavingsAccountDB (int accountNumber, String accountType, double balance, long pNr) throws SQLException
+    {
+        try
+        {
+            pstmt = conn.prepareStatement("Insert into account (AccountNumber, Balance, "
+                    + "AccountType, Customer_PNR) Values(?,?,?,?);");
+        
+            pstmt.setInt(1, accountNumber);
+            pstmt.setDouble(2, balance);
+            pstmt.setString(3, accountType);
+            pstmt.setLong(4, pNr);
+            
+            pstmt.executeUpdate();
+        } catch (SQLException ex)
+        {
+            System.out.println(ex.getMessage());
+            System.out.println("Fel i metoden addSavingsAccountDB");
+        }
+        
+        finally
+        {
+            if(pstmt != null)
+                pstmt.close();
+            if(conn != null)
+                conn.close();
+        }
+        
+       
+    }
+    
+    public void depositDB(String dateTime, double amount, double balance, int accountNumber) throws SQLException
+    {
+        try
+        {
+            pstmt = conn.prepareStatement("INSERT INTO transaction (dateTime, transactionType, amount, balance, account_accountNumber)"
+                    + " values (?,?,?,?,?);");
+            
+            pstmt.setString(1, dateTime);
+            pstmt.setString(2, "Deposit");
+            pstmt.setDouble(3, amount);
+            pstmt.setDouble(4, balance);
+            pstmt.setInt(5, accountNumber);
+            
+            pstmt.executeUpdate();
+
+        } catch (SQLException ex)
+        {
+            System.out.println(ex.getMessage());
+            System.out.println("Fel i metoden depositDB");
+        }
+        
+        finally
+        {
+            if(pstmt != null)
+                pstmt.close();
+            if(conn != null)
+                conn.close();
+        }
+        
+    }
+    
+    public void withdrawDB(String dateTime, double amount, double balance, int accountNumber) throws SQLException
+    {
+        try
+        {
+            pstmt = conn.prepareStatement("INSERT INTO transaction (dateTime, transactionType, amount, balance, account_accountNumber)"
+                    + " values (?,?,?,?,?);");
+            
+            pstmt.setString(1, dateTime);
+            pstmt.setString(2, "Withdraw");
+            pstmt.setDouble(3, amount);
+            pstmt.setDouble(4, balance);
+            pstmt.setInt(5, accountNumber);
+            
+            pstmt.executeUpdate();
+
+        } catch (SQLException ex)
+        {
+            System.out.println(ex.getMessage());
+            System.out.println("Fel i metoden withdrawDB");
+        }
+        
+        finally
+        {
+            if(pstmt != null)
+                pstmt.close();
+            if(conn != null)
+                conn.close();
+        }
+        
+    }
 
 }

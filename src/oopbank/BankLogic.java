@@ -5,6 +5,7 @@
  */
 package oopbank;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import oopbank.repository.DBConnection;
 
@@ -37,13 +38,17 @@ public class BankLogic {
         return banklogic;
     }
 //Lägger till ett kreditkonto till det personnummer som angivits
-    public int addCreditAccount(long prnNumber) {
+    public int addCreditAccount(long prnNumber) throws SQLException {
         int tempaccountnumb = 0;
         for (int i = 0; i < customerList.size(); i++) {
             if (customerList.get(i).getpNr() == prnNumber) {
                 CreditAccount tempaccount = new CreditAccount();
                 customerList.get(i).getAccountList().add(tempaccount);
                 tempaccountnumb = tempaccount.getAccountNo();
+                
+                //Anropar metoden från DBConnection
+                db.addCreditAccountDB(tempaccountnumb, "Credit Account", prnNumber);
+                
                 break;
             }
         }
@@ -68,13 +73,14 @@ public class BankLogic {
         return customerList.get(arrayfirst).getAccountList().get(arraysecond).getTransactionList();
     }
 //Lägger till ett sparkonto till angivet personnummer med en först insättning
-    public int addSavingsAccount(long prnNumber, double balance) {
+    public int addSavingsAccount(long prnNumber, double balance) throws SQLException {
         int tempaccountnumb = 0;
         for (int i = 0; i < customerList.size(); i++) {
             if (customerList.get(i).getpNr() == prnNumber) {
                 SavingsAccount tempaccount = new SavingsAccount(balance);
                 customerList.get(i).getAccountList().add(tempaccount);
                 tempaccountnumb = tempaccount.getAccountNo();
+                db.addSavingsAccountDB(tempaccountnumb, "Savings Account", balance, prnNumber);
                 break;
             }
         }
@@ -106,8 +112,9 @@ public class BankLogic {
         return customerList;
     }
 
-    public boolean deposit(long prnNumber, int accountNo, double amount) {
+    public boolean deposit(long prnNumber, int accountNo, double amount) throws SQLException {
         boolean temp = true;
+        String tempDateTime;
             //hämta rätt customer
         for (int i = 0; i < customerList.size(); i++) {
             if (customerList.get(i).getpNr() == prnNumber) {
@@ -122,6 +129,8 @@ public class BankLogic {
                         customerList.get(i).getAccountList().get(j).setBalance(tempBalance);
                         //skapa en transaktion
                         customerList.get(i).getAccountList().get(j).getTransactionList().add(new Transaction(temp, amount));
+                        tempDateTime = customerList.get(i).getAccountList().get(j).getTransactionList().get(i).getDate();
+                        db.depositDB(tempDateTime, amount, tempBalance, accountNo);
                         break;
                     }
 
@@ -132,8 +141,9 @@ public class BankLogic {
         return temp;
     }
 
-    public boolean withdraw(long pNr, int accountNo, double amount) {
+    public boolean withdraw(long pNr, int accountNo, double amount) throws SQLException {
         boolean temp = false;
+        String tempDateTime;
         //hämta customer
         for (int i = 0; i < customerList.size(); i++) {
             if (customerList.get(i).getpNr() == pNr) {
@@ -148,7 +158,8 @@ public class BankLogic {
                         customerList.get(i).getAccountList().get(j).setBalance(tempBalance);
                         //skapa transaktion
                         customerList.get(i).getAccountList().get(j).getTransactionList().add(new Transaction(temp, amount));
-
+                        tempDateTime = customerList.get(i).getAccountList().get(j).getTransactionList().get(i).getDate();
+                        db.withdrawDB(tempDateTime, amount, tempBalance, accountNo);
                         break;
                     }
 
