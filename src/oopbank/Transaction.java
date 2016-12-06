@@ -14,13 +14,13 @@ import java.util.Date;
  */
 public class Transaction
 {
-    private BankLogic banklogic = BankLogic.getInstance();
+   // private BankLogic banklogic = BankLogic.getInstance();
     private String date; 
     private boolean transactionType;
     private double amount;
     private double balance;
     
-    public Transaction(boolean transactionType, double amount)
+    public Transaction(boolean transactionType, double amount,double balance)
     {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         Date date = new Date();
@@ -30,8 +30,9 @@ public class Transaction
         this.transactionType = transactionType; //toString skriver ut deposit om true
         this.amount = amount;
 
-        this.balance = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getBalance();
+      this.balance = balance;
     }
+
     
     public Transaction(String dateTime, String transactionType,double amount, double balance){
         this.date = dateTime; //När en transaction skapas så blir Date alltid datum och tid "nu".

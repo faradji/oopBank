@@ -57,7 +57,9 @@ public class DBConnection {
             System.out.println(ex.getMessage() + "getCustomerListInfo");
         } finally {
             try {
+                if(rs!=null){
                 rs.close();
+                }
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage() + "getCustomerListInfo");
             }
@@ -182,7 +184,7 @@ public class DBConnection {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             System.out.println("Fel i metoden depositDB");
-        } 
+        }
 //        finally {
 //            if (pstmt != null) {
 //                pstmt.close();
@@ -230,29 +232,27 @@ public class DBConnection {
     public ArrayList getTransactionListinfo(int accountNo) {
         System.out.println("HEj");
         ArrayList tempTransactionList = new ArrayList();
-
+        int count = 0;
         try {
-            
-            rs = stmt.executeQuery("Select * FROM transaction WHERE account_accountNumber = " + accountNo);
- 
 
-            
             //hämtar all information från account table och lägger till konton
             //i arraylist för varje specifik kund
-//            sql = "Select * FROM transaction WHERE account_accountNumber = ?";
-////            String tempacc = String.valueOf(accountNo);
-//            pstmt = conn.prepareStatement(sql);
-//            pstmt.setInt(1, accountNo);
-//            rs = pstmt.executeQuery();
-
+            sql = "Select * FROM transaction WHERE account_accountNumber = ?";
+            String tempacc = String.valueOf(accountNo);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, accountNo);
+            rs = pstmt.executeQuery();
             while (rs.next()) {
-                String dateTime=rs.getString("dateTime");
-                String type=rs.getString("transactionType");
-                double amount= rs.getDouble("amount");
-                double balance= rs.getDouble("balance");
-                System.out.println(dateTime);
-                tempTransactionList.add(new Transaction(dateTime,type,amount,balance));
-             }
+                count++;
+                String dateTime = rs.getString("dateTime");
+                String type = rs.getString("transactionType");
+                double amount = rs.getDouble("amount");
+                double balance = rs.getDouble("balance");
+                System.out.println(dateTime + type + amount + balance);
+                //tempTransactionList.add(new Transaction(rs.getString("dateTime"), rs.getString("transactionType"), rs.getDouble("amount"), rs.getDouble("balance")));
+               tempTransactionList.add(new Transaction(dateTime,type,amount,balance));
+                System.out.println(count);
+            }
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage() + " getTransactionListInfo");

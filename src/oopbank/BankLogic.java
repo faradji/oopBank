@@ -29,13 +29,17 @@ public class BankLogic {
             customerList.get(i).setAccountList(db.getAccountListinfo(customerList.get(i).getpNr()));
             
         }
-        customerList.get(0).getAccountList().get(0).setTransactionList(db.getTransactionListinfo(1004));
-//        for(int i = 0; i < customerList.size(); i++){
-//            for(int j = 0; j < customerList.get(i).getAccountList().size(); j++){
-////            customerList.get(i).getAccountList().get(j).setTransactionList(db.getTransactionListinfo(customerList.get(i).getAccountList().get(j).getAccountNo()));
-//            customerList.get(i).getAccountList().get(j).setTransactionList(db.getTransactionListinfo(1004));
-//            }
-//        }
+        System.out.println(customerList.size());
+        System.out.println(customerList.get(0).getAccountList().size());
+       System.out.println(customerList.get(0).getAccountList().get(0).getTransactionList().size());
+     //  Transaction test1 = new Transaction(false, 20);
+//        customerList.get(0).getAccountList().get(0).getTransactionList().add(new Transaction(true,0.0));
+//        customerList.get(0).getAccountList().get(0).setTransactionList(db.getTransactionListinfo(1004));
+        for(int i = 0; i < customerList.size(); i++){
+            for(int j = 0; j < customerList.get(i).getAccountList().size(); j++){
+            customerList.get(i).getAccountList().get(j).setTransactionList(db.getTransactionListinfo(customerList.get(i).getAccountList().get(j).getAccountNo()));
+            }
+        }
         
         customerInfo = new ArrayList();
         removedCustomerInfo = new ArrayList();
@@ -139,7 +143,7 @@ public class BankLogic {
                         //uppdatera balance i list
                         customerList.get(i).getAccountList().get(j).setBalance(tempBalance);
                         //skapa en transaktion
-                        customerList.get(i).getAccountList().get(j).getTransactionList().add(new Transaction(temp, amount));
+                        customerList.get(i).getAccountList().get(j).getTransactionList().add(new Transaction(temp, amount,tempBalance));
                         tempDateTime = customerList.get(i).getAccountList().get(j).getTransactionList().get(j).getDate();
                         db.depositDB(tempDateTime, amount, tempBalance, accountNo);
                         break;
@@ -168,8 +172,10 @@ public class BankLogic {
                         //uppdatera balance i list
                         customerList.get(i).getAccountList().get(j).setBalance(tempBalance);
                         //skapa transaktion
-                        customerList.get(i).getAccountList().get(j).getTransactionList().add(new Transaction(temp, amount));
-                        tempDateTime = customerList.get(i).getAccountList().get(j).getTransactionList().get(j).getDate();
+                        customerList.get(i).getAccountList().get(j).getTransactionList().add
+                        (new Transaction(temp, amount,tempBalance));
+                        tempDateTime = customerList.get(i).getAccountList(
+                        ).get(j).getTransactionList().get(j).getDate();
                         db.withdrawDB(tempDateTime, amount, tempBalance, accountNo);
                         break;
                     }
