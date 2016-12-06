@@ -32,6 +32,20 @@ public class Transaction
 
         this.balance = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getAccountList().get(FXMLCustomerInfoController.accountChoice).getBalance();
     }
+    
+    public Transaction(String dateTime, String transactionType,double amount, double balance){
+        this.date = dateTime; //När en transaction skapas så blir Date alltid datum och tid "nu".
+
+        if("deposit".equalsIgnoreCase(transactionType)){
+            this.transactionType = true; //toString skriver ut deposit om true
+        }else{
+             this.transactionType = false;
+        }
+        
+        this.amount = amount;
+
+        this.balance = balance;
+    }
 
     public String getDate()
     { 

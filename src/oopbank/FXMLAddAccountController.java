@@ -1,5 +1,6 @@
 package oopbank;
 
+import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,7 +34,7 @@ public class FXMLAddAccountController {
     @FXML
     //Hämtar information från föregående scen angående vilken kund som är vald, kontrollerar
     //sedan vilken typ av konto som är valt och skapar därefter ett konto av rätt typ
-    public void clickedAddAccount() {
+    public void clickedAddAccount() throws SQLException {
         Customer selectedcustomer = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice);
         if (btnRadioSavings.isSelected() == true) {
             double value = 0;

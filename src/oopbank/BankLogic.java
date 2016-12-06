@@ -24,9 +24,19 @@ public class BankLogic {
     private BankLogic() {
         db = new DBConnection();
         customerList = db.getCustomerListInfo();
+        
         for(int i = 0; i < customerList.size(); i++){
             customerList.get(i).setAccountList(db.getAccountListinfo(customerList.get(i).getpNr()));
+            
         }
+        customerList.get(0).getAccountList().get(0).setTransactionList(db.getTransactionListinfo(1004));
+//        for(int i = 0; i < customerList.size(); i++){
+//            for(int j = 0; j < customerList.get(i).getAccountList().size(); j++){
+////            customerList.get(i).getAccountList().get(j).setTransactionList(db.getTransactionListinfo(customerList.get(i).getAccountList().get(j).getAccountNo()));
+//            customerList.get(i).getAccountList().get(j).setTransactionList(db.getTransactionListinfo(1004));
+//            }
+//        }
+        
         customerInfo = new ArrayList();
         removedCustomerInfo = new ArrayList();
     }
@@ -64,6 +74,7 @@ public class BankLogic {
                 for (int j = 0; j < customerList.get(i).getAccountList().size(); j++) {
                     if (customerList.get(i).getAccountList().get(j).getAccountNo() == accountNo) {
                         arraysecond = j;
+                        
                         break;
                     }
                     break;
@@ -129,7 +140,7 @@ public class BankLogic {
                         customerList.get(i).getAccountList().get(j).setBalance(tempBalance);
                         //skapa en transaktion
                         customerList.get(i).getAccountList().get(j).getTransactionList().add(new Transaction(temp, amount));
-                        tempDateTime = customerList.get(i).getAccountList().get(j).getTransactionList().get(i).getDate();
+                        tempDateTime = customerList.get(i).getAccountList().get(j).getTransactionList().get(j).getDate();
                         db.depositDB(tempDateTime, amount, tempBalance, accountNo);
                         break;
                     }
@@ -158,7 +169,7 @@ public class BankLogic {
                         customerList.get(i).getAccountList().get(j).setBalance(tempBalance);
                         //skapa transaktion
                         customerList.get(i).getAccountList().get(j).getTransactionList().add(new Transaction(temp, amount));
-                        tempDateTime = customerList.get(i).getAccountList().get(j).getTransactionList().get(i).getDate();
+                        tempDateTime = customerList.get(i).getAccountList().get(j).getTransactionList().get(j).getDate();
                         db.withdrawDB(tempDateTime, amount, tempBalance, accountNo);
                         break;
                     }
