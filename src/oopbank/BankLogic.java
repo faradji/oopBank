@@ -20,27 +20,28 @@ public class BankLogic {
     private ArrayList<String> customerInfo;
     private ArrayList<String> removedCustomerInfo;
     private final DBConnection db;
+
     //Konstruktor
     private BankLogic() {
         db = new DBConnection();
         customerList = db.getCustomerListInfo();
-        
-        for(int i = 0; i < customerList.size(); i++){
+
+        for (int i = 0; i < customerList.size(); i++) {
             customerList.get(i).setAccountList(db.getAccountListinfo(customerList.get(i).getpNr()));
-            
+
         }
         System.out.println(customerList.size());
         System.out.println(customerList.get(0).getAccountList().size());
-       System.out.println(customerList.get(0).getAccountList().get(0).getTransactionList().size());
-     //  Transaction test1 = new Transaction(false, 20);
+        System.out.println(customerList.get(0).getAccountList().get(0).getTransactionList().size());
+        //  Transaction test1 = new Transaction(false, 20);
 //        customerList.get(0).getAccountList().get(0).getTransactionList().add(new Transaction(true,0.0));
 //        customerList.get(0).getAccountList().get(0).setTransactionList(db.getTransactionListinfo(1004));
-        for(int i = 0; i < customerList.size(); i++){
-            for(int j = 0; j < customerList.get(i).getAccountList().size(); j++){
-            customerList.get(i).getAccountList().get(j).setTransactionList(db.getTransactionListinfo(customerList.get(i).getAccountList().get(j).getAccountNo()));
+        for (int i = 0; i < customerList.size(); i++) {
+            for (int j = 0; j < customerList.get(i).getAccountList().size(); j++) {
+                customerList.get(i).getAccountList().get(j).setTransactionList(db.getTransactionListinfo(customerList.get(i).getAccountList().get(j).getAccountNo()));
             }
         }
-        
+
         customerInfo = new ArrayList();
         removedCustomerInfo = new ArrayList();
     }
@@ -52,6 +53,7 @@ public class BankLogic {
         return banklogic;
     }
 //Lägger till ett kreditkonto till det personnummer som angivits
+
     public int addCreditAccount(long prnNumber) throws SQLException {
         int tempaccountnumb = 0;
         for (int i = 0; i < customerList.size(); i++) {
@@ -59,16 +61,17 @@ public class BankLogic {
                 CreditAccount tempaccount = new CreditAccount();
                 customerList.get(i).getAccountList().add(tempaccount);
                 tempaccountnumb = tempaccount.getAccountNo();
-                
+
                 //Anropar metoden från DBConnection
                 db.addCreditAccountDB(tempaccountnumb, "Credit Account", prnNumber);
-                
+
                 break;
             }
         }
         return tempaccountnumb;
     }
 //Returnerar en arraylista av transaktioner tillhörande ett specifikt konto
+
     public ArrayList getTransactions(long pnrNumber, int accountNo) {
         int arrayfirst = 0;
         int arraysecond = 0;
@@ -78,7 +81,7 @@ public class BankLogic {
                 for (int j = 0; j < customerList.get(i).getAccountList().size(); j++) {
                     if (customerList.get(i).getAccountList().get(j).getAccountNo() == accountNo) {
                         arraysecond = j;
-                        
+
                         break;
                     }
                     break;
@@ -88,6 +91,7 @@ public class BankLogic {
         return customerList.get(arrayfirst).getAccountList().get(arraysecond).getTransactionList();
     }
 //Lägger till ett sparkonto till angivet personnummer med en först insättning
+
     public int addSavingsAccount(long prnNumber, double balance) throws SQLException {
         int tempaccountnumb = 0;
         for (int i = 0; i < customerList.size(); i++) {
@@ -130,20 +134,20 @@ public class BankLogic {
     public boolean deposit(long prnNumber, int accountNo, double amount) throws SQLException {
         boolean temp = true;
         String tempDateTime;
-            //hämta rätt customer
+        //hämta rätt customer
         for (int i = 0; i < customerList.size(); i++) {
             if (customerList.get(i).getpNr() == prnNumber) {
-                    //hämta konto
+                //hämta konto
                 for (int j = 0; j < customerList.get(i).getAccountList().size(); j++) {
                     if (customerList.get(i).getAccountList().get(j).getAccountNo() == accountNo) {
-                      //spara balance
+                        //spara balance
                         double tempBalance = customerList.get(i).getAccountList().get(j).getBalance();
                         //spara nya balance
                         tempBalance += amount;
                         //uppdatera balance i list
                         customerList.get(i).getAccountList().get(j).setBalance(tempBalance);
                         //skapa en transaktion
-                        customerList.get(i).getAccountList().get(j).getTransactionList().add(new Transaction(temp, amount,tempBalance));
+                        customerList.get(i).getAccountList().get(j).getTransactionList().add(new Transaction(temp, amount, tempBalance));
                         tempDateTime = customerList.get(i).getAccountList().get(j).getTransactionList().get(j).getDate();
                         db.depositDB(tempDateTime, amount, tempBalance, accountNo);
                         break;
@@ -172,10 +176,8 @@ public class BankLogic {
                         //uppdatera balance i list
                         customerList.get(i).getAccountList().get(j).setBalance(tempBalance);
                         //skapa transaktion
-                        customerList.get(i).getAccountList().get(j).getTransactionList().add
-                        (new Transaction(temp, amount,tempBalance));
-                        tempDateTime = customerList.get(i).getAccountList(
-                        ).get(j).getTransactionList().get(j).getDate();
+                        customerList.get(i).getAccountList().get(j).getTransactionList().add(new Transaction(temp, amount, tempBalance));
+                        tempDateTime = customerList.get(i).getAccountList().get(j).getTransactionList().get(j).getDate();
                         db.withdrawDB(tempDateTime, amount, tempBalance, accountNo);
                         break;
                     }
@@ -192,7 +194,7 @@ public class BankLogic {
         int tempAccount = 0;
         String removedAccount = "";
         double tempBalance;
-        CreditAccount tempDebt;  
+        CreditAccount tempDebt;
 
         // Vilken kund
         for (int i = 0; i < customerList.size(); i++) {
@@ -210,14 +212,13 @@ public class BankLogic {
                             if (tempBalance < 0) {
                                 tempBalance *= 1.07;
                                 customerList.get(i).getAccountList().get(j).setBalance(tempBalance);
-                                tempDebt =  (CreditAccount)customerList.get(tempCustomer).getAccountList().get(tempAccount);
+                                tempDebt = (CreditAccount) customerList.get(tempCustomer).getAccountList().get(tempAccount);
 
                                 removedAccount = "\nAccount is closed" + "\n"
                                         + customerList.get(tempCustomer).getAccountList()
                                         .get(tempAccount).getAccountNo() + " " + customerList.get(tempCustomer).getAccountList()
                                         .get(tempAccount).getAccountType()
                                         + "\nDebtfee: " + tempDebt.getDebtInterest()
-                       
                                         + "\nBalance: " + " " + customerList.get(tempCustomer).getAccountList()
                                         .get(tempAccount).getBalance();
 
@@ -253,7 +254,7 @@ public class BankLogic {
         }
 
         customerList.get(tempCustomer).getAccountList().remove(tempAccount);
-
+        db.closeAccountDB(accountNo);
         return removedAccount;
     }
 
@@ -262,7 +263,7 @@ public class BankLogic {
         return customerList;
     }
 
-    public boolean addCustomer(String firstName, String lastName, long pNr) {
+    public boolean addCustomer(String firstName, String lastName, long pNr) throws SQLException {
         boolean customerCreated = true;
         //Går igenom customerlist och kollar om kunden redan finns.
         for (int i = 0; i < customerList.size(); i++) {
@@ -274,7 +275,7 @@ public class BankLogic {
         //lägger till kunden om den inte redan finns
         if (customerCreated == true) {
             customerList.add(new Customer(firstName, lastName, pNr));
-
+            db.addCustomerDB(firstName, lastName, pNr);
         }
         return customerCreated;
     }
@@ -287,14 +288,13 @@ public class BankLogic {
                 customerInfo.add(customerList.get(i).getFirstName() + " " + customerList.get(i).getLastName() + " " + customerList.get(i).getpNr());
 
                 //Sedan loopar accounts på följande rader
-                for (int j = 0; j < customerList.get(i).getAccountList().size(); j++)
-                {
+                for (int j = 0; j < customerList.get(i).getAccountList().size(); j++) {
                     customerInfo.add(customerList.get(i).getAccountList().get(j).toString());
                 }
             }
 
         }
-        
+
         return customerInfo;
 
     }
@@ -306,7 +306,7 @@ public class BankLogic {
 
         //går igenom customerlist för att hitta kunden
         for (int i = 0; i < customerList.size(); i++) {
-            
+
             //om kunden hittas så ändras namnen
             if (customerList.get(i).getpNr() == pNr) {
                 customerList.get(i).setFirstName(firstName);
@@ -315,7 +315,7 @@ public class BankLogic {
             }
         }
         return changedName;
-        
+
     }
 
     public ArrayList<String> removeCustomer(long pNr) {

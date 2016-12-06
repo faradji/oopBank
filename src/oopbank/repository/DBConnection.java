@@ -268,4 +268,40 @@ public class DBConnection {
 
         return tempTransactionList;
     }
+    
+    public void addCustomerDB(String firstName, String lastName, long pNr) throws SQLException
+    {
+        try {
+            pstmt = conn.prepareStatement("Insert into customer (PNR, firstName, lastName) Values(?,?,?);");
+            pstmt.setLong(1, pNr);
+            pstmt.setString(2, firstName);
+            pstmt.setString(3,lastName);
+            
+            pstmt.executeUpdate();
+            
+        } catch (SQLException ex) {
+            System.out.println("Fel i metoden addCustomerDB.");
+        }finally {
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
+public void closeAccountDB(int accountNumber)
+    {
+        try
+        {
+            stmt.executeUpdate("DELETE from account WHERE accountNumber = "  + accountNumber + ";");
+                        
+                      
+        } catch (SQLException ex)
+        {
+            System.out.println(ex.getMessage() + " closeAccountDB");
+        }
+    }
+
+
 }
