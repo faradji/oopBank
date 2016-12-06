@@ -30,12 +30,7 @@ public class BankLogic {
             customerList.get(i).setAccountList(db.getAccountListinfo(customerList.get(i).getpNr()));
 
         }
-        System.out.println(customerList.size());
-        System.out.println(customerList.get(0).getAccountList().size());
-        System.out.println(customerList.get(0).getAccountList().get(0).getTransactionList().size());
-        //  Transaction test1 = new Transaction(false, 20);
-//        customerList.get(0).getAccountList().get(0).getTransactionList().add(new Transaction(true,0.0));
-//        customerList.get(0).getAccountList().get(0).setTransactionList(db.getTransactionListinfo(1004));
+        
         for (int i = 0; i < customerList.size(); i++) {
             for (int j = 0; j < customerList.get(i).getAccountList().size(); j++) {
                 customerList.get(i).getAccountList().get(j).setTransactionList(db.getTransactionListinfo(customerList.get(i).getAccountList().get(j).getAccountNo()));
@@ -299,7 +294,7 @@ public class BankLogic {
 
     }
 
-    public boolean changeCustomerName(String firstName, String lastName, long pNr) {
+    public boolean changeCustomerName(String firstName, String lastName, long pNr) throws SQLException {
         //Byter namn på kund med personnummer pNr till name, returnerar true om namnet
         //ändrades, annars false(om kunden inte fanns)
         boolean changedName = false;
@@ -311,6 +306,7 @@ public class BankLogic {
             if (customerList.get(i).getpNr() == pNr) {
                 customerList.get(i).setFirstName(firstName);
                 customerList.get(i).setLastName(lastName);
+                db.changeNameDB(firstName, lastName, pNr);
                 changedName = true;
             }
         }
@@ -350,7 +346,9 @@ public class BankLogic {
 
         // Tar bort kunden
         customerList.remove(tempCustomerIndex);
-
+        
+        // Tar bort kund från databsen
+        db.removeCustomer(pNr);
         // Returnerar en array med all information som behövs
         return removedCustomerInfo;
 

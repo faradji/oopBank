@@ -42,7 +42,7 @@
                               <Button fx:id="btnAccountInfo" mnemonicParsing="false" onAction="#clickedAccountInformation" prefWidth="167.0" text="Deposit/Withdraw" />
                               <Region VBox.vgrow="ALWAYS" />
                               <Button fx:id="btnAddAccount" mnemonicParsing="false" onAction="#clickedAddAccount" prefWidth="167.0" text="Add account" />
-                              <Button fx:id="btnDeleteAccount" mnemonicParsing="false" onAction="#clickedDeleteAccount" prefWidth="167.0" text="Delete account" />
+                              <Button fx:id="btnDeleteAccount" mnemonicParsing="false" onAction="#clickedDeleteAccount" prefWidth="167.0" text="Close account" />
                            </children>
                            <HBox.margin>
                               <Insets bottom="32.0" left="40.0" top="57.0" />
