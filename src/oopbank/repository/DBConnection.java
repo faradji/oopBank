@@ -8,12 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import oopbank.Account;
 import oopbank.CreditAccount;
 import oopbank.Customer;
 import oopbank.SavingsAccount;
+import static java.lang.Long.parseLong;
+import oopbank.Transaction;
 
 public class DBConnection {
 
@@ -54,12 +54,12 @@ public class DBConnection {
             }
 
         } catch (SQLException ex) {
-          System.out.println(ex.getMessage()+ "getCustomerListInfo");
+            System.out.println(ex.getMessage() + "getCustomerListInfo");
         } finally {
             try {
                 rs.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage()+ "getCustomerListInfo");
+                System.out.println(ex.getMessage() + "getCustomerListInfo");
             }
         }
 
@@ -74,7 +74,7 @@ public class DBConnection {
             //plus ett
             rs = stmt.executeQuery("Select MAX(accountNumber) as accountNumber from account;");
             rs.next();
-            int temp=rs.getInt("accountNumber");
+            int temp = rs.getInt("accountNumber");
             Account.setAccountCounter((temp + 1));
 
             //hämtar all information från account table och lägger till konton
@@ -94,142 +94,178 @@ public class DBConnection {
             }
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage()+ " getAccountListInfo");
+            System.out.println(ex.getMessage() + " getAccountListInfo");
         } finally {
             try {
                 rs.close();
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage()+ " getAccountListInfo");
+                System.out.println(ex.getMessage() + " getAccountListInfo");
             }
         }
 
         return tempAccountList;
     }
-    
-    public void addCreditAccountDB(int accountNumber, String accountType, long pNr) throws SQLException
-    {
-        try
-        {
-            
+
+    public void addCreditAccountDB(int accountNumber, String accountType, long pNr) throws SQLException {
+        try {
+
             pstmt = conn.prepareStatement("Insert into account (AccountNumber, Balance, "
                     + "AccountType, Customer_PNR) Values (?,?,?,?);");
-            
+
             pstmt.setInt(1, accountNumber);
             pstmt.setDouble(2, 0);
             pstmt.setString(3, accountType);
             pstmt.setLong(4, pNr);
-            
+
             pstmt.executeUpdate();
-            
-            
-        } catch (SQLException ex)
-        {
+
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             System.out.println("Fel i metoden addCreditAccountDB");
-        }
-        
-        finally{
-            if(pstmt != null)
-            {
+        } finally {
+            if (pstmt != null) {
                 pstmt.close();
             }
-            
-            if (conn != null)
-            conn.close();
+
+            if (conn != null) {
+                conn.close();
+            }
         }
-    
+
     }
-    
-    public void addSavingsAccountDB (int accountNumber, String accountType, double balance, long pNr) throws SQLException
-    {
-        try
-        {
+
+    public void addSavingsAccountDB(int accountNumber, String accountType, double balance, long pNr) throws SQLException {
+        try {
             pstmt = conn.prepareStatement("Insert into account (AccountNumber, Balance, "
                     + "AccountType, Customer_PNR) Values(?,?,?,?);");
-        
+
             pstmt.setInt(1, accountNumber);
             pstmt.setDouble(2, balance);
             pstmt.setString(3, accountType);
             pstmt.setLong(4, pNr);
-            
+
             pstmt.executeUpdate();
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             System.out.println("Fel i metoden addSavingsAccountDB");
-        }
-        
-        finally
-        {
-            if(pstmt != null)
+        } finally {
+            if (pstmt != null) {
                 pstmt.close();
-            if(conn != null)
+            }
+            if (conn != null) {
                 conn.close();
+            }
         }
-        
-       
+
     }
-    
-    public void depositDB(String dateTime, double amount, double balance, int accountNumber) throws SQLException
-    {
-        try
-        {
-            pstmt = conn.prepareStatement("INSERT INTO transaction (dateTime, transactionType, amount, balance, account_accountNumber)"
+
+    public void depositDB(String dateTime, double amount, double balance, int accountNumber) throws SQLException {
+        try {
+            pstmt = conn.prepareStatement("INSERT INTO transaction (dateTime, transactionType,"
+                    + " amount, balance, account_accountNumber)"
                     + " values (?,?,?,?,?);");
-            
+
             pstmt.setString(1, dateTime);
             pstmt.setString(2, "Deposit");
             pstmt.setDouble(3, amount);
             pstmt.setDouble(4, balance);
             pstmt.setInt(5, accountNumber);
-            
+
             pstmt.executeUpdate();
 
-        } catch (SQLException ex)
-        {
+            pstmt = conn.prepareStatement("update account set balance=? where accountNumber=?;");
+
+            pstmt.setDouble(1, balance);
+            pstmt.setInt(2, accountNumber);
+            pstmt.executeUpdate();
+
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             System.out.println("Fel i metoden depositDB");
-        }
-        
-        finally
-        {
-            if(pstmt != null)
-                pstmt.close();
-            if(conn != null)
-                conn.close();
-        }
-        
+        } 
+//        finally {
+//            if (pstmt != null) {
+//                pstmt.close();
+//            }
+//            if (conn != null) {
+//                conn.close();
+//            }
+//        }
+
     }
-    
-    public void withdrawDB(String dateTime, double amount, double balance, int accountNumber) throws SQLException
-    {
-        try
-        {
+
+    public void withdrawDB(String dateTime, double amount, double balance, int accountNumber) throws SQLException {
+        try {
             pstmt = conn.prepareStatement("INSERT INTO transaction (dateTime, transactionType, amount, balance, account_accountNumber)"
                     + " values (?,?,?,?,?);");
-            
+
             pstmt.setString(1, dateTime);
             pstmt.setString(2, "Withdraw");
             pstmt.setDouble(3, amount);
             pstmt.setDouble(4, balance);
             pstmt.setInt(5, accountNumber);
-            
+
             pstmt.executeUpdate();
 
-        } catch (SQLException ex)
-        {
+            pstmt = conn.prepareStatement("update account set balance=? where accountNumber=?;");
+
+            pstmt.setDouble(1, balance);
+            pstmt.setInt(2, accountNumber);
+            pstmt.executeUpdate();
+
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             System.out.println("Fel i metoden withdrawDB");
-        }
-        
-        finally
-        {
-            if(pstmt != null)
+        } finally {
+            if (pstmt != null) {
                 pstmt.close();
-            if(conn != null)
+            }
+            if (conn != null) {
                 conn.close();
+            }
         }
-        
+
     }
 
+    public ArrayList getTransactionListinfo(int accountNo) {
+        System.out.println("HEj");
+        ArrayList tempTransactionList = new ArrayList();
+
+        try {
+            
+            rs = stmt.executeQuery("Select * FROM transaction WHERE account_accountNumber = " + accountNo);
+ 
+
+            
+            //hämtar all information från account table och lägger till konton
+            //i arraylist för varje specifik kund
+//            sql = "Select * FROM transaction WHERE account_accountNumber = ?";
+////            String tempacc = String.valueOf(accountNo);
+//            pstmt = conn.prepareStatement(sql);
+//            pstmt.setInt(1, accountNo);
+//            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String dateTime=rs.getString("dateTime");
+                String type=rs.getString("transactionType");
+                double amount= rs.getDouble("amount");
+                double balance= rs.getDouble("balance");
+                System.out.println(dateTime);
+                tempTransactionList.add(new Transaction(dateTime,type,amount,balance));
+             }
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage() + " getTransactionListInfo");
+        } finally {
+            try {
+                rs.close();
+                pstmt.close();
+                System.out.println("Choklad");
+            } catch (SQLException ex) {
+                System.out.println(ex.getMessage() + " getTransactionListInfo");
+            }
+        }
+
+        return tempTransactionList;
+    }
 }
