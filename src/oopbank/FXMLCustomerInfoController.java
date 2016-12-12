@@ -1,6 +1,7 @@
 package oopbank;
 
 import java.io.IOException;
+import static java.lang.Long.parseLong;
 import java.util.ArrayList;
 import java.util.Optional;
 import javafx.beans.property.SimpleStringProperty;
@@ -55,12 +56,14 @@ public class FXMLCustomerInfoController {
     private Label lblFullName;
 
     @FXML
-    private Label lblSSN;
+    private  Label lblSSN;
     
+    static long lvPnr;
 
     // Skapar nytt fönster
     @FXML
     private void clickedChangeCustomerInformation() throws IOException {
+       lvPnr =parseLong(lblSSN.getText()+"L");
         Stage changeCustomerInformationStage = new Stage();
         Scene changeCustomerInformationScene
                 = new Scene(FXMLLoader.load(getClass()

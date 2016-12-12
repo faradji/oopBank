@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.Long.parseLong;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,15 +67,23 @@ public class FXMLAccountInfoController implements Initializable {
     public void saveToFile() {
         DBConnection db = new DBConnection();
         ArrayList tempTrans = new ArrayList();
-        // Initierar vad textfilen ska heta
+        int tempaccnbr =FXMLStartController.lvCustomerChoice;
+        long tempPnr=FXMLCustomerInfoController.lvPnr;
+// Initierar vad textfilen ska heta
         String fileName = "kontoUtdrag.txt";
-        tempTrans.addAll(db.getTransactionListinfo(FXMLStartController.lvCustomerChoice));
+        
+        
+        System.out.println(tempTrans);
         // Sparar kunderna till en textfil
         try (PrintWriter pw = new PrintWriter(new FileOutputStream(fileName))) {
-            for (int i = 0; i < tempTrans.size(); i++) {
+            tempTrans.add(banklogic.getTransactions(tempPnr, tempaccnbr));
+            for(int i=0;i<tempTrans.size();i++){
                 pw.println(tempTrans.get(i));
-                pw.close();                
             }
+            System.out.println(tempTrans);
+                pw.close();
+           
+           
             
         } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());

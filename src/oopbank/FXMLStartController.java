@@ -164,7 +164,7 @@ public class FXMLStartController {
 
         try {
             lvCustomerChoice = lvCustomer.getSelectionModel().getSelectedIndex();
-
+            long pnr;
             Stage editCustomerStage = new Stage();
             Scene editCustomerScene
                     = new Scene(FXMLLoader.load(getClass()
