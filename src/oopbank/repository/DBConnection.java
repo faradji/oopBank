@@ -1,6 +1,5 @@
 package oopbank.repository;
 
-import static java.lang.Long.parseLong;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -302,6 +301,46 @@ public void closeAccountDB(int accountNumber)
             System.out.println(ex.getMessage() + " closeAccountDB");
         }
     }
+
+public void changeNameDB(String firstName, String lastName, long pNr) throws SQLException
+{
+	try 
+	{
+            String tempLong = String.valueOf(pNr);
+		pstmt = conn.prepareStatement("UPDATE customer SET firstName = ?,lastName = ? WHERE PNR = ?");
+
+		pstmt.setString(1, firstName);
+		pstmt.setString(2, lastName);
+		pstmt.setString(3, tempLong);
+
+		pstmt.executeUpdate();
+	} 
+	catch (SQLException ex) 
+	{
+            System.out.println(ex.getMessage());
+            System.out.println("changeNameDB");
+        } 
+	
+}
+
+public void removeCustomer(long pNr){
+	
+	try{
+
+	String tempLong = String.valueOf(pNr);
+	
+	String sql = "DELETE FROM customer WHERE PNR = ?";
+	
+	pstmt = conn.prepareStatement(sql);
+	pstmt.setString(1, tempLong);
+	
+        pstmt.executeUpdate();
+
+	}catch(SQLException e){
+		System.out.println(e.getMessage());
+	}
+
+}
 
 
 }
