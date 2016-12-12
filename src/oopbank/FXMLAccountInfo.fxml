@@ -37,6 +37,11 @@
                               <Insets top="21.0" />
                            </HBox.margin>
                         </Button>
+                        <Button mnemonicParsing="false" onAction="#saveToFile" text="Save to file">
+                           <HBox.margin>
+                              <Insets top="21.0" />
+                           </HBox.margin>
+                        </Button>
                      </children>
                      <BorderPane.margin>
                         <Insets />
