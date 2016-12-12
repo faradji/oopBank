@@ -205,7 +205,7 @@ public class FXMLCustomerInfoController {
         listViewAlert.setText("");
     }
 
-   
+  
     @FXML
     public void initialize() {
         

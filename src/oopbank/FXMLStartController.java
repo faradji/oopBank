@@ -32,6 +32,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import oopbank.repository.DBConnection;
 
 public class FXMLStartController {
 
@@ -274,7 +275,12 @@ public class FXMLStartController {
 
         listViewAlert.setText("");
     }
-
+ @FXML
+   public void close(){
+       DBConnection db= new DBConnection();
+       
+       db.closeConn();
+   }
     @FXML
     public void initialize() {
         refresh();

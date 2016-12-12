@@ -128,8 +128,9 @@
          <bottom>
             <HBox maxWidth="299.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#btnSaveToFile" text="Save customers to file" BorderPane.alignment="CENTER" />
+                  <Button mnemonicParsing="false" onAction="#close" text="Close program" />
                   <Region HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#btnSaveToFile" text="Save customers to file" BorderPane.alignment="CENTER" />
                </children>
                <BorderPane.margin>
                   <Insets bottom="10.0" left="40.0" />

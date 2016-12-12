@@ -16,7 +16,7 @@ import oopbank.repository.DBConnection;
 public class BankLogic {
 
     private static BankLogic banklogic = null;
-    private ArrayList<Customer> customerList;
+    private ArrayList<Customer> customerList ;
     private ArrayList<String> customerInfo;
     private ArrayList<String> removedCustomerInfo;
     private final DBConnection db;
