@@ -187,28 +187,23 @@ public class DBConnection {
     }
 
     public ArrayList getTransactionListinfo(int accountNo) {
-        System.out.println("HEj");
         ArrayList tempTransactionList = new ArrayList();
-        int count = 0;
         try {
 
             //hämtar all information från account table och lägger till konton
             //i arraylist för varje specifik kund
             sql = "Select * FROM transaction WHERE account_accountNumber = ?";
-            String tempacc = String.valueOf(accountNo);
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, accountNo);
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                count++;
+               
                 String dateTime = rs.getString("dateTime");
                 String type = rs.getString("transactionType");
                 double amount = rs.getDouble("amount");
                 double balance = rs.getDouble("balance");
-                System.out.println(dateTime + type + amount + balance);
-                //tempTransactionList.add(new Transaction(rs.getString("dateTime"), rs.getString("transactionType"), rs.getDouble("amount"), rs.getDouble("balance")));
-               tempTransactionList.add(new Transaction(dateTime,type,amount,balance));
-                System.out.println(count);
+                tempTransactionList.add((new Transaction(dateTime,type,amount,balance)));
+                
             }
 
         } catch (SQLException ex) {
