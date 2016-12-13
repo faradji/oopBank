@@ -22,6 +22,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -55,6 +56,8 @@ public class FXMLStartController {
 
     @FXML
     private Label addCustomerAlert;
+    @FXML
+    private Button btnClose;
 
     @FXML
     public static ObservableList<Customer> obsCustomerList;
@@ -280,6 +283,8 @@ public class FXMLStartController {
        DBConnection db= new DBConnection();
        
        db.closeConn();
+       Stage tempStage = (Stage) btnClose.getScene().getWindow();
+        tempStage.close();
    }
     @FXML
     public void initialize() {

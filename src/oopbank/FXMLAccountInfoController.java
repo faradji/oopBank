@@ -71,7 +71,7 @@ public class FXMLAccountInfoController implements Initializable {
 
     @FXML //deposit knappen
     public void saveToFile() throws IOException {
-       
+       DBConnection db = new DBConnection();;
         ArrayList tempTrans = new ArrayList();
         int tempaccnbr = Integer.parseInt(lblAccountNo.getText());
         long tempPnr = FXMLCustomerInfoController.lvPnr;
@@ -93,7 +93,7 @@ public class FXMLAccountInfoController implements Initializable {
             pw.println(sDate);
             pw.println("Transactions for account number: " + tempaccnbr);
 
-            tempTrans.add(banklogic.getTransactions(tempPnr, tempaccnbr));
+            tempTrans.add(db.getTransactionListinfo(tempaccnbr));
             for(int i=0;i<tempTrans.size();i++){
                 pw.println(tempTrans.get(i));
 }
