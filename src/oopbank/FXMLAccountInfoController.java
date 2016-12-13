@@ -5,14 +5,20 @@
  */
 package oopbank;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import static java.lang.Long.parseLong;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -37,58 +43,66 @@ import oopbank.repository.DBConnection;
  * @author Andreas Vettefors (contact@vettefors.se)
  */
 public class FXMLAccountInfoController implements Initializable {
-    
+
     private BankLogic banklogic = BankLogic.getInstance();
     @FXML
     private Label lblAccountType, lblBalance, lblCredit, lblnamn,
             credit, lblAlert, lblAccountNo;
-    
+
     @FXML
     private ListView lvTransactions;
-    
+
     @FXML
     private Button btnBack;
     @FXML
     private TextField amount;
-    
+
     @FXML
     private ObservableList<Transaction> transaction;
-    
+
     @FXML
     public void btnBackClicked() throws IOException {
-        
+
         Stage tempStage = (Stage) btnBack.getScene().getWindow();
-        
+
         tempStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("FXMLCustomerInfo.fxml"))));
-        
+
     }
 
     @FXML //deposit knappen
-    public void saveToFile() {
-        DBConnection db = new DBConnection();
+    public void saveToFile() throws IOException {
+       
         ArrayList tempTrans = new ArrayList();
-        int tempaccnbr =FXMLStartController.lvCustomerChoice;
-        long tempPnr=FXMLCustomerInfoController.lvPnr;
+        int tempaccnbr = Integer.parseInt(lblAccountNo.getText());
+        long tempPnr = FXMLCustomerInfoController.lvPnr;
+
+        // date nu
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date date = new Date();
+        String sDate = sdf.format(date);
 // Initierar vad textfilen ska heta
         String fileName = "kontoUtdrag.txt";
-        
-        
-        System.out.println(tempTrans);
+
         // Sparar kunderna till en textfil
-        try (PrintWriter pw = new PrintWriter(new FileOutputStream(fileName))) {
+        try (
+                //skriver in i en fil, true gör att man skriver in i slutet av filen istället för i början
+                FileWriter out = new FileWriter("kontoutdrag.txt", true);
+                BufferedWriter bf = new BufferedWriter(out);
+                PrintWriter pw = new PrintWriter(bf);) {
+
+            pw.println(sDate);
+            pw.println("Transactions for account number: " + tempaccnbr);
+
             tempTrans.add(banklogic.getTransactions(tempPnr, tempaccnbr));
             for(int i=0;i<tempTrans.size();i++){
                 pw.println(tempTrans.get(i));
-            }
-            System.out.println(tempTrans);
-                pw.close();
-           
-           
-            
+}
+            pw.close();
+
         } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());
         }
-        
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Info");
         alert.setHeaderText(null);
@@ -119,9 +133,9 @@ public class FXMLAccountInfoController implements Initializable {
         } catch (Exception e1) {
             System.err.println(e1);
         }
-        
+
     }
-    
+
     @FXML
     public void withdraw() {
         try {
@@ -165,7 +179,7 @@ public class FXMLAccountInfoController implements Initializable {
                             .getHasWithdrawn() == true) {
 // annars lägg på ränta
                         if ((tempBalance - (am * 1.02)) > 0) {
-                            
+
                             tempBalance -= (am * 0.02);
                             banklogic.getCustomerList()
                                     .get(FXMLStartController.lvCustomerChoice)
@@ -193,24 +207,24 @@ public class FXMLAccountInfoController implements Initializable {
                         lblAlert.setText("Not enough money!");
                     }
                 }
-                
+
             }
         } catch (NumberFormatException e) {
             lblAlert.setText("Numbers, please!");
         } catch (Exception e1) {
             System.err.println(e1);
         }
-        
+
     }
-    
+
     public void refresh() {
-        
+
         transaction = FXCollections.observableArrayList(banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice
         ).getAccountList().get(FXMLCustomerInfoController.accountChoice).getTransactionList());
-        
+
         Collections.reverse(transaction);
         lvTransactions.setItems(transaction);
-        
+
         String forNamn = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getFirstName();
         String efterNamn = banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice).getLastName();
         lblnamn.setText(forNamn + " " + efterNamn);//hämta för och efternamn
@@ -219,15 +233,15 @@ public class FXMLAccountInfoController implements Initializable {
                 .get(FXMLStartController.lvCustomerChoice)
                 .getAccountList().get(FXMLCustomerInfoController.accountChoice)
                 .getAccountNo());
-        
+
         lblAccountNo.setText(accountNumber);
-        
+
         String accountType = banklogic.getCustomerList()
                 .get(FXMLStartController.lvCustomerChoice)
                 .getAccountList()
                 .get(FXMLCustomerInfoController.accountChoice)
                 .getAccountType();
-        
+
         lblAccountType.setText(accountType);//lblAccountType ska visa om det är credit eller savings
 
         String balance = String.valueOf(banklogic.getCustomerList().get(FXMLStartController.lvCustomerChoice
@@ -235,14 +249,14 @@ public class FXMLAccountInfoController implements Initializable {
         lblBalance.setText(balance);//lblBalance visar saldot
 
         if (lblAccountType.getText().equalsIgnoreCase("Credit Account")) {
-            
+
             lblCredit.setText("-5000");//lblCredit visar krediten, om det är ett credit konto
 
         } else {
             lblCredit.setVisible(false);
             credit.setVisible(false);
         }
-        
+
         lblAlert.setText("");
     }
 
@@ -254,7 +268,7 @@ public class FXMLAccountInfoController implements Initializable {
         // TODO 
 
         refresh();
-        
+
     }
-    
+
 }
