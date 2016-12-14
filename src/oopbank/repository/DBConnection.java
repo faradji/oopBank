@@ -33,7 +33,7 @@ public class DBConnection {
             pstmt = conn.prepareStatement(sql);
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
 
         }
     }
@@ -53,7 +53,7 @@ public class DBConnection {
             }
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage() + "getCustomerListInfo");
+            System.err.println(ex.getMessage() + "getCustomerListInfo");
         } 
 
         return tempCustomer;
@@ -87,7 +87,7 @@ public class DBConnection {
             }
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage() + " getAccountListInfo");
+            System.err.println(ex.getMessage() + " getAccountListInfo");
         } 
 
         return tempAccountList;
@@ -107,7 +107,7 @@ public class DBConnection {
             pstmt.executeUpdate();
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             System.out.println("Fel i metoden addCreditAccountDB");
         } 
             
@@ -126,7 +126,7 @@ public class DBConnection {
 
             pstmt.executeUpdate();
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             System.out.println("Fel i metoden addSavingsAccountDB");
         } 
 
@@ -153,7 +153,7 @@ public class DBConnection {
             pstmt.executeUpdate();
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             System.out.println("Fel i metoden depositDB");
         }
 //        
@@ -180,7 +180,7 @@ public class DBConnection {
             pstmt.executeUpdate();
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             System.out.println("Fel i metoden withdrawDB");
         } 
 
@@ -207,7 +207,7 @@ public class DBConnection {
             }
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage() + " getTransactionListInfo");
+            System.err.println(ex.getMessage() + " getTransactionListInfo");
         } 
         
 
@@ -225,6 +225,7 @@ public class DBConnection {
             pstmt.executeUpdate();
             
         } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
             System.out.println("Fel i metoden addCustomerDB.");
         }
     }
@@ -237,7 +238,7 @@ public void closeAccountDB(int accountNumber)
                       
         } catch (SQLException ex)
         {
-            System.out.println(ex.getMessage() + " closeAccountDB");
+            System.err.println(ex.getMessage() + " closeAccountDB");
         }
     }
 
@@ -256,7 +257,7 @@ public void changeNameDB(String firstName, String lastName, long pNr) throws SQL
 	} 
 	catch (SQLException ex) 
 	{
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
             System.out.println("changeNameDB");
         } 
 	
@@ -276,7 +277,7 @@ public void removeCustomer(long pNr){
         pstmt.executeUpdate();
 
 	}catch(SQLException e){
-		System.out.println(e.getMessage());
+		System.err.println(e.getMessage() +"remove customer db");
 	}
 
 }
@@ -292,7 +293,7 @@ public void closeConn(){
         pstmt.close();
     }
     }catch(SQLException e){
-        System.out.println(e.getMessage());
+        System.err.println(e.getMessage() +"closeconn db");
     }
     
 }
