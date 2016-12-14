@@ -283,6 +283,7 @@ public class FXMLStartController {
        DBConnection db= new DBConnection();
        
        db.closeConn();
+       
        Stage tempStage = (Stage) btnClose.getScene().getWindow();
         tempStage.close();
    }

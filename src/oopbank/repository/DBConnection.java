@@ -281,7 +281,7 @@ public void removeCustomer(long pNr){
 	}
 
 }
-public void closeConn(){
+public void closeConn() {
     try{
     if(conn!=null){
         conn.close();
@@ -295,7 +295,6 @@ public void closeConn(){
     }catch(SQLException e){
         System.err.println(e.getMessage() +"closeconn db");
     }
-    
 }
 
 
